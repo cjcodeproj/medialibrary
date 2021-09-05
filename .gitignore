@@ -1,0 +1,10 @@
+# gitignore file python module
+
+# Compiled files, anything in a __pycache__ directory matching those filename patterns
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution files
+dist/
+*.egg-info/
