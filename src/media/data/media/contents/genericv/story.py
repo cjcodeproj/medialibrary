@@ -26,6 +26,8 @@ class Story():
             tagname = Namespaces.ns_strip(child.tag)
             if tagname == 'plot':
                 self.plot = Plot(child)
+            if tagname == 'overview':
+                self.plot = Plot(child)
             if tagname == 'keywords':
                 self.keywords = Keywords(child)
 

@@ -25,6 +25,8 @@ class Movie():
                 self.catalog = Catalog(child)
             if child.tag == Namespaces.nsf('movie') + 'story':
                 self.story = Story(child)
+            if child.tag == Namespaces.nsf('movie') + 'description':
+                self.story = Story(child)
             if child.tag == Namespaces.nsf('movie') + 'crew':
                 self.crew = Crew(child)
 

@@ -9,10 +9,17 @@ DVDs, and their contents.
 
 Thre are two demonstration executables in the library.
 
+```
 media.tools.listmovies
 media.tools.showmovies
+```
 
-To run them, use
+To run these tools use.
 
+```
+$ export MEDIAPATH=(path_to_xml_directory_structure)
 $ python -m media.tools.listmovies
 $ python -m media.tools.showmovies
+```
+
+The easiest way to test is to download a copy of the vtmedia-schema repo and use the examples there.
