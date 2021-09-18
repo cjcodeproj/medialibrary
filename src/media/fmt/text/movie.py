@@ -40,6 +40,7 @@ class Brief():
         self.output = ""
         # prep the header
         self.output = self.header()
+        self.output += self.classification_info()
         self.output += self.primary_crew()
         self.output += self.plot()
         self.output += self.keywords()
@@ -60,6 +61,26 @@ class Brief():
         out += "=" * 76
         out += "\n"
         return out
+
+    def classification_info(self):
+        '''Basic report on genre information'''
+        o_string = ""
+        if self.movie.classification:
+            classification = self.movie.classification
+            if classification.category:
+                o_string = "[" + str(classification.category) + "]"
+            if classification.genres.primary:
+                o_string += " {0}".format(classification.genres.primary)
+            if classification.genres.secondary:
+                o_string += "/" + "/".join(classification.genres.secondary)
+            if classification.genres.specific:
+                o_string += " \"{0}\"".format(classification.genres.specific)
+            o_string += "\n"
+            if classification.genres.subgenres:
+                s_string = ", ".join(classification.genres.subgenres)
+                o_string += "({0})\n".format(s_string)
+            o_string += "\n"
+        return o_string
 
     def primary_crew(self):
         '''Report on crew basics'''
