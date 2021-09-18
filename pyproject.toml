@@ -4,3 +4,6 @@ requires = [
 	"wheel"
 ]
 build-backend = "setuptools.build_meta"
+
+[tools.pylint.messages_control]
+disable = ["R0801"]

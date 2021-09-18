@@ -23,3 +23,22 @@ $ python -m media.tools.showmovies
 ```
 
 The easiest way to test is to download a copy of the vtmedia-schema repo and use the examples there.
+
+## Building
+
+Assuming a normal Python 3 environment with setuptools and build modules installed:
+
+```
+cd medialibrary
+python -m build 
+```
+
+Command will generate a dist/ directory with a .tar.gz file and a .whl file.
+
+## Installing
+
+Assuming a normal Python 3 environment:
+
+```
+python -m instal --user medialibrary-0.1-py3-none-any.whl
+```
