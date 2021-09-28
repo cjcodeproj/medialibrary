@@ -49,4 +49,4 @@ class Copyright():
                 self.holders.append(child.text)
 
     def __format__(self, format_spec):
-        return "{0}".format(self.year)
+        return f"{self.year}"

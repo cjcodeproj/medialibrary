@@ -40,7 +40,7 @@ class Title():
         self.title = in_title
 
     def __format__(self, format_spec):
-        return format(str(self.title), format_spec)
+        return f"{self.title!s}"
 
     def __str__(self):
         return self.title

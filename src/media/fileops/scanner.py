@@ -36,7 +36,7 @@ class Walker():
             for s_file in listdir(s_dir):
                 full_path = os.path.join(s_dir, s_file)
                 if self.debug:
-                    print("{0!s} {1!s} {2!s}".format(s_dir, s_file, full_path))
+                    print(f"{s_dir!s} {s_file!s} {full_path!s}")
                 if isdir(full_path):
                     if not s_file.startswith('.'):
                         # self.dir_count += 1
@@ -59,16 +59,14 @@ class Walker():
 
     def stats(self):
         '''Simple statistical output'''
-        return "{0:d} {1:d} {2:d}".format(len(self.dirs),
-                                          len(self.files), len(self.skipped))
+        return f"{len(self.dirs)} {len(self.files)} {len(self.skipped)}"
 
     def report(self):
         '''More detailed report of scanner operations'''
         out = "Stats\n-----\n"
-        out += "Directory Count   : {0:d}\n".format(len(self.dirs))
-        out += "File Count        : {0:d}\n".format(len(self.files) +
-                                                    len(self.skipped))
-        out += "        Matched   : {0:d}\n".format(len(self.files))
-        out += "    Non-Matched   : {0:d}\n".format(len(self.skipped))
-        out += "Elapsed Time      : {0:02f}\n".format(self.elapsed)
+        out += f"Directory Count   : {len(self.dirs)}\n"
+        out += f"File Count        : {len(self.files) + len(self.skipped)}\n"
+        out += f"        Matched   : {len(self.files)}\n"
+        out += f"    Non-Matched   : {len(self.skipped)}\n"
+        out += f"Elapsed Time      : {self.elapsed:02f}\n"
         return out

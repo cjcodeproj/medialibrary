@@ -40,5 +40,4 @@ class Parser():
         Report stats on how many files were read, and how many
         successful XML objects were created.
         '''
-        return "Files: {0:d} -- Objects {1:d}".format(
-                self.file_count, self.object_count)
+        return f"Files: {self.file_count} -- Objects {self.object_count}"

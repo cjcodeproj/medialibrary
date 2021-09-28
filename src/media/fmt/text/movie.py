@@ -16,8 +16,8 @@ class List():
     @classmethod
     def list_header(cls):
         '''Generate a simple header'''
-        out = "{0:50s} {1:4s}\n".format("Title", "Year")
-        out += "{0} {1}".format('=' * 50, '=' * 4)
+        out = f"{'Title':50s} {'Year':4s}\n"
+        out += f"{'=' * 50} {'=' * 4}"
         return out
 
     def mentry(self):
@@ -26,7 +26,7 @@ class List():
         if self.movie.catalog is not None:
             if self.movie.catalog.copyright is not None:
                 y_string = self.movie.catalog.copyright.year
-        out = "{0:50s} {1:4}".format(self.movie.title, y_string)
+        out = f"{self.movie.title!s:50s} {y_string:4d}"
         return out
 
     def __str__(self):
@@ -55,9 +55,9 @@ class Brief():
             if self.movie.catalog.copyright is not None:
                 y_string = self.movie.catalog.copyright.year
         if y_string:
-            out = "{0:69} ({1})\n".format(self.movie.title, y_string)
+            out = f"{self.movie.title!s:69s} ({y_string})\n"
         else:
-            out = "{0}\n".format(self.movie.title)
+            out = f"{self.movie.title}\n"
         out += "=" * 76
         out += "\n"
         return out
@@ -70,15 +70,15 @@ class Brief():
             if classification.category:
                 o_string = "[" + str(classification.category) + "]"
             if classification.genres.primary:
-                o_string += " {0}".format(classification.genres.primary)
+                o_string += f" {classification.genres.primary}"
             if classification.genres.secondary:
                 o_string += "/" + "/".join(classification.genres.secondary)
             if classification.genres.specific:
-                o_string += " \"{0}\"".format(classification.genres.specific)
+                o_string += f" \"{classification.genres.specific}\""
             o_string += "\n"
             if classification.genres.subgenres:
                 s_string = ", ".join(classification.genres.subgenres)
-                o_string += "({0})\n".format(s_string)
+                o_string += f"({s_string})\n"
             o_string += "\n"
         return o_string
 

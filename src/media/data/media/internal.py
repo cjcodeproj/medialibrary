@@ -30,7 +30,7 @@ class Media():
                         media.data.media.contents.movie.Movie(element))
 
     def __str__(self):
-        return "{0!s}".format(self.title)
+        return f"{self.title!s}"
 
 
 class Title():
@@ -52,5 +52,5 @@ class Title():
     def __str__(self):
         '''Return the title of the media'''
         if self.edition:
-            return "{0:s} ({1:s})".format(self.title, self.edition)
-        return "{0:s}".format(self.title)
+            return f"{self.title} ({self.edition})"
+        return f"{self.title}"

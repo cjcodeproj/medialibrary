@@ -121,10 +121,10 @@ class Name():
         self.raw = raw
 
     def __str__(self):
-        return "{0} {1}".format(self.given, self.family)
+        return f"{self.given} {self.family}"
 
     def __repr__(self):
-        return "{0} {1}".format(self.given, self.family)
+        return f"{self.given} {self.family}"
 
 
 class CharacterName():
@@ -158,7 +158,7 @@ class CharacterName():
                 self.middle = child.text
 
     def __str__(self):
-        return "{0} {1}".format(self.given, self.family)
+        return f"{self.given} {self.family}"
 
     def __repr__(self):
-        return "{0} {1}".format(self.given, self.family)
+        return f"{self.given} {self.family}"

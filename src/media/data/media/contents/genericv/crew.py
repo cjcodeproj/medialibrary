@@ -89,10 +89,10 @@ class SimpleCrew():
         '''Special output formatter to string multiple names together'''
         out_string = ""
         if len(in_list) == 1:
-            out_string = "{0}: {1}".format(title, in_list[0])
+            out_string = f"{title}: {in_list[0]}"
         else:
-            out_string = "{0}s: ".format(title)
+            out_string = f"{title}"
             for name in in_list:
-                out_string += "{0}, ".format(name)
+                out_string += f"{name}. "
             out_string = out_string[:-2]
         return out_string
