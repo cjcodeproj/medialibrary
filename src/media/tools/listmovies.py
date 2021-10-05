@@ -8,16 +8,15 @@ List out all movies, one per line.
 import os
 import argparse
 import media.fmt.text.movie
-from media.tools.common import load_media_dev
+from media.tools.common import load_media_dev, compile_movies
 
 
-def list_movies(media_devices):
+def list_movies(movies):
     '''Provide a summary list of all movies'''
     print(media.fmt.text.movie.List.list_header())
-    for m_dev in media_devices:
-        for movie in m_dev.contents:
-            movie_list_entry = media.fmt.text.movie.List(movie)
-            print(movie_list_entry)
+    for movie in sorted(movies):
+        movie_list_entry = media.fmt.text.movie.List(movie)
+        print(movie_list_entry)
 
 
 if __name__ == '__main__':
@@ -28,4 +27,5 @@ if __name__ == '__main__':
     if not mediapath:
         parser.print_help()
     devices = load_media_dev(mediapath)
-    list_movies(devices)
+    all_movies = compile_movies(devices)
+    list_movies(all_movies)

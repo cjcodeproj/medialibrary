@@ -7,15 +7,14 @@
 import os
 import argparse
 import media.fmt.text.movie
-from media.tools.common import load_media_dev
+from media.tools.common import load_media_dev, compile_movies
 
 
-def print_movies(media_devices):
+def print_movies(movies):
     '''Do a brief report on the movies'''
-    for m_dev in media_devices:
-        for movie in m_dev.contents:
-            movie_record = media.fmt.text.movie.Brief(movie)
-            print(movie_record)
+    for movie in sorted(movies):
+        movie_record = media.fmt.text.movie.Brief(movie)
+        print(movie_record)
 
 
 if __name__ == '__main__':
@@ -26,4 +25,5 @@ if __name__ == '__main__':
     if not moviepath:
         parser.print_help()
     devices = load_media_dev(moviepath)
-    print_movies(devices)
+    all_movies = compile_movies(devices)
+    print_movies(all_movies)

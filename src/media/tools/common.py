@@ -18,3 +18,12 @@ def load_media_dev(in_path):
     mload.load_media()
     media_devices = mload.medialist
     return media_devices
+
+
+def compile_movies(media_devices):
+    '''Extract movies from devices'''
+    movies = []
+    for m_dev in media_devices:
+        for movie in m_dev.contents:
+            movies.append(movie)
+    return movies

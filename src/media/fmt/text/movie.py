@@ -16,18 +16,35 @@ class List():
     @classmethod
     def list_header(cls):
         '''Generate a simple header'''
-        out = f"{'Title':50s} {'Year':4s}\n"
-        out += f"{'=' * 50} {'=' * 4}"
+        out = f"{'Title':50s} {'Year':4s} {'Genre':50s}\n"
+        out += f"{'=' * 50} {'=' * 4} {'=' * 50}"
         return out
 
     def mentry(self):
         '''One line entry'''
         y_string = ""
+        cat_string = ""
         if self.movie.catalog is not None:
             if self.movie.catalog.copyright is not None:
                 y_string = self.movie.catalog.copyright.year
-        out = f"{self.movie.title!s:50s} {y_string:4d}"
+        if self.movie.classification:
+            cat_string = self.build_classification()
+        out = f"{self.movie.title!s:50s} {y_string:4d} {cat_string:50s}"
         return out
+
+    def build_classification(self):
+        '''Classification briefing'''
+        o_string = ""
+        classification = self.movie.classification
+        if classification.category:
+            o_string = "[" + str(classification.category) + "]"
+        if classification.genres.primary:
+            o_string += f" {classification.genres.primary}"
+        if classification.genres.secondary:
+            o_string += "/" + "/".join(classification.genres.secondary)
+        if classification.genres.specific:
+            o_string += f" \"{classification.genres.specific}\""
+        return o_string
 
     def __str__(self):
         return self.output

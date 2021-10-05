@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-7](https://github.com/cjcodeproj/medialibrary/issues/7) Title (and other information) sorting
  - [medialibrary-8](https://github.com/cjcodeproj/medialibrary/issues/8) Consider f-strings for output
  - [medialibrary-6](https://github.com/cjcodeproj/medialibrary/issues/6) First distribution test
  - [medialibrary-4](https://github.com/cjcodeproj/medialibrary/issues/4) Basic code for handling movie classifications
