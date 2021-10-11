@@ -50,6 +50,26 @@ def hdr_block(header, i_list):
     return out_string
 
 
+def hdr_list_np(header, i_list):
+    '''
+    Output a larger list of items with a header,
+    but no pluralization of the header based on
+    item count.
+    '''
+    out_string = ""
+    hdr_string = f"{header}: "
+    bfr_string = " " * len(hdr_string)
+    str_list = ""
+    for i_name in i_list:
+        str_list += f"{i_name}, "
+    str_list = str_list[:-2]
+    out_ar = textwrap.wrap(str_list, width=DEF_WIDTH,
+                           initial_indent=hdr_string,
+                           subsequent_indent=bfr_string)
+    out_string = "\n".join(out_ar) + "\n"
+    return out_string
+
+
 def hdr_text(header, text_block):
     '''
     Output a block of text

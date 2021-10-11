@@ -3,7 +3,7 @@
 Standard text format reports for movies.
 '''
 
-from media.fmt.text.basics import hdr_list, hdr_text, hdr_block
+from media.fmt.text.basics import hdr_list, hdr_list_np, hdr_text, hdr_block
 
 
 class List():
@@ -59,6 +59,7 @@ class Brief():
         self.output = self.header()
         self.output += self.classification_info()
         self.output += self.primary_crew()
+        self.output += self.cast()
         self.output += self.plot()
         self.output += self.keywords()
         self.output += "\n"
@@ -111,12 +112,22 @@ class Brief():
                                 self.movie.crew.cinemap) + "\n"
         return out
 
+    def cast(self):
+        '''Report on film cast'''
+        out = ""
+        names = []
+        if self.movie.crew.cast is not None:
+            for role_o in self.movie.crew.cast.cast:
+                names.append(role_o.actor)
+            out = hdr_list_np("Cast", names)
+            out += "\n"
+        return out
+
     def plot(self):
         '''Report on plot'''
         out = ""
         if self.movie.story is not None:
             if self.movie.story.plot and str(self.movie.story.plot) != "":
-                out += "\n"
                 out += hdr_text("Plot", str(self.movie.story.plot))
                 out += "\n\n"
         return out
