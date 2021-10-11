@@ -95,6 +95,7 @@ class Name():
         self.given = ''
         self.family = ''
         self.middle = ''
+        self.sort = ''
         self.raw = ''
         if in_element is not None:
             self._process(in_element)
@@ -109,6 +110,7 @@ class Name():
             if tagname == 'mn':
                 self.middle = child.text
         self._build_string()
+        self._build_sort()
 
     def _build_string(self):
         raw = ''
@@ -120,11 +122,31 @@ class Name():
             raw += self.middle
         self.raw = raw
 
+    def rev_name(self):
+        '''Return the name in family, given order'''
+        return f"{self.family} {self.given}"
+
+    def _build_sort(self):
+        self.sort = self.family.casefold() + '_' \
+                    + self.given.casefold() + '_' + self.middle
+
     def __str__(self):
         return f"{self.given} {self.family}"
 
     def __repr__(self):
         return f"{self.given} {self.family}"
+
+    def __hash__(self):
+        return hash(self.sort)
+
+    def __lt__(self, other):
+        return self.sort < other.sort
+
+    def __gt__(self, other):
+        return self.sort > other.sort
+
+    def __eq__(self, other):
+        return self.sort == other.sort
 
 
 class CharacterName():

@@ -8,7 +8,7 @@ of visual art, like a movie or television show.
 # pylint: disable=R0801
 
 from media.xml.namespaces import Namespaces
-from media.data.nouns import Name
+from media.data.nouns import CharacterName, Name
 
 
 class Crew():
@@ -33,6 +33,8 @@ class Crew():
                 self.editors = SimpleCrew.load(child, 'editor')
             if tagname == 'cinemaphotographers':
                 self.cinemap = SimpleCrew.load(child, 'cinemaphotographer')
+            if tagname == 'cast':
+                self.cast = Cast(child)
 
 
 class Directors():
@@ -96,3 +98,36 @@ class SimpleCrew():
                 out_string += f"{name}. "
             out_string = out_string[:-2]
         return out_string
+
+
+class Cast():
+    '''
+    Container object for all cast members, or a subset of cast members.
+    '''
+    def __init__(self, in_element):
+        self.cast = []
+        if in_element is not None:
+            for child in in_element:
+                tagname = Namespaces.ns_strip(child.tag)
+                if tagname == 'role':
+                    self.cast.append(Role(child))
+
+
+class Role():
+    '''
+    A role contains a single actor person, and one or more
+    characters portrated by the role.
+    '''
+    def __init__(self, in_element):
+        self.actor = None
+        self.portrays = []
+        self.billing = 1
+        if in_element is not None:
+            for child in in_element:
+                tagname = Namespaces.ns_strip(child.tag)
+                if tagname == 'actor':
+                    self.actor = Name(child)
+                if tagname == 'as':
+                    self.portrays.append(CharacterName(child))
+            if 'billing' in in_element.attrib:
+                self.billing = int(in_element.attrib['billing'])
