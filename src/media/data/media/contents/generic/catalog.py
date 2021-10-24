@@ -35,6 +35,15 @@ class Title():
             word_split.append(article)
         self.sort_title = "_".join(word_split)
 
+    def __lt__(self, other):
+        return self.sort_title < other.sort_title
+
+    def __gt__(self, other):
+        return self.sort_title > other.sort_title
+
+    def __eq__(self, other):
+        return self.sort_title == other.sort_title
+
     def __str__(self):
         return self.title
 

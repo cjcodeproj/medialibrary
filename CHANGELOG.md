@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-12](https://github.com/cjcodeproj/medialibrary/issues/12) Improve proof of concept tool namelist
  - [medialibrary-10](https://github.com/cjcodeproj/medialibrary/issues/10) Implement proof of concept code for pulling names from film data
  - [medialibrary-9](https://github.com/cjcodeproj/medialibrary/issues/9) Implement code for pulling movie/crew/cast data
  - [medialibrary-7](https://github.com/cjcodeproj/medialibrary/issues/7) Title (and other information) sorting

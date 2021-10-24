@@ -15,21 +15,32 @@ class NameList():
     def __init__(self):
         self.names = {}
 
-    def add(self, name, job_role):
-        '''Add a name and job role to the list'''
+    def add(self, name, job_role, title):
+        '''Add a name, job role, and title to the list'''
         if name in self.names:
-            self.names[name][job_role] = 1
+            if job_role in self.names[name]:
+                self.names[name][job_role].append(title)
+            else:
+                self.names[name][job_role] = [title]
         else:
             self.names[name] = {}
-            self.names[name][job_role] = 1
+            self.names[name][job_role] = [title]
 
     def output(self):
-        '''Return the names and job roles'''
-        print(f"{'Family Name':20s} {'Given Name':15s} {'Job Roles':20s}")
-        print(f"{'=' * 20} {'=' * 15} {'=' * 20}")
+        '''Return the names, job roles, and titles'''
+        print(f"{'Family Name':20s} {'Given Name':15s} " +
+              f"{'Job Role':20s} {'Title'}")
+        print(f"{'=' * 20} {'=' * 15} {'=' * 20} {'=' * 25}")
         for nam in sorted(self.names.keys()):
-            job_roles = ", ".join(sorted(self.names[nam].keys()))
-            print(f"{nam.family:20s} {nam.given:15s} {job_roles}")
+            for j_role in sorted(self.names[nam].keys()):
+                t_count = 1
+                for title in sorted(self.names[nam][j_role]):
+                    if t_count == 1:
+                        print(f"{nam.family:20s} {nam.given:15s} " +
+                              f"{j_role:20s} {title!s}")
+                    else:
+                        print(f"{' ':20s} {' ':15s} {j_role:20s} {title!s}")
+                    t_count += 1
 
 
 def grab_crew_names(movies):
@@ -39,19 +50,19 @@ def grab_crew_names(movies):
         if movie.crew is not None:
             if movie.crew.directors:
                 for dir_n in movie.crew.directors:
-                    name_list.add(dir_n, "Director")
+                    name_list.add(dir_n, "Director", movie.title)
             if movie.crew.writers:
                 for writ_n in movie.crew.writers:
-                    name_list.add(writ_n, "Writer")
+                    name_list.add(writ_n, "Writer", movie.title)
             if movie.crew.cinemap:
                 for cinemap_n in movie.crew.cinemap:
-                    name_list.add(cinemap_n, "Cinemaphotographer")
+                    name_list.add(cinemap_n, "Cinemaphotographer", movie.title)
             if movie.crew.editors:
                 for editor_n in movie.crew.editors:
-                    name_list.add(editor_n, "Editor")
+                    name_list.add(editor_n, "Editor", movie.title)
             if movie.crew.cast:
                 for role in movie.crew.cast.cast:
-                    name_list.add(role.actor, "Cast")
+                    name_list.add(role.actor, "Cast", movie.title)
     return name_list
 
 

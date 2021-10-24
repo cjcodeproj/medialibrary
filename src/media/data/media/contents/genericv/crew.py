@@ -20,7 +20,7 @@ class Crew():
         self.editors = []
         self.writers = []
         self.cinemap = []
-        self.cast = []
+        self.cast = None
         if in_element is not None:
             self._process(in_element)
 
@@ -33,6 +33,8 @@ class Crew():
                 self.editors = SimpleCrew.load(child, 'editor')
             if tagname == 'cinemaphotographers':
                 self.cinemap = SimpleCrew.load(child, 'cinemaphotographer')
+            if tagname == 'writers':
+                self.writers = SimpleCrew.load(child, 'writer')
             if tagname == 'cast':
                 self.cast = Cast(child)
 

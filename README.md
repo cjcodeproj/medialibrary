@@ -7,11 +7,12 @@ DVDs, and their contents.
 
 ## Executables/Demos
 
-Thre are two demonstration executables in the library.
+Thre are three demonstration executables in the library.
 
 ```
-media.tools.listmovies
-media.tools.showmovies
+media.tools.movies.list
+media.tools.movies.show
+media.tools.movies.namelist
 ```
 
 To run these tools use.
@@ -62,16 +63,17 @@ Keywords:
 ```
 
 ```
-$ python -m media.tools.movies.namelist
-Family Name          Given Name      Job Roles           
-==================== =============== ====================
-Abroms               Edward          Editor
-Alberti              Maryse          Cinemaphotographer
-Albertson            Sean            Editor
-Alden Robinson       Phil            Director
-Alexander            Jane            Cast
-Apple                Cathering       Editor
-Ashton               John            Cast
+python -m media.tools.movies.namelist
+Family Name          Given Name      Job Role             Title
+==================== =============== ==================== =========================
+Abroms               Edward          Editor               The Sugarland Express
+Alberti              Maryse          Cinemaphotographer   Enron: The Smartest Guys In The Room
+Albertson            Sean            Editor               Killing Season
+Alden Robinson       Phil            Director             Sneakers
+Alden Robinson       Phil            Writer               Sneakers
+Alexander            Jane            Cast                 All The President's Men
+Apple                Cathering       Editor               Onward
+Ashton               John            Cast                 Midnight Run
 ...
 ```
 
