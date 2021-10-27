@@ -10,7 +10,10 @@ from media.xml.namespaces import Namespaces
 
 
 class Noun():
-    '''Abstract class for all proper nouns'''
+    '''
+    Abstract class for all proper nouns
+
+    '''
     def __init__(self, in_element):
         self.nvalue = in_element.text
 
@@ -19,7 +22,9 @@ class Noun():
 
 
 class Place():
-    '''Proper noun for a location'''
+    '''
+    ProperNoun class  for a location
+    '''
     def __init__(self, in_place):
         self.name = ''
         self.city = ''
@@ -90,7 +95,13 @@ class Place():
 
 
 class Name():
-    '''Proper noun for the same of a real person'''
+    '''
+    Proper noun for the name of a real person.
+
+    A real person's name will include
+    the common components like a given name,
+    a family name, and maybe a middle name.
+    '''
     def __init__(self, in_element):
         self.given = ''
         self.family = ''
@@ -150,7 +161,14 @@ class Name():
 
 
 class CharacterName():
-    '''Name class for a character name in a movie'''
+    '''
+    Name class for a character name in a movie
+
+    This class is loosely similar to a Name class, but
+    there are variations where the character in a
+    movie may have names that don't conform to
+    the naming conventions of a real person.
+    '''
     def __init__(self, in_element):
         self.given = ''
         self.family = ''

@@ -19,6 +19,20 @@ class Keywords():
     '''
     Main container object for a list of keyword objects
     Main container class is a hash table of arrays, which can get tricky.
+
+    Keywords are either GenericKeyword objects, or ProperNoun objects.
+
+    Every keyword has an integer relevance value to signify importance.
+    The values range from 1 (most important) to 5 (least important) with
+    the default value being 3.
+
+    All keywords are kept in an array of pools (known as collections
+    in the XML schema.  If no collections is defined for a keyword,
+    it goes in the 'generic' pool.
+
+    Groups are a feature of the XML schema that allow multiple
+    keyword objects to share the same relevance value, or the
+    same collection value.
     '''
     def __init__(self, in_kw_element):
         '''Initialize keyword bundle'''
@@ -34,11 +48,11 @@ class Keywords():
         return sorted(out)
 
     def pool_list(self):
-        '''Return a list of keyword pools'''
+        '''Returns a list of keyword pools'''
         return self.pools.keys()
 
     def all_by_pools(self):
-        '''Data by pool, still sorted'''
+        '''Returns a dictionary of keywords, ordered by the pool name'''
         out_p = {}
         for pool_n in self.pools:
             out_p[pool_n] = sorted(self.pools[pool_n])
@@ -95,7 +109,16 @@ class Keywords():
 
 
 class GenericKeyword():
-    '''Generic keyword'''
+    '''
+    A generic keyword is a simple string that doesn't have any
+    unique traits, compared to a ProperNounKeyword.  It's
+    value could represent a common noun, or a verb, or
+    almost anything.
+
+    It has values for relevance, a synonym string, a
+    clarification string, and a pool assignments.
+
+    '''
     def __init__(self, in_element):
         self.value = in_element.text
         self.lower_c = in_element.text.casefold()
@@ -116,6 +139,16 @@ class GenericKeyword():
         return self.value
 
     def __lt__(self, other):
+        '''
+        Sorting for generic keywords is tricker, because
+        the relevance has to be accounted for.  If
+        the keyword "banana" has a lower relevance value
+        than the keyword "apple", then "banana" would
+        come first in the sort evaluation.
+
+        GenericKeyword objects and ProperNounKeyword
+        objects can be compared against one another.
+        '''
         if self.relevance == other.relevance:
             return self.lower_c < other.lower_c
         return self.relevance < other.relevance
@@ -136,7 +169,7 @@ class ProperNounKeyword():
     Proper name keyword, which is tricker, because there is
     an embedded pproper noun inside the element that has to
     be accounted for, alongside the attributes of the
-    properNoun element.
+    keyword properNoun element.
     '''
     def __init__(self, in_element):
         self.value = None
@@ -170,6 +203,15 @@ class ProperNounKeyword():
         return str(self.value)
 
     def __lt__(self, other):
+        '''
+        Sorting for ProperNoun objects is similar to
+        GenericKeyword objects because the relevance
+        value can change the sort order between
+        two string values.
+
+        ProperNounKeyword objects and GenericKeyword
+        objects can be compared against one another.
+        '''
         if self.relevance == other.relevance:
             return self.lower_c < other.lower_c
         return self.relevance < other.relevance

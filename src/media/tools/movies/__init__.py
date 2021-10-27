@@ -1,4 +1,4 @@
 #!/usr/bin/env python
 '''
-movies.tools module
+media.tools.movies module
 '''
