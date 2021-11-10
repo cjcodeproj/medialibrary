@@ -9,11 +9,6 @@ Keywords module
 from media.data.nouns import Noun, Name, Place
 from media.xml.namespaces import Namespaces
 
-#
-# This code is really sloppy and could benefit from some
-# optimization
-#
-
 
 class Keywords():
     '''
@@ -108,7 +103,67 @@ class Keywords():
                 self._add_to_pool(prn_kw)
 
 
-class GenericKeyword():
+class AbstractKeyword():
+    '''
+    Parent class that both GenericKeyword and ProperNounKeyword inherit from
+    '''
+    def __init__(self, in_element):
+        self.value = ''
+        self.sort_value = ''
+        self.type = ''
+        self.relevance = 3
+        self.synonym = None
+        self.pool = 'generic'
+        self.clarification = None
+        self._process_attributes(in_element)
+
+    def _process_attributes(self, in_element):
+        if 'relevance' in in_element.attrib:
+            self.relevance = int(in_element.attrib['relevance'])
+        if 'collection' in in_element.attrib:
+            self.pool = in_element.attrib['collection']
+        if 'clarification' in in_element.attrib:
+            self.clarification = in_element.attrib['clarification']
+        if 'synonym' in in_element.attrib:
+            self.synonym = in_element.attrib['synonym']
+
+    def detail(self):
+        '''
+        Return detailed data on the keyword
+        '''
+        return self.type + '/' + self.value
+
+    def __hash__(self):
+        return hash(self.value)
+
+    def __lt__(self, other):
+        '''
+        Sorting for all keywords is tricier, becase
+        the relevance value has to be accounted for. If
+        the keyword "banana" has a lower relevance value than
+        the keyword "apple", then "banana" comes first in the
+        sort evaluation.
+
+        All subclasses of AbstractKeyword should inherit
+        this mechanism, and the subclasses should be
+        able to compare themselves to one another.
+        '''
+        if self.relevance == other.relevance:
+            return self.sort_value < other.sort_value
+        return self.relevance < other.relevance
+
+    def __gt__(self, other):
+        if self.relevance == other.relevance:
+            return self.sort_value > other.sort_value
+        return self.relevance > other.relevance
+
+    def __eq__(self, other):
+        if self.relevance == other.relevance:
+            return self.sort_value == other.sort_value
+        return False
+
+
+class GenericKeyword(AbstractKeyword):
     '''
     A generic keyword is a simple string that doesn't have any
     unique traits, compared to a ProperNounKeyword.  It's
@@ -120,51 +175,16 @@ class GenericKeyword():
 
     '''
     def __init__(self, in_element):
+        super().__init__(in_element)
         self.value = in_element.text
-        self.lower_c = in_element.text.casefold()
-        self.relevance = 3
-        self.synonym = None
-        self.pool = 'generic'
-        self.clarification = None
-        if 'relevance' in in_element.attrib:
-            self.relevance = int(in_element.attrib['relevance'])
-        if 'collection' in in_element.attrib:
-            self.pool = in_element.attrib['collection']
-        if 'clarification' in in_element.attrib:
-            self.clarification = in_element.attrib['clarification']
-        if 'synonym' in in_element.attrib:
-            self.synonym = in_element.attrib['synonym']
+        self.sort_value = self.value.casefold()
+        self.type = 'generic'
 
     def __str__(self):
         return self.value
 
-    def __lt__(self, other):
-        '''
-        Sorting for generic keywords is tricker, because
-        the relevance has to be accounted for.  If
-        the keyword "banana" has a lower relevance value
-        than the keyword "apple", then "banana" would
-        come first in the sort evaluation.
 
-        GenericKeyword objects and ProperNounKeyword
-        objects can be compared against one another.
-        '''
-        if self.relevance == other.relevance:
-            return self.lower_c < other.lower_c
-        return self.relevance < other.relevance
-
-    def __gt__(self, other):
-        if self.relevance == other.relevance:
-            return self.lower_c > other.lower_c
-        return self.relevance > other.relevance
-
-    def __eq__(self, other):
-        if self.relevance == other.relevance:
-            return self.lower_c == other.lower_c
-        return False
-
-
-class ProperNounKeyword():
+class ProperNounKeyword(AbstractKeyword):
     '''
     Proper name keyword, which is tricker, because there is
     an embedded pproper noun inside the element that has to
@@ -172,26 +192,16 @@ class ProperNounKeyword():
     keyword properNoun element.
     '''
     def __init__(self, in_element):
-        self.value = None
-        self.synonym = None
-        self.clarification = None
-        self.pool = 'generic'
-        self.relevance = 3
-        if 'relevance' in in_element.attrib:
-            self.relevance = int(in_element.attrib['relevance'])
-        if 'collection' in in_element.attrib:
-            self.pool = in_element.attrib['collection']
-        if 'clarification' in in_element.attrib:
-            self.clarification = in_element.attrib['clarification']
-        if 'synonym' in in_element.attrib:
-            self.synonym = in_element.attrib['synonym']
+        super().__init__(in_element)
+        self.type = 'properNoun'
         self._process(in_element)
-        self.lower_c = str(self.value).casefold()
+        self.sort_value = str(self.value.sort_value).casefold()
 
     def _process(self, in_element):
         if in_element is not None:
             child = in_element[0]
             tagname = Namespaces.ns_strip(child.tag)
+            self.tagtype = tagname
             if tagname in ['thing', 'entity', 'group', 'event']:
                 self.value = Noun(child)
             elif tagname == 'person':
@@ -199,29 +209,8 @@ class ProperNounKeyword():
             elif tagname == 'place':
                 self.value = Place(child)
 
+    def detail(self):
+        return self.type + '/' + self.tagtype + '/' + str(self.value)
+
     def __str__(self):
         return str(self.value)
-
-    def __lt__(self, other):
-        '''
-        Sorting for ProperNoun objects is similar to
-        GenericKeyword objects because the relevance
-        value can change the sort order between
-        two string values.
-
-        ProperNounKeyword objects and GenericKeyword
-        objects can be compared against one another.
-        '''
-        if self.relevance == other.relevance:
-            return self.lower_c < other.lower_c
-        return self.relevance < other.relevance
-
-    def __gt__(self, other):
-        if self.relevance == other.relevance:
-            return self.lower_c > other.lower_c
-        return self.relevance > other.relevance
-
-    def __eq__(self, other):
-        if self.relevance == other.relevance:
-            return self.lower_c == other.lower_c
-        return False

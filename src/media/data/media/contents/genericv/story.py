@@ -17,7 +17,7 @@ class Story():
     '''
     def __init__(self, in_element):
         self.plot = None
-        self.keywords = []
+        self.keywords = None
         self.themes = []
         self._process(in_element)
 
