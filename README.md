@@ -22,6 +22,7 @@ $ export MEDIAPATH=(path_to_xml_directory_structure)
 $ python -m media.tools.movies.list
 $ python -m media.tools.movies.show
 $ python -m media.tools.movies.namelist
+$ python -m media.tools.movies.keywordlist
 ```
 
 ```
@@ -74,6 +75,29 @@ Alden Robinson       Phil            Writer               Sneakers
 Alexander            Jane            Cast                 All The President's Men
 Apple                Cathering       Editor               Onward
 Ashton               John            Cast                 Midnight Run
+...
+```
+
+```
+$ python -m media.tools.movies.keywordlist
+Keyword                                       Title
+============================================= =========================
+properNoun/place/7-Eleven                     Wargames
+generic/accountant                            Midnight Run
+generic/affair                                Blood Simple
+                                              Blood Simple
+generic/air duct                              The Great Escape
+                                              The Great Escape
+properNoun/entity/Air Force                   Wargames
+generic/alcohol                               Death Proof
+generic/alien contact                         Contact
+generic/alien invasion                        The Last Starfighter
+generic/aliens                                The Last Starfighter
+properNoun/thing/Allure                       Death Proof
+properNoun/place/Amarillo (Texas)             Midnight Run
+properNoun/entity/Amtrack                     Midnight Run
+generic/anagram                               Sneakers
+generic/answering machine                     Sneakers
 ...
 ```
 
