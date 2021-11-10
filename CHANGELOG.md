@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-16](https://github.com/cjcodeproj/medialibrary/issues/16) FilenameMatches regex pattern is incorrect
  - [medialibrary-15](https://github.com/cjcodeproj/medialibrary/issues/15) The keyword code is kind of sloppy
  - [medialibrary-14](https://github.com/cjcodeproj/medialibrary/issues/14) The proper noun code is kind of sloppy
  - [medialibrary-12](https://github.com/cjcodeproj/medialibrary/issues/12) Improve proof of concept tool namelist
