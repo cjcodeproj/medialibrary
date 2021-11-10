@@ -95,5 +95,5 @@ Command will generate a dist/ directory with a .tar.gz file and a .whl file.
 Assuming a normal Python 3 environment:
 
 ```
-python -m install --user medialibrary-0.1-py3-none-any.whl
+python -m pip install --user medialibrary-0.1-py3-none-any.whl
 ```

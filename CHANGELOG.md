@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-14](https://github.com/cjcodeproj/medialibrary/issues/14) The proper noun code is kind of sloppy
  - [medialibrary-12](https://github.com/cjcodeproj/medialibrary/issues/12) Improve proof of concept tool namelist
  - [medialibrary-10](https://github.com/cjcodeproj/medialibrary/issues/10) Implement proof of concept code for pulling names from film data
  - [medialibrary-9](https://github.com/cjcodeproj/medialibrary/issues/9) Implement code for pulling movie/crew/cast data
