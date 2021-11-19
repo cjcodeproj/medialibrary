@@ -7,12 +7,14 @@ DVDs, and their contents.
 
 ## Executables/Demos
 
-Thre are three demonstration executables in the library.
+Thre are five demonstration proof of concept executables in the library.
 
 ```
 media.tools.movies.list
 media.tools.movies.show
 media.tools.movies.namelist
+media.tools.movies.keywordlist
+media.tools.movies.castlist
 ```
 
 To run these tools use.
@@ -23,6 +25,7 @@ $ python -m media.tools.movies.list
 $ python -m media.tools.movies.show
 $ python -m media.tools.movies.namelist
 $ python -m media.tools.movies.keywordlist
+# python -m media.tools.movies.castlist
 ```
 
 ```
@@ -85,9 +88,7 @@ Keyword                                       Title
 properNoun/place/7-Eleven                     Wargames
 generic/accountant                            Midnight Run
 generic/affair                                Blood Simple
-                                              Blood Simple
 generic/air duct                              The Great Escape
-                                              The Great Escape
 properNoun/entity/Air Force                   Wargames
 generic/alcohol                               Death Proof
 generic/alien contact                         Contact
@@ -98,6 +99,34 @@ properNoun/place/Amarillo (Texas)             Midnight Run
 properNoun/entity/Amtrack                     Midnight Run
 generic/anagram                               Sneakers
 generic/answering machine                     Sneakers
+...
+```
+
+```
+$ python -m media.tools.movies.castlist --mediapath ~/xml/m/vtmedia-schema/examples/
+Actor Name                     Movie Title                    Character Name                
+============================== ========================= ==============================
+Jane Alexander                 All The President's Men        'The Bookeeper'
+John Ashton                    Midnight Run                   Marvin Dorfler
+William Atherton               The Sugarland Express          Clovis
+Richard Attenborough           The Great Escape               Squadron Leader Roger Bartlett 'The Big X'
+Dan Aykroyd                    Sneakers                       Darryl 'Mother' Roscow
+Martin Balsam                  All The President's Men        Howard Simons
+Zöe Bell                       Death Proof                    Zöe Bell
+Steve Bisley                   Mad Max                        Jim Goose
+Kyle Bornheimer                Onward                         Wilden Lightfoot
+Matthew Broderick              Wargames                       David
+Charles Bronson                The Great Escape               Flight Lieutenant Danny Welinski 'Tunnel King'
+Jake Busey                     Road House 2: Last Call        'Wild' Bill
+Michael Chiklis                Parker                         Melander
+James Coburn                   The Great Escape               Flying Officer Sedgwick 'The Manufacturer'
+Dabney Coleman                 Wargames                       McKittrick
+Barry Corbin                   Wargames                       General Beringer
+Peter Coyote                   Enron: The Smartest Guys In The Room Narrator
+Rosario Dawson                 Death Proof                    Abernathy
+                               Unstoppable                    Connie
+Robert De Niro                 Killing Season                 Benjamin Ford
+                               Midnight Run                   Jack Walsh
 ...
 ```
 

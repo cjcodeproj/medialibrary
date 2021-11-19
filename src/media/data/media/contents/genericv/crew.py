@@ -7,6 +7,7 @@ of visual art, like a movie or television show.
 # pylint: disable=too-few-public-methods
 # pylint: disable=R0801
 
+from media.xml.functions import xs_bool
 from media.xml.namespaces import Namespaces
 from media.data.nouns import Name
 
@@ -130,12 +131,94 @@ class Role():
                 if tagname == 'actor':
                     self.actor = Name(child)
                 if tagname == 'as':
-                    self.portrays.append(CharacterName(child))
+                    child_tag = Namespaces.ns_strip(child[0].tag)
+                    if child_tag == 'narrator':
+                        self.portrays.append(PortraysNarrator())
+                    elif child_tag == 'self':
+                        self.portrays.append(PortraysSelf(child))
+                    elif child_tag == 'title':
+                        self.portrays.append(CharacterTitle(child))
+                    else:
+                        self.portrays.append(CharacterName(child))
             if 'billing' in in_element.attrib:
                 self.billing = int(in_element.attrib['billing'])
 
+    def __str__(self):
+        return "Role monster"
 
-class CharacterName():
+
+class Portrays():
+    '''
+    Abstract root class for all portrays objects.
+
+    '''
+    def __init__(self):
+        self.value = ''
+        self.formal = ''
+        self.sort_value = ''
+
+    def __str__(self):
+        return self.value
+
+    def __hash__(self):
+        '''
+        Hash values are only guaraunteed to be unique
+        against other values against the same actor within
+        the same role structure.
+        '''
+        return hash(self.formal)
+
+    def __lt__(self, other):
+        return self.sort_value < other.sort_value
+
+    def __rt__(self, other):
+        return self.sort_value > other.sort_value
+
+    def __eq__(self, other):
+        return self.sort_value == other.sort_value
+
+
+class PortraysNarrator(Portrays):
+    '''
+    Class designating the special role Narrator
+    '''
+    def __init__(self):
+        super().__init__()
+        self.value = 'Narrator'
+        self.formal = 'Narrator'
+        self.sort_value = 'narrator'
+
+
+class PortraysSelf(Portrays):
+    '''
+    Class designed for the special role Self
+    '''
+    def __init__(self, in_element):
+        super().__init__()
+        self.value = 'Self'
+        self.formal = 'Self'
+        self.sort_value = 'self'
+        ref_tag = in_element[0]
+        if 'fictionalVariant' in ref_tag.attrib:
+            if xs_bool(ref_tag.attrib['fictionalVariant']):
+                self.formal += ' (fictional variant)'
+        if 'archivalFootage' in ref_tag.attrib:
+            if xs_bool(ref_tag.attrib['archivalFootage']):
+                self.formal += ' (archival footage)'
+
+
+class CharacterTitle(Portrays):
+    '''
+    Class designed for the special role Title
+    '''
+    def __init__(self, in_element):
+        super().__init__()
+        self.value = in_element[0].text
+        self.formal = in_element[0].text
+        self.sort_value = in_element[0].text.casefold()
+
+
+class CharacterName(Portrays):
     '''
     Name class for a character name in a movie
 
@@ -144,36 +227,126 @@ class CharacterName():
     movie may have names that don't conform to
     the naming conventions of a real person.
     '''
+    name_matrix = {
+            'gn': 'given',
+            'nick': 'nick',
+            'mn': 'middle',
+            'fn': 'family'
+    }
+
     def __init__(self, in_element):
-        self.given = ''
-        self.family = ''
-        self.middle = ''
-        self.narrator = False
-        self.chself = False
+        super().__init__()
+        self.value = ''
+        self.chunk = {}
+        self.pre_title = ''
+        self.post_title = ''
+        self.variant = ''
         if in_element is not None:
             self._process(in_element)
 
-    def is_narrator(self):
-        '''Is the role of the narrator'''
-        return self.narrator or False
-
-    def plays_self(self):
-        '''Is the role playing themselves'''
-        return self.chself or False
-
     def _process(self, in_element):
         '''Build the object based on the data'''
+        order = []
         for child in in_element:
             tagname = Namespaces.ns_strip(child.tag)
-            if tagname == 'gn':
-                self.given = child.text
-            if tagname == 'fn':
-                self.given = child.text
-            if tagname == 'mn':
-                self.middle = child.text
+            tagcount = 1
+            if tagname in CharacterName.name_matrix:
+                if tagname == 'nick':
+                    self.chunk[CharacterName.name_matrix[tagname]] = "'" + \
+                            child.text + "'"
+                else:
+                    self.chunk[CharacterName.name_matrix[tagname]] = child.text
+                order.append(CharacterName.name_matrix[tagname])
+                tagcount += 1
+            elif tagname == 'preTitle':
+                self.pre_title = child.text
+            elif tagname == 'postTitle':
+                self.post_title = child.text
+            elif tagname == 'variant':
+                self.variant = child.text
+        self._build_value(order)
+        self._build_formal()
+        self._build_sort(order)
+
+#    def _process2(self, in_element):
+#        '''Build the object based on the data'''
+#        for child in in_element:
+#            tagname = Namespaces.ns_strip(child.tag)
+#            tagcount = 1
+#            order = []
+#            if tagname == 'self':
+#                self.chunk['self'] = "(self)"
+#                order = ['self']
+#                self._build_value(order)
+#                return
+#            if tagname == 'narrator':
+#                self.chunk['narrator'] = "(narrator)"
+#                order = ['narrator']
+#                self._build_value(order)
+#                return
+#            if tagname == 'title':
+#                self.chunk['title'] = child.text
+#                order = ['title']
+#                self._build_value(order)
+#                return
+#            if tagname == 'nick':
+#                self.chunk['nick'] = child.text
+#                order.append('nick')
+#            if tagname == 'gn':
+#                self.chunk['given'] = child.text
+#                order.append('given')
+#            if tagname == 'mn':
+#                self.chunk['middle'] = child.text
+#                order.append('middle')
+#            if tagname == 'fn':
+#                self.chunk['family'] = child.text
+#                order.append('family')
+#            tagcount += 1
+#        self._build_value(order)
+#        return
+
+    def _build_value(self, order):
+        raw = ''
+        for chunk_i in order:
+            raw += self.chunk[chunk_i] + ' '
+        raw = raw[:-1]
+        self.value = raw
+
+    def _build_formal(self):
+        raw = ''
+        if self.pre_title:
+            raw = self.pre_title + ' ' + self.value
+        else:
+            raw = self.value
+        if self.post_title:
+            raw += ' ' + self.post_title
+        if self.variant:
+            raw += ' (' + self.variant + ')'
+        self.formal = raw
+
+    def _build_sort(self, order):
+        order = ['family', 'given', 'middle']
+        raw = ''
+        for o_i in order:
+            if o_i in self.chunk:
+                raw += self.chunk[o_i].casefold() + '_'
+        raw = raw[:-1]
+        self.sort_value = raw
+
+#    def complete(self):
+#        out = ''
+#        if self.pre_title:
+#            out = self.pre_title + ' ' + self.value
+#        else:
+#            out = self.value
+#        if self.post_title:
+#            out += ' ' + self.post_title
+#        if self.variant:
+#            out += ' (' + self.variant + ')'
+#        return out
 
     def __str__(self):
-        return f"{self.given} {self.family}"
+        return f"{self.value}"
 
     def __repr__(self):
-        return f"{self.given} {self.family}"
+        return f"{self.chunk['given']} {self.chunk['family']}"
