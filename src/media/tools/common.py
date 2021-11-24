@@ -25,5 +25,6 @@ def compile_movies(media_devices):
     movies = []
     for m_dev in media_devices:
         for movie in m_dev.contents:
-            movies.append(movie)
+            if movie not in movies:
+                movies.append(movie)
     return movies
