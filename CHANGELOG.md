@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-17](https://github.com/cjcodeproj/medialibrary/issues/17) Setup object hashes
  - [medialibrary-19](https://github.com/cjcodeproj/medialibrary/issues/19) Update code for Character Names
  - [medialibrary-16](https://github.com/cjcodeproj/medialibrary/issues/16) FilenameMatches regex pattern is incorrect
  - [medialibrary-15](https://github.com/cjcodeproj/medialibrary/issues/15) The keyword code is kind of sloppy

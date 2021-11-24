@@ -44,6 +44,9 @@ class Movie():
         if self.catalog.unique_index is not None:
             self.unique_key += "-" + str(self.catalog.unique_index.index)
 
+    def __hash__(self):
+        return hash(self.unique_key)
+
     def __lt__(self, other):
         return self.unique_key < other.unique_key
 
