@@ -3,6 +3,7 @@
 
 import media.fileops.scanner
 import media.fileops.loader
+import media.fileops.repo
 from media.fileops.filenames import FilenameMatches
 
 # Walker module walks the filesystem
@@ -11,13 +12,11 @@ from media.fileops.filenames import FilenameMatches
 
 def load_media_dev(in_path):
     '''Identify suitable files and load them up'''
-    walker = media.fileops.scanner.Walker([in_path])
-    walker.filename_match(FilenameMatches.Movie_Media)
-    walker.scan()
-    mload = media.fileops.loader.Loader(walker)
-    mload.load_media()
-    media_devices = mload.medialist
-    return media_devices
+    repo = media.fileops.repo.Repo(in_path)
+    repo.scan()
+    loader = media.fileops.loader.Loader()
+    m_devices = loader.load_media(repo, FilenameMatches.Movie_Media)
+    return m_devices
 
 
 def compile_movies(media_devices):

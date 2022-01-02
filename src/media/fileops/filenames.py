@@ -9,4 +9,5 @@ import re
 class FilenameMatches():
     '''Static data on filename matches'''
     # Movie_Media = re.compile("(dvd|bluray|ultrahd|vhs)(-[\n+])?.xml$")
-    Movie_Media = re.compile("-(dvd|bluray|ultrahd|vhs)(-[\\d+])?\\.xml")
+    Movie_Media = re.compile("-(dvd|bluray|ultrahd|vhs)(-[\\d+])?\\.xml$")
+    All_Xml = re.compile("\\.xml$")

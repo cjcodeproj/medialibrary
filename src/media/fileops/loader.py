@@ -2,26 +2,30 @@
 
 '''Code relating to the loading of XML files'''
 
+# pylint: disable=too-few-public-methods
+
 import media.xml.parser
+from media.fileops.filenames import FilenameMatches
 
 
 class Loader():
     '''Loads a predetermined list of media data files'''
-    def __init__(self, in_scanner):
-        self.medialist = []
-        self.scanner = in_scanner
+    def __init__(self):
+        self.file_count = 0
+        self.object_count = 0
         self.parser = media.xml.parser.Parser()
 
-    def load_media(self):
+    def load_media(self, repo, pattern=None):
         '''For each file, run the parser against it, and create an
            object if possible'''
-        for in_file in self.scanner.files:
-            self.medialist.extend(self.parser.load_file(in_file))
-
-    def file_count(self):
-        '''Return count on the number of files read'''
-        return len(self.scanner.files)
-
-    def object_count(self):
-        '''Return count on the number of media objects created'''
-        return len(self.medialist)
+        m_obj = []
+        files = []
+        if pattern is not None:
+            files = repo.file_match(pattern)
+        else:
+            files = repo.file_match(FilenameMatches.All_Xml)
+        for in_file in files:
+            self.file_count += 1
+            m_obj.extend(self.parser.load_file(in_file))
+        self.object_count += len(m_obj)
+        return m_obj
