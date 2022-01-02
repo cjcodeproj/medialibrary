@@ -132,6 +132,36 @@ Robert De Niro                 Killing Season                 Benjamin Ford
 
 The easiest way to test is to download a copy of the vtmedia-schema repo and use the examples there.
 
+## Python Shell Interface (Beta)
+
+Pulling data using the Python Shell.
+
+```
+$ python
+Python 3.9.7 (default, Sep  3 2021, 12:15:38) 
+[GCC 10.2.0] on sunos5
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import media.fileops.loader
+>>> import media.fileops.repo
+>>> r=media.fileops.repo.Repo('/home/user/xml/vtmedia-schema/examples/movies')
+>>> r.scan()
+>>> loader = media.fileops.loader.Loader()
+>>> dev_list = loader.load_media(r)
+>>> print(dev_list[0].contents[0].title)
+Killing Season
+>>> print(dev_list[0].contents[1].title)
+Red Lights
+>>> print(dev_list[1].contents[0].title)
+All The President's Men
+>>> print(dev_list[2].contents[0].title)
+Unstoppable
+>>> print(dev_list[3].contents[0].title)
+Road House 2: Last Call
+>>> print(dev_list[4].contents[0].title)
+The Last Starfighter
+>>> 
+```
+
 ## Building
 
 Assuming a normal Python 3 environment with setuptools and build modules installed:

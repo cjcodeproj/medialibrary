@@ -14,12 +14,9 @@ from os.path import isdir, isfile
 class Walker():
     '''Scans directory for media XML files'''
     def __init__(self, in_paths, debug=False):
-        # self.paths = in_paths
         self.dirs = []
         self.files = []
         self.skipped = []
-        # self.dir_count = 0
-        # self.match_count = 0
         self.elapsed = None
         self.match_re = None
         self.debug = debug
@@ -39,14 +36,9 @@ class Walker():
                     print(f"{s_dir!s} {s_file!s} {full_path!s}")
                 if isdir(full_path):
                     if not s_file.startswith('.'):
-                        # self.dir_count += 1
                         self.dirs.append(full_path)
                 elif isfile(full_path):
-                    if self.name_match(s_file):
-                        # self.match_count += 1
-                        self.files.append(full_path)
-                    else:
-                        self.skipped.append(full_path)
+                    self.files.append(full_path)
         tend = time.time()
         self.elapsed = tend - tstart
 
