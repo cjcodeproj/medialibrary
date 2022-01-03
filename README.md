@@ -15,6 +15,7 @@ media.tools.movies.show
 media.tools.movies.namelist
 media.tools.movies.keywordlist
 media.tools.movies.castlist
+media.tools.movies.genrebreakdown
 ```
 
 To run these tools use.
@@ -25,7 +26,8 @@ $ python -m media.tools.movies.list
 $ python -m media.tools.movies.show
 $ python -m media.tools.movies.namelist
 $ python -m media.tools.movies.keywordlist
-# python -m media.tools.movies.castlist
+$ python -m media.tools.movies.castlist
+$ python -m media.tools.movies.genrebreakdown
 ```
 
 ```
@@ -127,6 +129,39 @@ Rosario Dawson                 Death Proof                    Abernathy
                                Unstoppable                    Connie
 Robert De Niro                 Killing Season                 Benjamin Ford
                                Midnight Run                   Jack Walsh
+...
+```
+
+```
+$ python -m media.tools.movies.genrebreakdown
+...
+                                                        <<< Primary Genres >>>
+
+Primary Genre   Count Perc   Ratio                                              Sample Title
+---------------  ----- ------ -------------------------------------------------- ---------------------------------------------
+Action               8  34.8% -----------------                                  48 Hrs.
+Adventure            3  13.0% ------                                             The Great Escape
+Documentary          1   4.3% --                                                 Enron: The Smartest Guys In The Room
+Drama                2   8.7% ----                                               All The President's Men
+Horror               1   4.3% --                                                 Death Proof
+Mystery              1   4.3% --                                                 Red Lights
+Sci-Fi               3  13.0% ------                                             Contact
+Thriller             4  17.4% --------                                           3 Days Of The Condor
+---------------  ----- ------ -------------------------------------------------- ---------------------------------------------
+Total movie count 23
+
+                                                       <<< Secondary Genres >>>
+
+Primary Genre: Action  (8 / 23)
+
+Secondary Genre Count Perc   Ratio                                              Sample Title
+--------------- ----- ------ -------------------------------------------------- ---------------------------------------------
+Comedy              3  33.3% ----------------                                   48 Hrs.
+Crime               2  22.2% -----------                                        Road House 2: Last Call
+Drama               1  11.1% -----                                              Killing Season
+Sci-Fi              1  11.1% -----                                              Mad Max
+Thriller            2  22.2% -----------                                        Unstoppable
+--------------- ----- ------ -------------------------------------------------- ---------------------------------------------
 ...
 ```
 
