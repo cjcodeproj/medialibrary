@@ -4,79 +4,106 @@ Module to report on all named within a movie
 '''
 
 # pylint: disable=R0801
-# pylint: disable=too-few-public-methods
 
 import os
 import argparse
-from media.tools.common import load_media_dev, compile_movies
+from media.tools.common import (
+        load_media_dev, compile_movies, random_sample_list
+        )
 
 
-class KWP():
+class KeywordTitleMap():
     '''
-    KWP (KeywordPair)
+    One keyword object with a list of titles that utilize that keyword.
 
-    Simple class to associate keywords to movie titles
 
-    This could be really inefficient POC code
     '''
+    def __init__(self, in_keyword, in_title):
+        self.keyword = in_keyword
+        self.titles = [in_title]
 
-    def __init__(self, keyword, title):
-        self.keyword = keyword
-        self.title = title
+    def add_title(self, in_title):
+        '''Add a movie title to an existing keyword object.'''
+        self.titles.append(in_title)
 
+    @classmethod
+    def header(cls):
+        '''Print a simple header.'''
+        out = f"{'Keyword':45s} {'Title'}\n" + \
+              f"{'=' * 45} {'=' * 25}\n"
+        return out
 
-class KeywordList():
-    '''Build a structure of keywords and titles'''
-    def __init__(self):
-        self.kwo = {}
+    def __str__(self):
+        '''Print out the keyword with a sorted title list'''
+        out = ''
+        line = 1
+        for title_i in sorted(self.titles):
+            if line == 1:
+                out += f"{self.keyword.detail():45s} {title_i!s}\n"
+            else:
+                out += f"{' ':45s} {title_i!s}\n"
+            line += 1
+        return out
 
-    def add(self, keyword, title):
-        '''Add a name, job role, and title to the list'''
-        if keyword.sort_value in self.kwo:
-            self.kwo[keyword.sort_value].append(KWP(keyword, title))
-        else:
-            self.kwo[keyword.sort_value] = [KWP(keyword, title)]
+    def __lt__(self, other):
+        return self.keyword.sort_value < other.keyword.sort_value
 
-    def output(self):
-        '''Return the keywords and titles'''
-        print(f"{'Keyword':45s} {'Title'}")
-        print(f"{'=' * 45} {'=' * 25}")
-        for kwd in sorted(self.kwo.keys()):
-            t_count = 1
-            for keyword_obj in self.kwo[kwd]:
-                if t_count == 1:
-                    print(f"{keyword_obj.keyword.detail():45s} " +
-                          f"{keyword_obj.title!s}")
-                else:
-                    print(f"{' ':45s} {keyword_obj.title!s}")
-                t_count += 1
+    def __gt__(self, other):
+        return self.keyword.sort_value > other.keyword.sort_value
+
+    def __eq__(self, other):
+        return self.keyword.sort_value == self.keyword.sort_value
 
 
 def grab_keywords(movies):
-    '''Extract keywords from a movie'''
-    kw_list = KeywordList()
-    kw_src = None
+    '''
+    Build a dictionary of all keywords.
+
+    For every movie, pull all of the keywords.
+
+    For existing keywords in the dictionary, add the title to
+    the existing object.
+    '''
+    kw_dict = {}
     for movie in movies:
+        kw_pull = None
+        story = None
         if movie.story is not None:
-            if movie.story.keywords is not None:
-                kw_src = movie.story.keywords.all()
+            story = movie.story
         elif movie.description is not None:
-            if movie.description.keywords is not None:
-                kw_src = movie.description.keywords.all()
-        if kw_src is not None:
-            for keyword in kw_src:
-                kw_list.add(keyword, movie.title)
-    return kw_list
+            story = movie.description
+        if story.keywords is not None:
+            kw_pull = story.keywords.all()
+            for kw_i in kw_pull:
+                kw_detail = kw_i.detail()
+                if kw_detail in kw_dict:
+                    kw_dict[kw_detail].add_title(movie.title)
+                else:
+                    kw_dict[kw_detail] = \
+                            KeywordTitleMap(kw_i, movie.title)
+    return list(kw_dict.values())
+
+
+def list_keywords(keywords):
+    '''Print the keywords that are passed along.'''
+    print(KeywordTitleMap.header(), end='')
+    for kw_i in sorted(keywords):
+        print(kw_i, end='')
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simple movie list.')
     parser.add_argument('--mediapath', help='path of media library')
+    parser.add_argument('--random', type=int, help='show X keywords')
     args = parser.parse_args()
     mediapath = args.mediapath or os.environ['MEDIAPATH']
     if not mediapath:
         parser.print_help()
     devices = load_media_dev(mediapath)
     all_movies = compile_movies(devices)
-    names = grab_keywords(all_movies)
-    names.output()
+    all_keywords = grab_keywords(all_movies)
+    if args.random:
+        rand_limit = args.random
+        list_keywords(random_sample_list(all_keywords, rand_limit))
+    else:
+        list_keywords(all_keywords)

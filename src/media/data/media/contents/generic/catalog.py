@@ -35,6 +35,9 @@ class Title():
             word_split.append(article)
         self.sort_title = "_".join(word_split)
 
+    def __hash__(self):
+        return hash(self.sort_title)
+
     def __lt__(self, other):
         return self.sort_title < other.sort_title
 

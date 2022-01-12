@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-25](https://github.com/cjcodeproj/medialibrary/issues/25) Random sample output in POC tools
  - [medialibrary-24](https://github.com/cjcodeproj/medialibrary/issues/24) Provide breakdown of film genres
  - [medialibrary-21](https://github.com/cjcodeproj/medialibrary/issues/21) Reevaluate file loading code
  - [medialibrary-20](https://github.com/cjcodeproj/medialibrary/issues/20) Improvements to POC tools
