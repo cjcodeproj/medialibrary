@@ -7,7 +7,9 @@
 import os
 import argparse
 import media.fmt.text.movie
-from media.tools.common import load_media_dev, compile_movies
+from media.tools.common import (
+        load_media_dev, compile_movies, random_sample_list
+        )
 
 
 def print_movies(movies):
@@ -20,10 +22,15 @@ def print_movies(movies):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simple movie list.')
     parser.add_argument('--mediapath', help='path of media library')
+    parser.add_argument('--random', type=int, help='print X random entries')
     args = parser.parse_args()
     moviepath = args.mediapath or os.environ['MEDIAPATH']
     if not moviepath:
         parser.print_help()
     devices = load_media_dev(moviepath)
     all_movies = compile_movies(devices)
-    print_movies(all_movies)
+    if args.random:
+        rand_limit = args.random
+        print_movies(random_sample_list(all_movies, rand_limit))
+    else:
+        print_movies(all_movies)
