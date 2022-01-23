@@ -7,6 +7,7 @@ from media.xml.namespaces import Namespaces
 from media.data.media.contents.generic.catalog import Title, Catalog
 from media.data.media.contents.genericv.story import Story
 from media.data.media.contents.genericv.crew import Crew
+from media.data.media.contents.genericv.technical import Technical
 from media.data.media.contents.movie.classification import Classification
 
 
@@ -15,6 +16,7 @@ class Movie():
     def __init__(self, in_chunk):
         self.title = None
         self.catalog = None
+        self.technical = None
         self.crew = None
         self.unique_key = ""
         self._process(in_chunk)
@@ -27,6 +29,8 @@ class Movie():
                 self.catalog = Catalog(child)
             if child.tag == Namespaces.nsf('movie') + 'classification':
                 self.classification = Classification(child)
+            if child.tag == Namespaces.nsf('movie') + 'technical':
+                self.technical = Technical(child)
             if child.tag == Namespaces.nsf('movie') + 'story':
                 self.story = Story(child)
             if child.tag == Namespaces.nsf('movie') + 'description':
