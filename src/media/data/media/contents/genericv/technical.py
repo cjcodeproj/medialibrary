@@ -58,9 +58,18 @@ def process_iso_duration(in_string):
                      r"(?P<seconds>\d{1,2}S)?"
     dur_match = re.match(duration_regex, in_string)
     if dur_match is not None:
-        in_hours = int(dur_match.group('hours').rstrip('H') or '0')
-        in_minutes = int(dur_match.group('minutes').rstrip('M') or '0')
-        in_seconds = int(dur_match.group('seconds').rstrip('S') or '0')
+        if dur_match.group('hours') is not None:
+            in_hours = int(dur_match.group('hours').rstrip('H'))
+        else:
+            in_hours = 0
+        if dur_match.group('minutes') is not None:
+            in_minutes = int(dur_match.group('minutes').rstrip('M'))
+        else:
+            in_minutes = 0
+        if dur_match.group('seconds') is not None:
+            in_seconds = int(dur_match.group('seconds').rstrip('S'))
+        else:
+            in_seconds = 0
         return timedelta(hours=in_hours,
                          minutes=in_minutes,
                          seconds=in_seconds)
