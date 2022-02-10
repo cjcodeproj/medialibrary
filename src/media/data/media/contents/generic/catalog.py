@@ -6,7 +6,7 @@ across all media types
 
 # pylint: disable=too-few-public-methods
 
-import string
+from media.generic.stringtools import build_filename_string, build_sort_string
 from media.xml.namespaces import Namespaces
 from media.xml.functions import xs_bool
 
@@ -15,25 +15,8 @@ class Title():
     '''Movie title object'''
     def __init__(self, in_title):
         self.title = in_title
-        self._build_file_title()
-        self._build_sort_title()
-
-    def _build_file_title(self):
-        level1 = self.title.translate(
-                self.title.maketrans("", "", string.punctuation))
-        level2 = level1.casefold()
-        self.file_title = level2.translate(
-                level2.maketrans(" \t\n\r\v", "_____"))
-
-    def _build_sort_title(self):
-        level1 = self.title.translate(
-                self.title.maketrans("", "", string.punctuation))
-        level2 = level1.casefold()
-        word_split = level2.split()
-        if word_split[0] in ['the', 'a', 'an']:
-            article = word_split.pop(0)
-            word_split.append(article)
-        self.sort_title = "_".join(word_split)
+        self.sort_title = build_sort_string(self.title)
+        self.file_title = build_filename_string(self.title)
 
     def __hash__(self):
         return hash(self.sort_title)

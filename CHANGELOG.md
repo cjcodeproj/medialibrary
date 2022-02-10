@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-22](https://github.com/cjcodeproj/medialibrary/issues/22) Slight flaw with title search code
  - [medialibrary-29](https://github.com/cjcodeproj/medialibrary/issues/29) Create technical/runtime code
  - [medialibrary-25](https://github.com/cjcodeproj/medialibrary/issues/25) Random sample output in POC tools
  - [medialibrary-24](https://github.com/cjcodeproj/medialibrary/issues/24) Provide breakdown of film genres
