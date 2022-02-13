@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-33](https://github.com/cjcodeproj/medialibrary/issues/33) Issue with Movie class when catalog data is incomplete.
  - [medialibrary-22](https://github.com/cjcodeproj/medialibrary/issues/22) Slight flaw with title search code
  - [medialibrary-29](https://github.com/cjcodeproj/medialibrary/issues/29) Create technical/runtime code
  - [medialibrary-25](https://github.com/cjcodeproj/medialibrary/issues/25) Random sample output in POC tools

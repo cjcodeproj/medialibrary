@@ -37,16 +37,30 @@ class Movie():
                 self.story = Story(child)
             if child.tag == Namespaces.nsf('movie') + 'crew':
                 self.crew = Crew(child)
-        self._build_unique_key()
+        if self.title is not None:
+            self._build_unique_key()
 
     def _build_unique_key(self):
-        if self.catalog.alt_titles.variant_sort is True:
-            self.unique_key = self.catalog.alt_titles.variant_title.sort_title
+        ukv = None
+        cpy = None
+        if self.catalog is not None:
+            if self.catalog.alt_titles is not None:
+                if self.catalog.alt_titles.variant_sort is True:
+                    self.unique_key = \
+                            self.catalog.alt_titles.variant_title.sort_title
+                else:
+                    self.unique_key = self.title.sort_title
+            if self.catalog.copyright is not None:
+                cpy = str(self.catalog.copyright.year)
+            else:
+                cpy = "0000"
+            if self.catalog.unique_index is not None:
+                ukv = str(self.catalog.unique_index.index)
+            else:
+                ukv = "1"
+            self.unique_key += "-" + cpy + "-" + ukv
         else:
-            self.unique_key = self.title.sort_title
-        self.unique_key += "-" + str(self.catalog.copyright.year)
-        if self.catalog.unique_index is not None:
-            self.unique_key += "-" + str(self.catalog.unique_index.index)
+            self.unique_key = self.title.sort_title + "-0000-1"
 
     def __hash__(self):
         return hash(self.unique_key)

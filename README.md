@@ -16,6 +16,7 @@ media.tools.movies.namelist
 media.tools.movies.keywordlist
 media.tools.movies.castlist
 media.tools.movies.genrebreakdown
+media.tools.movies.debuglist
 ```
 
 To run these tools use.
@@ -28,6 +29,7 @@ $ python -m media.tools.movies.namelist
 $ python -m media.tools.movies.keywordlist
 $ python -m media.tools.movies.castlist
 $ python -m media.tools.movies.genrebreakdown
+$ python -m media.tools.movies.debuglist
 ```
 
 ```
@@ -195,6 +197,16 @@ Road House 2: Last Call
 >>> print(dev_list[4].contents[0].title)
 The Last Starfighter
 >>> 
+```
+
+## Code Cleanliness
+
+All code is checked with pycodestyle and pylint before committed.
+
+```
+cd medialibrary src
+pycodestyle media
+pylint media
 ```
 
 ## Building
