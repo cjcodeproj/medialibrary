@@ -204,9 +204,24 @@ The Last Starfighter
 All code is checked with pycodestyle and pylint before committed.
 
 ```
-cd medialibrary src
+cd medialibrary/src
 pycodestyle media
 pylint media
+```
+
+## Unit Tests
+
+Unit tests can be run as follows:
+```
+cd medialibrary
+PYTHONPATH=src/ python -m unittest
+```
+
+### Code Cleanliness (Unit Tests)
+```
+cd medialibrary
+pycodestyle test
+PYTHONPATH=src/ pylint test
 ```
 
 ## Building
