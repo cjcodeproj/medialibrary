@@ -7,9 +7,10 @@ import unittest
 import xml.etree.ElementTree as ET
 from media.data.media.contents.movie import Movie
 from media.data.media.contents.generic.catalog import (
-        Title, Catalog, Copyright, AlternateTitles,
+        Title, TitleValueException, Catalog, Copyright, AlternateTitles,
         UniqueConstraints
         )
+from media.xml.namespaces import Namespaces
 
 CASE1 = '''<?xml version='1.0'?>
 <movie xmlns='http://vectortron.com/xml/media/movie'>
@@ -56,6 +57,39 @@ CASE3 = '''<?xml version='1.0'?>
 </movie>
 '''
 
+CASE4 = '''<?xml version='1.0'?>
+<movie xmlns='http://vectortron.com/xml/media/movie'>
+ <title> </title>
+ <catalog>
+  <copyright>
+   <year>1977</year>
+  </copyright>
+ </catalog>
+</movie>
+'''
+
+CASE5 = '''<?xml version='1.0'?>
+<movie xmlns='http://vectortron.com/xml/media/movie'>
+ <title>The Stranger</title>
+ <catalog>
+  <copyright>
+   <year>1978</year>
+  </copyright>
+ </catalog>
+</movie>
+'''
+
+CASE6 = '''<?xml version='1.0'?>
+<movie xmlns='http://vectortron.com/xml/media/movie'>
+ <title>The Stranger Comes Back</title>
+ <catalog>
+  <copyright>
+   <year>1979</year>
+  </copyright>
+ </catalog>
+</movie>
+'''
+
 
 class TestTitle(unittest.TestCase):
     '''
@@ -88,6 +122,47 @@ class TestTitle(unittest.TestCase):
         Assert Title instance has correct file_title.
         '''
         self.assertEqual(self.movie.title.file_title, "a_river_turns_inward")
+
+
+class TestTitleIndependent(unittest.TestCase):
+    '''
+    Test Title objects independtly of movie objects.
+    '''
+    def test_empty_title(self):
+        '''
+        Assert an empty title string will fail.
+        '''
+        xmlroot = ET.fromstring(CASE4)
+        title_element = xmlroot.findall('./movie:title', Namespaces.ns)[0]
+        with self.assertRaises(TitleValueException):
+            title_object = Title(title_element.text)
+            del title_object
+
+    def test_populated_title(self):
+        '''
+        Assert a populated title string will succeed.
+        '''
+        xmlroot = ET.fromstring(CASE3)
+        title_element = xmlroot.findall('./movie:title', Namespaces.ns)[0]
+        title_object = title_element.text
+        self.assertEqual(str(title_object), "74 Minutes To Countdown")
+
+
+class TestTitleSorting(unittest.TestCase):
+    '''
+    Test title object sorting when an article is in the title.
+    '''
+    def setUp(self):
+        xmlroot1 = ET.fromstring(CASE5)
+        xmlroot2 = ET.fromstring(CASE6)
+        self.movie1 = Movie(xmlroot1)
+        self.movie2 = Movie(xmlroot2)
+
+    def test_title_with_article_comparision(self):
+        '''
+        Make sure articles do not interfere with title sorting.
+        '''
+        self.assertTrue(self.movie1.title < self.movie2.title)
 
 
 class TestCatalog(unittest.TestCase):

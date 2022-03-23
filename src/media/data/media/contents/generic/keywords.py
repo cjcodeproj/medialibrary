@@ -64,8 +64,9 @@ class Keywords():
                 self._add_group(child)
 
     def _add_single_kw(self, child):
-        gen_kw = GenericKeyword(child)
-        self._add_to_pool(gen_kw)
+        if child.text.strip() != '':
+            gen_kw = GenericKeyword(child)
+            self._add_to_pool(gen_kw)
 
     def _add_proper_noun(self, child):
         prn_kw = ProperNounKeyword(child)
@@ -88,12 +89,13 @@ class Keywords():
         for child in group_element:
             tname = Namespaces.ns_strip(child.tag)
             if tname == 'generic':
-                gen_kw = GenericKeyword(child)
-                if pool:
-                    gen_kw.pool = pool
-                if relevance:
-                    gen_kw.relevance = relevance
-                self._add_to_pool(gen_kw)
+                if child.text.strip() != '':
+                    gen_kw = GenericKeyword(child)
+                    if pool:
+                        gen_kw.pool = pool
+                    if relevance:
+                        gen_kw.relevance = relevance
+                    self._add_to_pool(gen_kw)
             if tname == 'properNoun':
                 prn_kw = ProperNounKeyword(child)
                 if pool:

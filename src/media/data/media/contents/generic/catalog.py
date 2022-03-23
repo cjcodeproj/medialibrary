@@ -14,7 +14,9 @@ from media.xml.functions import xs_bool
 class Title():
     '''Movie title object'''
     def __init__(self, in_title):
-        self.title = in_title
+        self.title = in_title.strip()
+        if len(self.title) == 0:
+            raise TitleValueException("Invalid Title")
         self.sort_title = build_sort_string(self.title)
         self.file_title = build_filename_string(self.title)
 
@@ -32,6 +34,16 @@ class Title():
 
     def __str__(self):
         return self.title
+
+
+class TitleValueException(Exception):
+    '''Exception raised when a WOA has an invalid title.'''
+    def __init__(self, message):
+        super().__init__(message)
+        self.message = message
+
+    def __str__(self):
+        return self.message
 
 
 class Catalog():

@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-35](https://github.com/cjcodeproj/medialibrary/issues/35) Exceptions for some missing data
  - [medialibrary-32](https://github.com/cjcodeproj/medialibrary/issues/32) Unit tests
  - [medialibrary-33](https://github.com/cjcodeproj/medialibrary/issues/33) Issue with Movie class when catalog data is incomplete.
  - [medialibrary-22](https://github.com/cjcodeproj/medialibrary/issues/22) Slight flaw with title search code

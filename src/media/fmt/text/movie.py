@@ -142,7 +142,9 @@ class Brief():
         out = ""
         if self.movie.story is not None:
             if self.movie.story.keywords:
-                out += hdr_block("Keyword", self.movie.story.keywords.all())
+                if len(self.movie.story.keywords.all()) > 0:
+                    out += hdr_block("Keyword",
+                                     self.movie.story.keywords.all())
         return out
 
     def __str__(self):

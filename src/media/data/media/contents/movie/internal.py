@@ -4,7 +4,9 @@
 # pylint: disable=too-few-public-methods
 
 from media.xml.namespaces import Namespaces
-from media.data.media.contents.generic.catalog import Title, Catalog
+from media.data.media.contents.generic.catalog import (
+        Title, TitleValueException, Catalog
+        )
 from media.data.media.contents.genericv.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
@@ -24,7 +26,10 @@ class Movie():
     def _process(self, in_chunk):
         for child in in_chunk:
             if child.tag == Namespaces.nsf('movie') + 'title':
-                self.title = Title(child.text)
+                try:
+                    self.title = Title(child.text)
+                except TitleValueException as tve:
+                    raise MovieException(tve.message) from tve
             if child.tag == Namespaces.nsf('movie') + 'catalog':
                 self.catalog = Catalog(child)
             if child.tag == Namespaces.nsf('movie') + 'classification':
@@ -73,3 +78,13 @@ class Movie():
 
     def __eq__(self, other):
         return self.unique_key == other.unique_key
+
+
+class MovieException(Exception):
+    '''Exception raised when there is an issue with a movie.'''
+    def __init__(self, message):
+        super().__init__(message)
+        self.message = message
+
+    def __str__(self):
+        return self.message

@@ -5,7 +5,7 @@
 
 import unittest
 import xml.etree.ElementTree as ET
-from media.data.media.contents.movie import Movie
+from media.data.media.contents.movie import Movie, MovieException
 
 CASE1 = '''<?xml version='1.0'?>
 <movie xmlns='http://vectortron.com/xml/media/movie'>
@@ -44,6 +44,17 @@ CASE4 = '''<?xml version='1.0'?>
   <ucIndex>
    <value>2</value>
   </ucIndex>
+ </catalog>
+</movie>
+'''
+
+CASE5 = '''<?xml version='1.0'?>
+<movie xmlns='http://vectortron.com/xml/media/movie'>
+ <title> </title>
+ <catalog>
+  <copyright>
+   <year>1977</year>
+  </copyright>
  </catalog>
 </movie>
 '''
@@ -130,3 +141,13 @@ class TestMovieVariantTitle(unittest.TestCase):
         Assert sort order between two movies.
         '''
         self.assertTrue(self.movie1 > self.movie2)
+
+
+class TestMovieTitleException(unittest.TestCase):
+    '''Movie title exception'''
+    def test_title_exception(self):
+        '''Text exception with title triggers Movie object exception.'''
+        xmlroot1 = ET.fromstring(CASE5)
+        with self.assertRaises(MovieException):
+            movie1 = Movie(xmlroot1)
+            del movie1
