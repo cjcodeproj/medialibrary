@@ -7,7 +7,7 @@ DVDs, and their contents.
 
 ## Executables/Demos
 
-Thre are five demonstration proof of concept executables in the library.
+Thre are eight demonstration proof of concept executables in the library.
 
 ```
 media.tools.movies.list
@@ -16,6 +16,7 @@ media.tools.movies.namelist
 media.tools.movies.keywordlist
 media.tools.movies.castlist
 media.tools.movies.genrebreakdown
+media.tools.movies.timebuckets
 media.tools.movies.debuglist
 ```
 
@@ -29,6 +30,7 @@ $ python -m media.tools.movies.namelist
 $ python -m media.tools.movies.keywordlist
 $ python -m media.tools.movies.castlist
 $ python -m media.tools.movies.genrebreakdown
+$ python -m media.tools.movies.timebuckets
 $ python -m media.tools.movies.debuglist
 ```
 
@@ -165,6 +167,23 @@ Sci-Fi              1  11.1% -----                                              
 Thriller            2  22.2% -----------                                        Unstoppable
 --------------- ----- ------ -------------------------------------------------- ---------------------------------------------
 ...
+```
+
+```
+$ python -m media.tools.movies.timebuckets --buckets 5
+Random Title                                       From     To       Count Perc   Ratio
+-------------------------------------------------- -------- -------- ----- ------ --------------------------------------------------
+Mad Max                                             1:26:01  1:43:28    10  43.5% ---------------------
+Death Proof                                         1:43:28  2:00:55     8  34.8% -----------------
+All The President's Men                             2:00:55  2:18:22     3  13.0% ------
+Contact                                             2:18:22  2:35:49     1   4.3% --
+The Great Escape                                    2:35:49  2:53:16     1   4.3% --
+-------------------------------------------------- -------- -------- ----- ------ --------------------------------------------------
+         Movie count : 23
+Average film runtime : 1:51:49
+ Median film runtime : 1:49:59  (The Sugarland Express)
+     Interval Length : 0:17:27
+        Bucket Count : 5
 ```
 
 The easiest way to test is to download a copy of the vtmedia-schema repo and use the examples there.
