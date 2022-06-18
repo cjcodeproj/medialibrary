@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-40](https://github.com/cjcodeproj/medialibrary/issues/40) Simple tool for validating movie data
  - [medialibrary-38](https://github.com/cjcodeproj/medialibrary/issues/38) POC tool to graph time distribution
  - [medialibrary-35](https://github.com/cjcodeproj/medialibrary/issues/35) Exceptions for some missing data
  - [medialibrary-32](https://github.com/cjcodeproj/medialibrary/issues/32) Unit tests
