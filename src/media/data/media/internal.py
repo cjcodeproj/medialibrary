@@ -3,7 +3,10 @@
 
 # pylint: disable=too-few-public-methods
 
+from media.generic.stringtools import build_sort_string
 from media.xml.namespaces import Namespaces
+import media.data.media.library
+import media.data.media.medium
 import media.data.media.contents.movie
 
 
@@ -11,7 +14,10 @@ class Media():
     '''Representation of a physical thing that holds content.'''
     def __init__(self, in_chunk):
         self.title = None
+        self.library = None
+        self.medium = None
         self.contents = []
+        self.unique_key = ""
         self._process(in_chunk)
 
     def _process(self, in_chunk):
@@ -19,8 +25,17 @@ class Media():
         for child in in_chunk:
             if child.tag == Namespaces.nsf('media') + 'title':
                 self.title = Title(child)
-            if child.tag == Namespaces.nsf('media') + 'contents':
+            elif child.tag == Namespaces.nsf('media') + 'library':
+                self.library = media.data.media.library.Library(child)
+            elif child.tag == Namespaces.nsf('media') + 'medium':
+                self.medium = media.data.media.medium.Medium(child)
+            elif child.tag == Namespaces.nsf('media') + 'contents':
                 self._load_contents(child)
+        if self.title is not None:
+            self._build_unique_key()
+
+    def _build_unique_key(self):
+        self.unique_key = self.title.sort_title
 
     def _load_contents(self, in_chunk):
         '''Build an array to hold the contents in the media'''
@@ -48,6 +63,7 @@ class Title():
                 self.title = child.text
             if child.tag == Namespaces.nsf('media') + 'edition':
                 self.edition = child.text
+        self.sort_title = build_sort_string(self.title)
 
     def __str__(self):
         '''Return the title of the media'''

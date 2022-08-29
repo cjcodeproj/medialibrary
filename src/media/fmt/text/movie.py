@@ -47,6 +47,39 @@ class List():
         return self.output
 
 
+class MiniEntry():
+    '''Oneliner mini-format'''
+    def __init__(self, in_movie, in_indent=2):
+        self.movie = in_movie
+        self.indent = in_indent
+        self._prep_fields()
+        self.output = self._build_output()
+
+    @classmethod
+    def header_line(cls, in_indent=2):
+        '''Generate a simple header'''
+        out = f"{' ' * in_indent}{'Title':40s} {'Year':4s} {'Genre':20s}\n" + \
+              f"{' ' * in_indent}{'-' * 40} {'-' * 4} {'-' * 20}\n"
+        return out
+
+    def _prep_fields(self):
+        self.title_key = self.movie.unique_key
+        self.year = ''
+        self.genre = ''
+        if self.movie.catalog is not None:
+            if self.movie.catalog.copyright is not None:
+                self.year = self.movie.catalog.copyright.year
+        if self.movie.classification is not None:
+            self.genre = build_genre_simple(self.movie)
+
+    def _build_output(self):
+        return f"{' ' * self.indent}{self.movie.title!s:40s} " + \
+               f"{self.year:4d} {self.genre:20s}\n"
+
+    def __str__(self):
+        return self.output
+
+
 class Brief():
     '''Formatting for a brief text record'''
     def __init__(self, in_movie):
@@ -151,6 +184,19 @@ class Brief():
         return self.output
 
 
+def build_genre_simple(in_movie):
+    '''
+    Build a string for all genres.
+    '''
+    o_string = ''
+    classification = in_movie.classification
+    if classification.genres.primary:
+        o_string = f"{classification.genres.primary}"
+    if classification.genres.secondary:
+        o_string += '/' + '/'.join(classification.genres.secondary)
+    return o_string
+
+
 def build_genre_classification(in_movie):
     '''
     Build a text classification string.
@@ -159,10 +205,7 @@ def build_genre_classification(in_movie):
     classification = in_movie.classification
     if classification.category:
         o_string = "[" + str(classification.category) + "]"
-    if classification.genres.primary:
-        o_string += f" {classification.genres.primary}"
-    if classification.genres.secondary:
-        o_string += "/" + "/".join(classification.genres.secondary)
+    o_string += " " + build_genre_simple(in_movie)
     if classification.genres.specific:
         o_string += f" \"{classification.genres.specific}\""
     return o_string

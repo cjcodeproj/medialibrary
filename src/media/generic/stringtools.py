@@ -8,9 +8,11 @@ import string
 
 def transform_string(in_value):
     '''Low level change to remove all punctuation from a string.'''
-    no_punctuation = in_value.translate(
-             in_value.maketrans("", "", string.punctuation))
-    return no_punctuation.casefold()
+    if (in_value is not None):
+        no_punctuation = in_value.translate(
+            in_value.maketrans("", "", string.punctuation))
+        return no_punctuation.casefold()
+    return "SHOULDNT BE HERE"
 
 
 def build_filename_string(in_value):
