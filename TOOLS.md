@@ -53,7 +53,7 @@ The media tools report on data related to physical media.
 ### Media List
 
 ```
-python -m media.tools.media.list \[--random (int)\] \[--mediapath (path)\]
+python -m media.tools.media.list [--random (int)] [--mediapath (path)]
 ```
 
 Provides a list of physical media.
@@ -72,7 +72,7 @@ Unstoppable                                   Blu-Ray         2 2020-01-01
 ### Media Show
 
 ```
-python -m media.tools.media.show \[--random (int)\] \[--mediapath (path)\]
+python -m media.tools.media.show [--random (int)] [--mediapath (path)]
 ```
 
 Provides detailed descriptions of physical media.
@@ -120,7 +120,7 @@ media.tools.movies.validate
 ### Movie List
 
 ```
-python -m media.tools.movies.list \[--random (int)\] \[--mediapath (path)\] \[--sort (runtime|length)\]
+python -m media.tools.movies.list [--random (int)] [--mediapath (path)] [--sort (runtime|length)]
 ```
 
 Provide a list of movies found in the repository.
@@ -139,7 +139,7 @@ Death Proof                                        2017 [FICTION] Horror/Thrille
 ### Movie Show
 
 ```
-python -m media.tools.movies.show \[--random (int)\] \[--mediapath (path)\] \[--sort (runtime|length)\]
+python -m media.tools.movies.show [--random (int)] [--mediapath (path)] [--sort (runtime|length)]
 ```
 
 Provides detailed descriptions of movies.
@@ -174,7 +174,7 @@ Keywords:
 ### Movie Namelist
 
 ```
-python -m media.tools.movies.namelist \[--random (int)\] \[--mediapath (path)\]
+python -m media.tools.movies.namelist [--random (int)] [--mediapath (path)]
 ```
 
 Lists all crew and cast names associated with the movies.
@@ -197,7 +197,7 @@ Ashton               John            Cast                 Midnight Run
 ### Movie Keywords
 
 ```
-python -m media.tools.movies.keywords \[--random (int)\] \[--mediapath (path)\]
+python -m media.tools.movies.keywords [--random (int)] [--mediapath (path)]
 ```
 
 List all keywords found in movies.
@@ -226,7 +226,7 @@ generic/answering machine                     Sneakers
 ### Movie Casts
 
 ```
-python -m media.tools.movies.castlist \[--random (int)\] \[--mediapath (path)\]
+python -m media.tools.movies.castlist [--random (int)] [--mediapath (path)]
 ```
 
 List all actors found in movies.
@@ -262,7 +262,7 @@ Robert De Niro                 Killing Season                 Benjamin Ford
 ### Movie Genres
 
 ```
-python -m media.tools.movies.genrebreakdown \[--mediapath (path)\]
+python -m media.tools.movies.genrebreakdown [--mediapath (path)]
 ```
 
 Provides a breakdown of every movie based their primary and secondary genres.
@@ -303,7 +303,7 @@ Thriller            2  22.2% -----------                                        
 ### Movie Runlengths
 
 ```
-python -m media.tools.movies.timebuckets \[--mediapath (path)\]
+python -m media.tools.movies.timebuckets [--mediapath (path)]
 ```
 
 Sumarize the runtime of every movie.
@@ -328,7 +328,7 @@ Average film runtime : 1:51:49
 ### Movie Debuglist 
 
 ```
-python -m media.tools.movies.debuglist \[--mediapath (path)\]
+python -m media.tools.movies.debuglist [--mediapath (path)]
 ```
 
 Provides output useful for debugging the creation Python movie objects.  Internal tool.  Unsupported.
@@ -347,7 +347,7 @@ Chaos                               2005 chaos                                47
 ### Movie Validate
 
 ```
-python -m media.tools.movies.validate \[--mediapath (path)\]
+python -m media.tools.movies.validate [--mediapath (path)]
 ```
 
 Examines movies and identifies missing or incomplete data.  Internal tool.  Unsupported.
