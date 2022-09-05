@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-43](https://github.com/cjcodeproj/medialibrary/issues/43) Reign in the README.md file
  - [medialibrary-39](https://github.com/cjcodeproj/medialibrary/issues/39) Code to read physical media data
  - [medialibrary-40](https://github.com/cjcodeproj/medialibrary/issues/40) Simple tool for validating movie data
  - [medialibrary-38](https://github.com/cjcodeproj/medialibrary/issues/38) POC tool to graph time distribution
