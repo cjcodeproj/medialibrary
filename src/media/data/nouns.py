@@ -144,6 +144,8 @@ class Name(AbstractNoun):
         self.family = ''
         self.middle = ''
         self.sort = ''
+        self.post_title = ''
+        self.pre_title = ''
         if in_element is not None:
             self.tagname = Namespaces.ns_strip(in_element.tag)
             self._process(in_element)
@@ -153,27 +155,49 @@ class Name(AbstractNoun):
             tagname = Namespaces.ns_strip(child.tag)
             if tagname == 'gn':
                 self.given = child.text
-            if tagname == 'fn':
+            elif tagname == 'fn':
                 self.family = child.text
-            if tagname == 'mn':
+            elif tagname == 'mn':
                 self.middle = child.text
+            elif tagname == 'postTitle':
+                self.post_title = child.text
+            elif tagname == 'preTitle':
+                self.pre_title = child.text
         self._build_value()
-        # self._build_sort()
+        self._build_sort_value()
 
     def _build_value(self):
+        """Construct a printable name."""
         raw = ''
+        if self.pre_title:
+            raw += self.pre_title + ' '
         if self.given:
             raw += self.given + ' '
+        if self.middle:
+            raw += self.middle + ' '
         if self.family:
             raw += self.family
-        if self.middle:
-            raw += ' ' + self.middle
+        if self.post_title:
+            raw += ' ' + self.post_title
         self.value = raw
-        self.sort_value = self.family.casefold() + '_' \
-            + self.given.casefold() + '_' + self.middle.casefold()
+
+    def _build_sort_value(self):
+        """Construct a string for sorting names."""
+        raw = ''
+        if self.family:
+            raw = self.family.casefold() \
+                    + '_' \
+                    + self.given.casefold()
+            if self.middle:
+                raw += '_' + self.middle.casefold()
+        else:
+            raw = self.given.casefold()
+            if self.middle:
+                raw += '_' + self.middle
+        if self.post_title:
+            raw += '_' + self.post_title
+        self.sort_value = raw
 
     def __str__(self):
-        '''
-        The formal string value should be returned
-        '''
-        return f"{self.given} {self.family}"
+        """The formal string value should be returned."""
+        return self.value
