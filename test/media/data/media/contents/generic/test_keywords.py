@@ -22,6 +22,30 @@ CASE1 = '''<?xml version='1.0'?>
 </movie>
 '''
 
+CASE2 = '''<?xml version='1.0'?>
+<keywords xmlns='http://vectortron.com/xml/media/movie'>
+ <generic>baseball</generic>
+</keywords>
+'''
+
+CASE3 = '''<?xml version='1.0'?>
+<keywords xmlns='http://vectortron.com/xml/media/movie'>
+ <generic> </generic>
+</keywords>
+'''
+
+CASE4 = '''<?xml version='1.0'?>
+<keywords xmlns='http://vectortron.com/xml/media/movie'>
+ <generic> </generic>
+</keywords>
+'''
+
+CASE5 = '''<?xml version='1.0'?>
+<keywords xmlns='http://vectortron.com/xml/media/movie'>
+ <generic/>
+</keywords>
+'''
+
 
 class TestKeywords(unittest.TestCase):
     '''
@@ -143,3 +167,55 @@ class TestProperNounKeyword(unittest.TestCase):
         '''
         keyword = self.movie.story.keywords.pools['generic'][2]
         self.assertEqual(keyword.detail(), 'properNoun/place/Miami (Florida)')
+
+
+class TestKeywordObject(unittest.TestCase):
+    """Tests against the keyword object directly"""
+    def setUp(self):
+        """Setup method"""
+        xmlroot1 = ET.fromstring(CASE2)
+        self.keywords = Keywords(xmlroot1)
+
+    def test_keyword_object_instance(self):
+        """Confirm object is properly created"""
+        self.assertIsInstance(self.keywords, Keywords)
+
+    def test_keyword_array_length(self):
+        """Confirm all keywords are counted"""
+        self.assertEqual(len(self.keywords.all()), 1)
+
+class TestKeywordInputValidation1(unittest.TestCase):
+    """Tests for input validation of generic keywords"""
+    def setUp(self):
+        xmlroot1 = ET.fromstring(CASE3)
+        self.keywords = Keywords(xmlroot1)
+
+    def test_no_generic_keyword_from_bad_input1(self):
+        """Confirm whitespace keyword does not create an object"""
+        self.assertEqual(len(self.keywords.all()), 0)
+
+class TestKeywordInputValidation2(unittest.TestCase):
+    """Tests for empty generic keyword value"""
+    def setUp(self):
+        xmlroot1 = ET.fromstring(CASE4)
+        self.keywords = Keywords(xmlroot1)
+
+    def test_no_generic_keyword_from_bad_input2(self):
+        """Confirm empty keyword did not create an object"""
+        self.assertEqual(len(self.keywords.all()), 0)
+
+
+class TestKeywordInputValidation3(unittest.TestCase):
+    """Tests for empty generic keyword value"""
+    def setUp(self):
+        xmlroot1 = ET.fromstring(CASE5)
+        self.keywords = Keywords(xmlroot1)
+
+    def test_no_generic_keyword_from_bad_input3(self):
+        """Confirm empty keyword did not create an object"""
+        self.assertEqual(len(self.keywords.all()), 0)
+
+
+if __name__=='__main__':
+    unittest.main()
+

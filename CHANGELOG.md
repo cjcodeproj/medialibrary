@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-45](https://github.com/cjcodeproj/medialibrary/issues/45) XML elements without text may cause an error when stripped
  - [medialibrary-18](https://github.com/cjcodeproj/medialibrary/issues/18) Proper Noun name sorting mixes up when there is no family name
  - [medialibrary-43](https://github.com/cjcodeproj/medialibrary/issues/43) Reign in the README.md file
  - [medialibrary-39](https://github.com/cjcodeproj/medialibrary/issues/39) Code to read physical media data

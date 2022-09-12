@@ -8,7 +8,7 @@ import string
 
 def transform_string(in_value):
     '''Low level change to remove all punctuation from a string.'''
-    if (in_value is not None):
+    if in_value is not None:
         no_punctuation = in_value.translate(
             in_value.maketrans("", "", string.punctuation))
         return no_punctuation.casefold()
