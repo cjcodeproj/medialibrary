@@ -3,6 +3,11 @@
 The `medialibrary` module is a Python module for reading XML files containing entertainment media
 data adhering to the vtmedia schema.
 
+The schema records data on works of art, and the physical media that contain the artwork.
+
+The repositories below contain the definition of the schema and a sample dataset for testing the
+code.
+
 
 | Repository | Purpose |
 | --- | --- |

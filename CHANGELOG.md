@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-62](https://github.com/cjcodeproj/medialibrary/issues/62) First PyPi test
  - [medialibrary-56](https://github.com/cjcodeproj/medialibrary/issues/56) File loader ignored Blu-Ray 3d movies
  - [medialibrary-45](https://github.com/cjcodeproj/medialibrary/issues/45) XML elements without text may cause an error when stripped
  - [medialibrary-18](https://github.com/cjcodeproj/medialibrary/issues/18) Proper Noun name sorting mixes up when there is no family name
