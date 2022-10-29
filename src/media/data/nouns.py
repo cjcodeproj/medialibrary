@@ -201,3 +201,31 @@ class Name(AbstractNoun):
     def __str__(self):
         """The formal string value should be returned."""
         return self.value
+
+
+class Art(AbstractNoun):
+    """
+    Proper noun describing a work of art.
+
+    Element contains no child elements, only
+    text, plus two optional attributes.
+    """
+    def __init__(self, in_art_element):
+        super().__init__()
+        self.art_type = ''
+        self.art_year = 0
+        if in_art_element is not None:
+            self._process(in_art_element)
+
+    def _process(self, in_element):
+        art_name = in_element.text.strip()
+        self.tagname = Namespaces.ns_strip(in_element.tag)
+        if 'type' in in_element.attrib:
+            self.art_type = in_element.attrib['type']
+        if 'year' in in_element.attrib:
+            self.art_year = int(in_element.attrib['year'])
+        if self.art_type:
+            self.value = art_name + ' (' + self.art_type + ')'
+        else:
+            self.value = art_name
+        self.sort_value = self.value.casefold()

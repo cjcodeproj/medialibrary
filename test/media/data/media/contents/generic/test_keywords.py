@@ -17,6 +17,7 @@ CASE1 = '''<?xml version='1.0'?>
    <generic>hotel</generic>
    <properNoun><place><ci>Miami</ci><st>Florida</st></place></properNoun>
    <properNoun><entity>US Army</entity></properNoun>
+   <properNoun><art type='movie' year='1980'>Xanadu</art></properNoun>
   </keywords>
  </story>
 </movie>
@@ -169,6 +170,39 @@ class TestProperNounKeyword(unittest.TestCase):
         self.assertEqual(keyword.detail(), 'properNoun/place/Miami (Florida)')
 
 
+class TestProperNounArtKeyword(unittest.TestCase):
+    """
+    Tests against ProperNoun Art keywords.
+    """
+    def setUp(self):
+        """
+        Test setup method.
+        """
+        xmlroot1 = ET.fromstring(CASE1)
+        self.movie = Movie(xmlroot1)
+
+    def test_propernoun_art_object(self):
+        """
+        Asset object instance is created.
+        """
+        keyword = self.movie.story.keywords.pools['generic'][4]
+        self.assertIsInstance(keyword, ProperNounKeyword)
+
+    def test_propernoun_art_value(self):
+        """
+        Test proper noun art object value.
+        """
+        keyword = self.movie.story.keywords.pools['generic'][4]
+        self.assertEqual(str(keyword), 'Xanadu (movie)')
+
+    def test_propernoun_art_object_detail(self):
+        """
+        Assert object detail value is correct.
+        """
+        keyword = self.movie.story.keywords.pools['generic'][4]
+        self.assertEqual(keyword.detail(), 'properNoun/art/Xanadu (movie)')
+
+
 class TestKeywordObject(unittest.TestCase):
     """Tests against the keyword object directly"""
     def setUp(self):
@@ -184,6 +218,7 @@ class TestKeywordObject(unittest.TestCase):
         """Confirm all keywords are counted"""
         self.assertEqual(len(self.keywords.all()), 1)
 
+
 class TestKeywordInputValidation1(unittest.TestCase):
     """Tests for input validation of generic keywords"""
     def setUp(self):
@@ -193,6 +228,7 @@ class TestKeywordInputValidation1(unittest.TestCase):
     def test_no_generic_keyword_from_bad_input1(self):
         """Confirm whitespace keyword does not create an object"""
         self.assertEqual(len(self.keywords.all()), 0)
+
 
 class TestKeywordInputValidation2(unittest.TestCase):
     """Tests for empty generic keyword value"""
@@ -216,6 +252,5 @@ class TestKeywordInputValidation3(unittest.TestCase):
         self.assertEqual(len(self.keywords.all()), 0)
 
 
-if __name__=='__main__':
+if __name__ == '__main__':
     unittest.main()
-

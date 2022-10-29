@@ -6,7 +6,7 @@ Keywords module
 # pylint: disable=too-few-public-methods
 # pylint: disable=consider-using-dict-items
 
-from media.data.nouns import Noun, Name, Place
+from media.data.nouns import Noun, Name, Place, Art
 from media.xml.namespaces import Namespaces
 
 
@@ -212,6 +212,8 @@ class ProperNounKeyword(AbstractKeyword):
                 self.value = Name(child)
             elif tagname == 'place':
                 self.value = Place(child)
+            elif tagname == 'art':
+                self.value = Art(child)
 
     def detail(self):
         return self.type + '/' + self.tagtype + '/' + str(self.value)
