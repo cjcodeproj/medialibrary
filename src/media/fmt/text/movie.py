@@ -19,9 +19,16 @@ class List():
     @classmethod
     def list_header(cls):
         '''Generate a simple header'''
-        out = f"{'Title':50s} {'Year':4s} {'Runtime':8s} {'Genre':50s}\n"
-        out += f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}"
+        out = f"{'Title':50s} {'Year':4s} {'Runtime':8s} {'Genre':50s}\n" + \
+              cls.list_header_line()
         return out
+
+    @classmethod
+    def list_header_line(cls):
+        """
+        Generate a text line to separate headers vs rows.
+        """
+        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}"
 
     def _prep_fields(self):
         self.title_key = self.movie.unique_key
@@ -32,7 +39,7 @@ class List():
 
     def mentry(self):
         '''One line entry'''
-        y_string = ""
+        y_string = 0
         cat_string = ""
         if self.movie.catalog is not None:
             if self.movie.catalog.copyright is not None:
@@ -59,8 +66,15 @@ class MiniEntry():
     def header_line(cls, in_indent=2):
         '''Generate a simple header'''
         out = f"{' ' * in_indent}{'Title':40s} {'Year':4s} {'Genre':20s}\n" + \
-              f"{' ' * in_indent}{'-' * 40} {'-' * 4} {'-' * 20}\n"
+              cls.header_line_line()
         return out
+
+    @classmethod
+    def header_line_line(cls, in_indent=2):
+        """
+        Generate a line to separate headers vs rows.
+        """
+        return f"{' ' * in_indent}{'-' * 40} {'-' * 4} {'-' * 20}\n"
 
     def _prep_fields(self):
         self.title_key = self.movie.unique_key
