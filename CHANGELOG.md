@@ -2,6 +2,9 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-67](https://github.com/cjcodeproj/medialibrary/issues/67) Page break between movie entries
+ - [medialibrary-66](https://github.com/cjcodeproj/medialibrary/issues/66) POC tool castlist doesn't handle duplicate titles properly
+ - [medialibrary-46](https://github.com/cjcodeproj/medialibrary/issues/46) Command line tools should have stats option
  - [medialibrary-63](https://github.com/cjcodeproj/medialibrary/issues/63) Create object code to handle "art" proper noun
  - [medialibrary-62](https://github.com/cjcodeproj/medialibrary/issues/62) First PyPi test
  - [medialibrary-56](https://github.com/cjcodeproj/medialibrary/issues/56) File loader ignored Blu-Ray 3d movies
