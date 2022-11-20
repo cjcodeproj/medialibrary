@@ -14,19 +14,22 @@ from media.tools.common import load_media_dev, compile_movies
 class PrimaryBucket():
     '''
     Bucket class system for primary genres.
+
+    Very simple dictionary where key values are the primary genre name, and
+    the value is a list containing the movie objects.
     '''
     def __init__(self):
         self.genres = {}
         self.movie_count = 0
 
-    def add(self, genre, title):
+    def add(self, genre, movie):
         '''
-        Add a title to a genre, regardless of whether it exists or not.
+        Add a movie to a genre, regardless of whether it exists or not.
         '''
         if genre in self.genres:
-            self.genres[genre].append(title)
+            self.genres[genre].append(movie)
         else:
-            self.genres[genre] = [title]
+            self.genres[genre] = [movie]
         self.movie_count += 1
 
     def bucket(self, genre):
@@ -49,9 +52,9 @@ class PrimaryBucket():
             pg_tally = len(self.genres[genre])
             perc = float(pg_tally / self.movie_count * 100)
             text_pro_bar = proportion_bar(pg_tally, self.movie_count)
-            rand_title = random_title(self.bucket(genre))
+            rand_movie = random_movie(self.bucket(genre))
             out += f"{genre:15s}  {pg_tally:5d} {perc:5.1f}% " + \
-                   f"{text_pro_bar:50s} {rand_title}\n"
+                   f"{text_pro_bar:50s} {rand_movie.title!s}\n"
         out += f"{'-' * 15}  {'-' * 5} {'-' * 6} {'-' * 50} {'-' *45}\n"
         out += f"Total movie count {self.movie_count}\n\n"
         return out
@@ -60,22 +63,27 @@ class PrimaryBucket():
 class SecondaryBucket():
     '''
     A class for a primary/secondary bucket tree.
+
+    A slightly more complex dictionary compared to PrimaryBucket.
+    Each key is still based on the value of 'primary', but the value is another
+    dictionary, with each key of the smaller dictionary being the values of
+    the 'secondary' elements, and the value being a list of movie objects.
     '''
     def __init__(self):
         self.genres = {}
         self.movie_count = 0
 
-    def add(self, in_primary, in_secondaries, title):
+    def add(self, in_primary, in_secondaries, movie):
         '''
         Populate the primary/secondary buckets.
         '''
         if len(in_secondaries) == 0:
-            self._add_no_secondaries(in_primary, title)
+            self._add_no_secondaries(in_primary, movie)
         else:
-            self._add_with_secondaries(in_primary, in_secondaries, title)
+            self._add_with_secondaries(in_primary, in_secondaries, movie)
         self.movie_count += 1
 
-    def _add_no_secondaries(self, in_primary, title):
+    def _add_no_secondaries(self, in_primary, movie):
         '''
         Add a movie to a special secondary bucket signifying
         that there are no secondary genres for this movie.
@@ -83,13 +91,13 @@ class SecondaryBucket():
         sec_genre = '(none)'
         if in_primary in self.genres:
             if sec_genre in self.genres[in_primary]:
-                self.genres[in_primary][sec_genre].append(title)
+                self.genres[in_primary][sec_genre].append(movie)
             else:
-                self.genres[in_primary][sec_genre] = [title]
+                self.genres[in_primary][sec_genre] = [movie]
         else:
-            self.genres[in_primary] = {sec_genre: [title]}
+            self.genres[in_primary] = {sec_genre: [movie]}
 
-    def _add_with_secondaries(self, in_primary, in_secondaries, title):
+    def _add_with_secondaries(self, in_primary, in_secondaries, movie):
         '''
         Add a movie to every possible secondary genre bucket
         for a given primary genre bucket.
@@ -97,23 +105,36 @@ class SecondaryBucket():
         for sec_genre in in_secondaries:
             if in_primary in self.genres:
                 if sec_genre in self.genres[in_primary]:
-                    self.genres[in_primary][sec_genre].append(title)
+                    self.genres[in_primary][sec_genre].append(movie)
                 else:
-                    self.genres[in_primary][sec_genre] = [title]
+                    self.genres[in_primary][sec_genre] = [movie]
             else:
-                self.genres[in_primary] = {sec_genre: [title]}
+                self.genres[in_primary] = {sec_genre: [movie]}
 
     def _count_primary_unique(self, in_primary):
         '''
         We need this to count movies under a primary genre
         that may fall into multiple secondary buckets.
+
+        This function creates a list and iterates through
+        all of the movies, but only adds the movie object to
+        the list if it isn't already present.
         '''
         out = []
         for secondary_i in self.genres[in_primary]:
-            for title in self.genres[in_primary][secondary_i]:
-                if title not in out:
-                    out.append(title)
+            for movie in self.genres[in_primary][secondary_i]:
+                if movie not in out:
+                    out.append(movie)
         return len(out)
+
+    def _count_secondary_occurences(self, in_primary_g):
+        sec_occur = 0
+        for prim_g in self.genres:
+            for sec_g in self.genres[prim_g]:
+                if sec_g == in_primary_g:
+                    # sec_occur += 1
+                    sec_occur += len(self.genres[prim_g][sec_g])
+        return sec_occur
 
     def bucket(self, in_primary, in_secondary):
         '''
@@ -134,18 +155,20 @@ class SecondaryBucket():
             for secondary_i in self.genres[primary_i]:
                 sec_tally += len(self.genres[primary_i][secondary_i])
             prim_count = self._count_primary_unique(primary_i)
-            out += f"\nPrimary Genre: {primary_i}  ({prim_count} / " + \
-                   f"{self.movie_count})\n\n"
-            out += f"{'Secondary Genre':15s} {'Count':5s} {'Perc':6s} " + \
+            sec_occur = self._count_secondary_occurences(primary_i)
+            out += f"\nPrimary Genre: {primary_i:12s}  ({prim_count:d} / " + \
+                   f"{self.movie_count:d}) "
+            out += f"Occurences as a secondary genre: {sec_occur}\n\n"
+            out += f"{'Secondary Genre':12s} {'Count':5s} {'Perc':6s} " + \
                    f"{'Ratio':50s} {'Sample Title'}\n"
             out += f"{'-' * 15} {'-' * 5} {'-' * 6} {'-' * 50} {'-' * 45}\n"
             for secondary_i in sorted(self.genres[primary_i]):
                 sec_count = len(self.genres[primary_i][secondary_i])
                 perc = float(sec_count / sec_tally * 100)
                 text_pro_bar = proportion_bar(sec_count, sec_tally)
-                rand_title = random_title(self.genres[primary_i][secondary_i])
+                rand_movie = random_movie(self.genres[primary_i][secondary_i])
                 out += f"{secondary_i:15s} {sec_count:5d} {perc:5.1f}% " + \
-                       f"{text_pro_bar:50s} {rand_title}\n"
+                       f"{text_pro_bar:50s} {rand_movie.title!s}\n"
             out += f"{'-' * 15} {'-' * 5} {'-' * 6} {'-' * 50} {'-' * 45}\n"
         return out
 
@@ -166,7 +189,7 @@ def populate_primary_buckets(movies):
     for movie in movies:
         if movie.classification.genres:
             prim_genre = movie.classification.genres.primary
-            pg_bucket.add(prim_genre, movie.title)
+            pg_bucket.add(prim_genre, movie)
     return pg_bucket
 
 
@@ -177,7 +200,7 @@ def populate_secondary_buckets(movies):
         if movie.classification.genres:
             prim_genre = movie.classification.genres.primary
             sec_genre = movie.classification.genres.secondary
-            sg_bucket.add(prim_genre, sec_genre, movie.title)
+            sg_bucket.add(prim_genre, sec_genre, movie)
     return sg_bucket
 
 
@@ -192,17 +215,17 @@ def proportion_bar(value, maximum, limit=50):
     return f"{tics}"
 
 
-def random_title(in_list):
+def random_movie(in_list):
     '''
-    For a given list of movie titles, return one random
-    title from the list.
+    For a given list of movies, return one random
+    movie from the list.
     '''
     total_count = len(in_list)
     if total_count == 1:
         random_index = 0
     else:
         random_index = random.randint(0, len(in_list)-1)
-    return str(in_list[random_index])
+    return in_list[random_index]
 
 
 if __name__ == '__main__':
