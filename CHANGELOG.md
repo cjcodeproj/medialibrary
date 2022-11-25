@@ -2,7 +2,8 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
- - [medialibrary-69](https://github.com/cjcodeproj/medialibrary/issues/69) Command line tool genrebreakdown has same bad title dictionary index
+ - [medialibrary-65](https://github.com/cjcodeproj/medialibrary/issues/65) All code files should have copyright headers
+ - [medialibrary-68](https://github.com/cjcodeproj/medialibrary/issues/68) Command line tool genrebreakdown has same bad title dictionary index
  - [medialibrary-67](https://github.com/cjcodeproj/medialibrary/issues/67) Page break between movie entries
  - [medialibrary-66](https://github.com/cjcodeproj/medialibrary/issues/66) POC tool castlist doesn't handle duplicate titles properly
  - [medialibrary-46](https://github.com/cjcodeproj/medialibrary/issues/46) Command line tools should have stats option
