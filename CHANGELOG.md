@@ -2,6 +2,17 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-50](https://github.com/cjcodeproj/medialibrary/issues/50) More metadata in the pyproject.toml
+ - [medialibrary-65](https://github.com/cjcodeproj/medialibrary/issues/65) All code files should have copyright headers
+ - [medialibrary-68](https://github.com/cjcodeproj/medialibrary/issues/68) Command line tool genrebreakdown has same bad title dictionary index
+ - [medialibrary-67](https://github.com/cjcodeproj/medialibrary/issues/67) Page break between movie entries
+ - [medialibrary-66](https://github.com/cjcodeproj/medialibrary/issues/66) POC tool castlist doesn't handle duplicate titles properly
+ - [medialibrary-46](https://github.com/cjcodeproj/medialibrary/issues/46) Command line tools should have stats option
+ - [medialibrary-63](https://github.com/cjcodeproj/medialibrary/issues/63) Create object code to handle "art" proper noun
+ - [medialibrary-62](https://github.com/cjcodeproj/medialibrary/issues/62) First PyPi test
+ - [medialibrary-56](https://github.com/cjcodeproj/medialibrary/issues/56) File loader ignored Blu-Ray 3d movies
+ - [medialibrary-45](https://github.com/cjcodeproj/medialibrary/issues/45) XML elements without text may cause an error when stripped
+ - [medialibrary-18](https://github.com/cjcodeproj/medialibrary/issues/18) Proper Noun name sorting mixes up when there is no family name
  - [medialibrary-43](https://github.com/cjcodeproj/medialibrary/issues/43) Reign in the README.md file
  - [medialibrary-39](https://github.com/cjcodeproj/medialibrary/issues/39) Code to read physical media data
  - [medialibrary-40](https://github.com/cjcodeproj/medialibrary/issues/40) Simple tool for validating movie data
