@@ -1,4 +1,27 @@
 #!/usr/bin/env python
+
+#
+# Copyright 2022 Chris Josephes
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+#
+
 '''
 Objects for representation of proper nouns used in keywords.
 '''
@@ -144,6 +167,8 @@ class Name(AbstractNoun):
         self.family = ''
         self.middle = ''
         self.sort = ''
+        self.post_title = ''
+        self.pre_title = ''
         if in_element is not None:
             self.tagname = Namespaces.ns_strip(in_element.tag)
             self._process(in_element)
@@ -153,27 +178,77 @@ class Name(AbstractNoun):
             tagname = Namespaces.ns_strip(child.tag)
             if tagname == 'gn':
                 self.given = child.text
-            if tagname == 'fn':
+            elif tagname == 'fn':
                 self.family = child.text
-            if tagname == 'mn':
+            elif tagname == 'mn':
                 self.middle = child.text
+            elif tagname == 'postTitle':
+                self.post_title = child.text
+            elif tagname == 'preTitle':
+                self.pre_title = child.text
         self._build_value()
-        # self._build_sort()
+        self._build_sort_value()
 
     def _build_value(self):
+        """Construct a printable name."""
         raw = ''
+        if self.pre_title:
+            raw += self.pre_title + ' '
         if self.given:
             raw += self.given + ' '
+        if self.middle:
+            raw += self.middle + ' '
         if self.family:
             raw += self.family
-        if self.middle:
-            raw += ' ' + self.middle
+        if self.post_title:
+            raw += ' ' + self.post_title
         self.value = raw
-        self.sort_value = self.family.casefold() + '_' \
-            + self.given.casefold() + '_' + self.middle.casefold()
+
+    def _build_sort_value(self):
+        """Construct a string for sorting names."""
+        raw = ''
+        if self.family:
+            raw = self.family.casefold() \
+                    + '_' \
+                    + self.given.casefold()
+            if self.middle:
+                raw += '_' + self.middle.casefold()
+        else:
+            raw = self.given.casefold()
+            if self.middle:
+                raw += '_' + self.middle
+        if self.post_title:
+            raw += '_' + self.post_title
+        self.sort_value = raw
 
     def __str__(self):
-        '''
-        The formal string value should be returned
-        '''
-        return f"{self.given} {self.family}"
+        """The formal string value should be returned."""
+        return self.value
+
+
+class Art(AbstractNoun):
+    """
+    Proper noun describing a work of art.
+
+    Element contains no child elements, only
+    text, plus two optional attributes.
+    """
+    def __init__(self, in_art_element):
+        super().__init__()
+        self.art_type = ''
+        self.art_year = 0
+        if in_art_element is not None:
+            self._process(in_art_element)
+
+    def _process(self, in_element):
+        art_name = in_element.text.strip()
+        self.tagname = Namespaces.ns_strip(in_element.tag)
+        if 'type' in in_element.attrib:
+            self.art_type = in_element.attrib['type']
+        if 'year' in in_element.attrib:
+            self.art_year = int(in_element.attrib['year'])
+        if self.art_type:
+            self.value = art_name + ' (' + self.art_type + ')'
+        else:
+            self.value = art_name
+        self.sort_value = self.value.casefold()

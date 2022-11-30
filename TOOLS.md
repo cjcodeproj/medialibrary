@@ -1,4 +1,4 @@
-# Command Line Tools
+# Media Library Reader -- Command Line Tools
 
 
 The medialibrary module includes the following proof of concept tools which can 
@@ -363,7 +363,7 @@ Enron: The Smartest Guys In The Room               Plot has less than 20 words
 The Great Escape                                   Plot missing
 ```
 
-## Python Shell Interface (Beta)
+## Python Shell Interface
 
 Pulling data using the Python Shell.
 

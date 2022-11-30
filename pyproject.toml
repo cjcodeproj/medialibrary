@@ -1,3 +1,34 @@
+[project]
+name = "medialibrary"
+version = "0.1.5"
+description = "Library for reading vtmedia XML files"
+readme = "README.md"
+requires-python = ">3.8"
+license = {text = "MIT License"}
+keywords = ["xml", "movies", "dvds"]
+authors = [
+  {email = "cjcodeproj@fastmail.com", name = "Chris J"}
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Text Processing :: Markup :: XML"
+]
+
+[project.urls]
+homepage = "https://github.com/cjcodeproj/medialibrary"
+"bug tracker" = "https://github.com/cjcodeproj/medialibrary/issues"
+repository = "https://github.com/cjcodeproj/medialibrary"
+changelog = "https://github.com/cjcodeproj/medialibrary/blob/main/CHANGELOG.md"
+
+
+[tools.setuptools]
+license-files = ["LICENSE"]
+
 [build-system]
 requires = [
 	"setuptools",
