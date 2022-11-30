@@ -1,7 +1,8 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.1.5
+ - [medialibrary-72](https://github.com/cjcodeproj/medialibrary/issues/72) Prep work for first release to PyPi (0.1.5)
  - [medialibrary-50](https://github.com/cjcodeproj/medialibrary/issues/50) More metadata in the pyproject.toml
  - [medialibrary-65](https://github.com/cjcodeproj/medialibrary/issues/65) All code files should have copyright headers
  - [medialibrary-68](https://github.com/cjcodeproj/medialibrary/issues/68) Command line tool genrebreakdown has same bad title dictionary index
