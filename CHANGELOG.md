@@ -1,6 +1,10 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-75](https://github.com/cjcodeproj/medialibrary/issues/75) CharacterName updates reflecting changed XML elements
+
+
 ## RELEASE 0.1.5
  - [medialibrary-72](https://github.com/cjcodeproj/medialibrary/issues/72) Prep work for first release to PyPi (0.1.5)
  - [medialibrary-50](https://github.com/cjcodeproj/medialibrary/issues/50) More metadata in the pyproject.toml

@@ -29,6 +29,7 @@ of visual art, like a movie or television show.
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=R0801
+# pylint: disable=too-many-instance-attributes
 
 from media.xml.functions import xs_bool
 from media.xml.namespaces import Namespaces
@@ -261,14 +262,21 @@ class CharacterName(Portrays):
         super().__init__()
         self.value = ''
         self.chunk = {}
-        self.pre_title = ''
-        self.post_title = ''
+        self.prefix = ''
+        self.suffix = ''
+        self.addendum = ''
         self.variant = ''
         if in_element is not None:
             self._process(in_element)
 
     def _process(self, in_element):
-        '''Build the object based on the data'''
+        '''
+        Build the attribute values, while also keeping
+        track of the order that the elements are processed.
+
+        Treat nicknames differently by surrounding them
+        in single quote marks.
+        '''
         order = []
         for child in in_element:
             tagname = Namespaces.ns_strip(child.tag)
@@ -281,54 +289,24 @@ class CharacterName(Portrays):
                     self.chunk[CharacterName.name_matrix[tagname]] = child.text
                 order.append(CharacterName.name_matrix[tagname])
                 tagcount += 1
-            elif tagname == 'preTitle':
-                self.pre_title = child.text
-            elif tagname == 'postTitle':
-                self.post_title = child.text
+            elif tagname == 'prefix':
+                self.prefix = child.text
+            elif tagname == 'suffix':
+                self.suffix = child.text
+            elif tagname == 'addendum':
+                self.addendum = child.text
             elif tagname == 'variant':
                 self.variant = child.text
         self._build_value(order)
         self._build_formal()
         self._build_sort(order)
 
-#    def _process2(self, in_element):
-#        '''Build the object based on the data'''
-#        for child in in_element:
-#            tagname = Namespaces.ns_strip(child.tag)
-#            tagcount = 1
-#            order = []
-#            if tagname == 'self':
-#                self.chunk['self'] = "(self)"
-#                order = ['self']
-#                self._build_value(order)
-#                return
-#            if tagname == 'narrator':
-#                self.chunk['narrator'] = "(narrator)"
-#                order = ['narrator']
-#                self._build_value(order)
-#                return
-#            if tagname == 'title':
-#                self.chunk['title'] = child.text
-#                order = ['title']
-#                self._build_value(order)
-#                return
-#            if tagname == 'nick':
-#                self.chunk['nick'] = child.text
-#                order.append('nick')
-#            if tagname == 'gn':
-#                self.chunk['given'] = child.text
-#                order.append('given')
-#            if tagname == 'mn':
-#                self.chunk['middle'] = child.text
-#                order.append('middle')
-#            if tagname == 'fn':
-#                self.chunk['family'] = child.text
-#                order.append('family')
-#            tagcount += 1
-#        self._build_value(order)
-#        return
-
     def _build_value(self, order):
+        '''
+        Build the name value by piecing each
+        element together in the order they
+        were read.
+        '''
         raw = ''
         for chunk_i in order:
             raw += self.chunk[chunk_i] + ' '
@@ -337,17 +315,24 @@ class CharacterName(Portrays):
 
     def _build_formal(self):
         raw = ''
-        if self.pre_title:
-            raw = self.pre_title + ' ' + self.value
+        if self.prefix:
+            raw = self.prefix + ' ' + self.value
         else:
             raw = self.value
-        if self.post_title:
-            raw += ' ' + self.post_title
+        if self.suffix:
+            raw += ' ' + self.suffix
+        if self.addendum:
+            raw += ' (' + self.addendum + ')'
         if self.variant:
             raw += ' (' + self.variant + ')'
         self.formal = raw
 
     def _build_sort(self, order):
+        '''
+        Build an explicit sort value by
+        taking the family name, given name,
+        and finally the middle name.
+        '''
         order = ['family', 'given', 'middle']
         raw = ''
         for o_i in order:
@@ -355,18 +340,6 @@ class CharacterName(Portrays):
                 raw += self.chunk[o_i].casefold() + '_'
         raw = raw[:-1]
         self.sort_value = raw
-
-#    def complete(self):
-#        out = ''
-#        if self.pre_title:
-#            out = self.pre_title + ' ' + self.value
-#        else:
-#            out = self.value
-#        if self.post_title:
-#            out += ' ' + self.post_title
-#        if self.variant:
-#            out += ' (' + self.variant + ')'
-#        return out
 
     def __str__(self):
         return f"{self.value}"
