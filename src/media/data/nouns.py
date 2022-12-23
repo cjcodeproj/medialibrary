@@ -167,8 +167,8 @@ class Name(AbstractNoun):
         self.family = ''
         self.middle = ''
         self.sort = ''
-        self.post_title = ''
-        self.pre_title = ''
+        self.suffix = ''
+        self.prefix = ''
         if in_element is not None:
             self.tagname = Namespaces.ns_strip(in_element.tag)
             self._process(in_element)
@@ -182,26 +182,26 @@ class Name(AbstractNoun):
                 self.family = child.text
             elif tagname == 'mn':
                 self.middle = child.text
-            elif tagname == 'postTitle':
-                self.post_title = child.text
-            elif tagname == 'preTitle':
-                self.pre_title = child.text
+            elif tagname == 'suffix':
+                self.suffix = child.text
+            elif tagname == 'prefix':
+                self.prefix = child.text
         self._build_value()
         self._build_sort_value()
 
     def _build_value(self):
         """Construct a printable name."""
         raw = ''
-        if self.pre_title:
-            raw += self.pre_title + ' '
+        if self.prefix:
+            raw += self.prefix + ' '
         if self.given:
             raw += self.given + ' '
         if self.middle:
             raw += self.middle + ' '
         if self.family:
             raw += self.family
-        if self.post_title:
-            raw += ' ' + self.post_title
+        if self.suffix:
+            raw += ' ' + self.suffix
         self.value = raw
 
     def _build_sort_value(self):
@@ -217,8 +217,8 @@ class Name(AbstractNoun):
             raw = self.given.casefold()
             if self.middle:
                 raw += '_' + self.middle
-        if self.post_title:
-            raw += '_' + self.post_title
+        if self.suffix:
+            raw += '_' + self.suffix
         self.sort_value = raw
 
     def __str__(self):
