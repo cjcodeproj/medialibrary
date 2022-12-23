@@ -41,7 +41,7 @@ CASE1 = '''<?xml version='1.0'?>
    <role>
     <actor><gn>Marty</gn><fn>Goofus</fn></actor>
     <as><prefix>Judge</prefix><gn>Bettle</gn><fn>Gallant</fn>
-     <suffix tpe='generational'>Sr.</suffix></as>
+     <suffix tpe='generational'>Sr.</suffix><aspect>voice</aspect></as>
    </role>
   </cast>
  </crew>
@@ -97,6 +97,13 @@ class TestCastRoleAs(unittest.TestCase):
         '''
         cn1 = self.movie.crew.cast.cast[0].portrays[0]
         self.assertEqual(cn1.chunk['given'], "Bettle")
+
+    def test_character_aspect(self):
+        '''
+        Test aspect value of character name.
+        '''
+        cn1 = self.movie.crew.cast.cast[0].portrays[0]
+        self.assertEqual(cn1.aspect, 'voice')
 
 
 if __name__ == '__main__':

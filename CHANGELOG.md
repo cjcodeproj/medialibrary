@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-77](https://github.com/cjcodeproj/medialibrary/issues/77) Handle CharacterName aspect element
  - [medialibrary-78](https://github.com/cjcodeproj/medialibrary/issues/78) Code to handle schema changes to PNNameType
  - [medialibrary-75](https://github.com/cjcodeproj/medialibrary/issues/75) CharacterName updates reflecting changed XML elements
 

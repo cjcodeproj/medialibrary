@@ -266,6 +266,7 @@ class CharacterName(Portrays):
         self.suffix = ''
         self.addendum = ''
         self.variant = ''
+        self.aspect = ''
         if in_element is not None:
             self._process(in_element)
 
@@ -297,6 +298,8 @@ class CharacterName(Portrays):
                 self.addendum = child.text
             elif tagname == 'variant':
                 self.variant = child.text
+            elif tagname == 'aspect':
+                self.aspect = child.text
         self._build_value(order)
         self._build_formal()
         self._build_sort(order)
@@ -325,6 +328,8 @@ class CharacterName(Portrays):
             raw += ' (' + self.addendum + ')'
         if self.variant:
             raw += ' (' + self.variant + ')'
+        if self.aspect:
+            raw += ' (' + self.aspect + ')'
         self.formal = raw
 
     def _build_sort(self, order):
