@@ -6,8 +6,10 @@ be called directly from the command line.
 
 
 ```
+media.tools.media.authorrecords
 media.tools.media.list
 media.tools.media.show
+media.tools.meta.authorship
 media.tools.movies.list
 media.tools.movies.show
 media.tools.movies.namelist
@@ -44,11 +46,29 @@ Every tool uses Python argparse for argument parsing, and provides a help option
 ## Media Tools
 
 ```
+media.tools.media.authorrecords
 media.tools.media.list
 media.tools.media.show
 ```
 
 The media tools report on data related to physical media.
+
+### Media Author Records 
+
+```
+python -m media.tools.media.authorrecords [--mediapath (path)]
+```
+
+Identifies any authorship records present in a repository.
+
+```
+$ python -m media.tools.media.authorrecords
+
+Record for 'Mad Max'                     (Bob)
+--------------------------------------------------
+Created: 2021-06-28
+
+```
 
 ### Media List
 
@@ -102,6 +122,36 @@ Contents > Movies
   48 Hrs.                                  1982 Action/Comedy       
 
 ```
+
+## Metadata Tools
+
+```
+media.tools.meta.authorship
+```
+
+### Authorship Record Creator Tool
+
+```
+python -m media.tools.meta.authorship [--title (title)] [--author (author_name)] [--email (author_email)]
+```
+
+Generates an XML authorship record based on command line arguments.
+
+```
+$ python -m media.tools.meta.authorship --title "Record for 'Mad Max'"
+<?xml version='1.0' encoding='us-ascii'?>
+<authorshipRecord xmlns="http://vectortron.com/xml/media/meta/authorship">
+  <title>Record for 'Mad Max'</title>
+  <catalog />
+  <changelog>
+    <creation>
+      <date>2023-01-15</date>
+    </creation>
+  </changelog>
+</authorshipRecord>
+
+```
+
 
 ## Movie Tools
 

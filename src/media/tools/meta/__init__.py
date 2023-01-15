@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,24 +22,6 @@
 # SOFTWARE.
 #
 
-'''XML Namespace Constants'''
-
-
-class Namespaces():
-    '''Static data on XML Namespaces'''
-    ns = {
-            "media": "http://vectortron.com/xml/media/media",
-            "movie": "http://vectortron.com/xml/media/movie",
-            "authorship": "http://vectortron.com/xml/media/meta/authorship"
-        }
-
-    @classmethod
-    def nsf(cls, in_tag):
-        '''return the fully qualified namespace to the prefix format'''
-        return '{' + Namespaces.ns[in_tag] + '}'
-
-    @classmethod
-    def ns_strip(cls, in_tag):
-        '''Strip the namespace from an element'''
-        out = in_tag.split("}", 1)
-        return out[1]
+'''
+media.tools.meta module
+'''

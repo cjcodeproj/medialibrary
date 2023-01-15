@@ -31,11 +31,13 @@ from media.xml.namespaces import Namespaces
 import media.data.media.library
 import media.data.media.medium
 import media.data.media.contents.movie
+import media.data.media.meta.authorship as MA
 
 
 class Media():
     '''Representation of a physical thing that holds content.'''
     def __init__(self, in_chunk):
+        self.author_record = None
         self.title = None
         self.library = None
         self.medium = None
@@ -46,6 +48,8 @@ class Media():
     def _process(self, in_chunk):
         '''Read the passed elemennt and load the interpret the data'''
         for child in in_chunk:
+            if child.tag == Namespaces.nsf('authorship') + 'authorshipRecord':
+                self.author_record = MA.AuthorshipRecord(child)
             if child.tag == Namespaces.nsf('media') + 'title':
                 self.title = Title(child)
             elif child.tag == Namespaces.nsf('media') + 'library':
