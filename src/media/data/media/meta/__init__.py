@@ -21,25 +21,3 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-
-'''XML Namespace Constants'''
-
-
-class Namespaces():
-    '''Static data on XML Namespaces'''
-    ns = {
-            "media": "http://vectortron.com/xml/media/media",
-            "movie": "http://vectortron.com/xml/media/movie",
-            "authorship": "http://vectortron.com/xml/media/meta/authorship"
-        }
-
-    @classmethod
-    def nsf(cls, in_tag):
-        '''return the fully qualified namespace to the prefix format'''
-        return '{' + Namespaces.ns[in_tag] + '}'
-
-    @classmethod
-    def ns_strip(cls, in_tag):
-        '''Strip the namespace from an element'''
-        out = in_tag.split("}", 1)
-        return out[1]
