@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-86](https://github.com/cjcodeproj/medialibrary/issues/86) Add more fields to debuglist POC tool
  - [medialibrary-81](https://github.com/cjcodeproj/medialibrary/issues/81) Code for handling authorship record element
  - [medialibrary-77](https://github.com/cjcodeproj/medialibrary/issues/77) Handle CharacterName aspect element
  - [medialibrary-78](https://github.com/cjcodeproj/medialibrary/issues/78) Code to handle schema changes to PNNameType
