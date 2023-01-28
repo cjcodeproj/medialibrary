@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,8 @@ import unittest
 import xml.etree.ElementTree as ET
 from media.data.media.contents.movie import Movie
 from media.data.media.contents.genericv.crew import (
-        Crew, Cast, Role, CharacterName
+        Crew, Cast, Role, CharacterName, PortraysBackground,
+        PortraysAdditionalVoices
         )
 
 CASE1 = '''<?xml version='1.0'?>
@@ -42,6 +43,15 @@ CASE1 = '''<?xml version='1.0'?>
     <actor><gn>Marty</gn><fn>Goofus</fn></actor>
     <as><prefix>Judge</prefix><gn>Bettle</gn><fn>Gallant</fn>
      <suffix tpe='generational'>Sr.</suffix><aspect>voice</aspect></as>
+   </role>
+   <role>
+    <actor><gn>Josh</gn><fn>Gallant</fn></actor>
+    <as><nick>Travesty</nick></as>
+    <as><additionalVoices/></as>
+   </role>
+   <role>
+    <actor><gn>Al</gn><fn>Abama</fn><suffix>Jr.</suffix></actor>
+    <as><background/></as>
    </role>
   </cast>
  </crew>
@@ -104,6 +114,20 @@ class TestCastRoleAs(unittest.TestCase):
         '''
         cn1 = self.movie.crew.cast.cast[0].portrays[0]
         self.assertEqual(cn1.aspect, 'voice')
+
+    def test_character_background(self):
+        '''
+        Test a character who has a background role.
+        '''
+        cn1 = self.movie.crew.cast.cast[2].portrays[0]
+        self.assertIsInstance(cn1, PortraysBackground)
+
+    def test_character_additional_voices(self):
+        '''
+        Test a character as additional voices.
+        '''
+        cn1 = self.movie.crew.cast.cast[1].portrays[1]
+        self.assertIsInstance(cn1, PortraysAdditionalVoices)
 
 
 if __name__ == '__main__':
