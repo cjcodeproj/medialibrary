@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ from datetime import timedelta
 import os
 import argparse
 from media.tools.common import (
-        load_media_dev, compile_movies, random_sample_list
+        load_movies, random_sample_list
         )
 from media.tools.movies.list import prep_list
 from media.tools.movies.genrebreakdown import proportion_bar
@@ -222,8 +222,7 @@ if __name__ == '__main__':
     mediapath = args.mediapath or os.environ['MEDIAPATH']
     if not mediapath:
         parser.print_help()
-    devices = load_media_dev(mediapath)
-    all_movies = compile_movies(devices)
+    all_movies = load_movies(mediapath)
     list_entries = prep_list(all_movies)
     sorted_movies = sorted(list_entries, key=lambda x: x.runtime)
     if args.buckets:

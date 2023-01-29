@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ import os
 import argparse
 import media.fmt.text.movie
 from media.tools.common import (
-        load_media_dev, compile_movies, random_sample_list
+        load_movies, random_sample_list
         )
 
 
@@ -86,8 +86,7 @@ if __name__ == '__main__':
     mediapath = args.mediapath or os.environ['MEDIAPATH']
     if not mediapath:
         parser.print_help()
-    devices = load_media_dev(mediapath)
-    all_movies = compile_movies(devices)
+    all_movies = load_movies(mediapath)
     if args.random:
         sample = prep_list(random_sample_list(all_movies, args.random))
     else:

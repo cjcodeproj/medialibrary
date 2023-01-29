@@ -424,26 +424,20 @@ The objects are returned as an array, which can be accessed directly.
 
 ```
 $ python
-Python 3.9.7 (default, Sep  3 2021, 12:15:38) 
-[GCC 10.2.0] on sunos5
+Python 3.10.8 (main, Oct 31 2022, 11:27:36) [GCC 12.2.0] on sunos5
 Type "help", "copyright", "credits" or "license" for more information.
->>> import media.fileops.loader
 >>> import media.fileops.repo
->>> r=media.fileops.repo.Repo('/home/user/xml/vtmedia-schema/examples/movies')
->>> r.scan()
->>> loader = media.fileops.loader.Loader()
->>> dev_list = loader.load_media(r)
->>> print(dev_list[0].contents[0].title)
-Killing Season
->>> print(dev_list[0].contents[1].title)
-Red Lights
->>> print(dev_list[1].contents[0].title)
-All The President's Men
->>> print(dev_list[2].contents[0].title)
-Unstoppable
->>> print(dev_list[3].contents[0].title)
-Road House 2: Last Call
->>> print(dev_list[4].contents[0].title)
-The Last Starfighter
->>> 
+>>> repo = media.fileops.repo.Repo('/home/user/xml/movies/data')
+>>> repo.scans()
+>>> repo.load()
+>>> print(len(repo.media))
+575
+>>> print(len(repo.content))
+591
+>>> mo = repo.get_movies()
+>>> print(mo[126].title)
+Collateral
+>>> print(mo[126].crew.cast.cast[0].actor)
+Tom Cruise
+>>> quit()
 ```
