@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-85](https://github.com/cjcodeproj/medialibrary/issues/85) Title sort problem when both a number and article are present
  - [medialibrary-82](https://github.com/cjcodeproj/medialibrary/issues/82) Better repo code for handling content objects
  - [medialibrary-87](https://github.com/cjcodeproj/medialibrary/issues/87) Support additional character roles
  - [medialibrary-86](https://github.com/cjcodeproj/medialibrary/issues/86) Add more fields to debuglist POC tool
