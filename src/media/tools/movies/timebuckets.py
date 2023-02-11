@@ -32,10 +32,11 @@ from datetime import timedelta
 
 import os
 import argparse
+from media.generic.sorting.lists import Organizer
+from media.generic.sorting.groups import Batch
 from media.tools.common import (
         load_movies, random_sample_list
         )
-from media.tools.movies.list import prep_list
 from media.tools.movies.genrebreakdown import proportion_bar
 
 
@@ -61,7 +62,6 @@ class BucketManager():
         shortest = in_list[0].runtime
         longest = in_list[-1].runtime
         interval = self.get_bucket_interval(shortest, longest)
-        # print(f"Interval is {interval}\n")
         start_i = shortest
         for _ in range(1, self.limit + 1):
             self.buckets.append(Bucket(start_i, interval, len(in_list)))
@@ -223,8 +223,9 @@ if __name__ == '__main__':
     if not mediapath:
         parser.print_help()
     all_movies = load_movies(mediapath)
-    list_entries = prep_list(all_movies)
-    sorted_movies = sorted(list_entries, key=lambda x: x.runtime)
+    organizer = Organizer(all_movies)
+    single_batch = organizer.get_batches()[0]
+    sorted_movies = single_batch.index_by(Batch.S_RUNTIME)
     if args.buckets:
         buckets = BucketManager(args.buckets)
     else:

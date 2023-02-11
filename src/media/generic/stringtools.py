@@ -50,7 +50,7 @@ def build_sort_string(in_value):
     word_split = level1.split()
     if word_split[0] in LanguageHelpers.Articles_English:
         article = word_split.pop(0)
-        word_split.append('_'+article)
+        word_split.append('+'+article)
     return '_'.join(word_split)
 
 
