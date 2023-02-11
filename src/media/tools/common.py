@@ -24,6 +24,8 @@
 
 '''Common routines for command line tools'''
 
+# pylint disable=R0801
+
 import random
 import media.fileops.scanner
 import media.fileops.loader

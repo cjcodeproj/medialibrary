@@ -2,6 +2,9 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-88](https://github.com/cjcodeproj/medialibrary/issues/88) Media output formatting should not have duplicate data fields
+ - [medialibrary-76](https://github.com/cjcodeproj/medialibrary/issues/76) Index objects for output reports
+ - [medialibrary-57](https://github.com/cjcodeproj/medialibrary/issues/57) Movie list tool should have more sort/grouping options
  - [medialibrary-85](https://github.com/cjcodeproj/medialibrary/issues/85) Title sort problem when both a number and article are present
  - [medialibrary-82](https://github.com/cjcodeproj/medialibrary/issues/82) Better repo code for handling content objects
  - [medialibrary-87](https://github.com/cjcodeproj/medialibrary/issues/87) Support additional character roles
