@@ -105,7 +105,7 @@ class TestMovie(unittest.TestCase):
         Assert the unique key value for a given movie.
         '''
         self.assertEqual(self.movie.unique_key,
-                         "river_turns_inward__a-0000-1")
+                         "river_turns_inward_+a-0000-1")
 
 
 class TestMovieSort(unittest.TestCase):

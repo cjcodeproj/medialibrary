@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-95](https://github.com/cjcodeproj/medialibrary/issues/95) Some unit tests failed after fixing 85
  - [medialibrary-88](https://github.com/cjcodeproj/medialibrary/issues/88) Media output formatting should not have duplicate data fields
  - [medialibrary-76](https://github.com/cjcodeproj/medialibrary/issues/76) Index objects for output reports
  - [medialibrary-57](https://github.com/cjcodeproj/medialibrary/issues/57) Movie list tool should have more sort/grouping options
