@@ -34,7 +34,7 @@ of visual art, like a movie or television show.
 import xml.etree.ElementTree as ET
 from media.xml.functions import xs_bool
 from media.xml.namespaces import Namespaces
-from media.data.nouns import Name
+from media.data.nouns import PersonalName
 
 
 class Crew():
@@ -77,7 +77,7 @@ class Directors():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == 'director':
-                    out.append(Name(child))
+                    out.append(PersonalName(child))
         return out
 
 
@@ -95,7 +95,7 @@ class Writers():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == 'writer':
-                    out.append(Name(child))
+                    out.append(PersonalName(child))
 
 
 class SimpleCrew():
@@ -111,7 +111,7 @@ class SimpleCrew():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == desired_tag:
-                    out.append(Name(child))
+                    out.append(PersonalName(child))
         return out
 
     @classmethod
@@ -154,7 +154,7 @@ class Role():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == 'actor':
-                    self.actor = Name(child)
+                    self.actor = PersonalName(child)
                 if tagname == 'as':
                     child_tag = Namespaces.ns_strip(child[0].tag)
                     if child_tag == 'narrator':

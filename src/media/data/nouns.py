@@ -30,6 +30,7 @@ Objects for representation of proper nouns used in keywords.
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-instance-attributes
 
+from media.generic.stringtools import chg_ws
 from media.xml.namespaces import Namespaces
 
 
@@ -149,7 +150,7 @@ class Place(AbstractNoun):
         return minor
 
 
-class Name(AbstractNoun):
+class PersonalName(AbstractNoun):
     '''
     Proper noun for the name of a real person.
 
@@ -163,12 +164,15 @@ class Name(AbstractNoun):
     '''
     def __init__(self, in_element):
         super().__init__()
+        self.sort_value = ''
+        self.value = ''
         self.given = ''
         self.family = ''
         self.middle = ''
-        self.sort = ''
         self.suffix = ''
         self.prefix = ''
+        self.pref_complete = ''
+        self.pref_given = ''
         if in_element is not None:
             self.tagname = Namespaces.ns_strip(in_element.tag)
             self._process(in_element)
@@ -186,39 +190,52 @@ class Name(AbstractNoun):
                 self.suffix = child.text
             elif tagname == 'prefix':
                 self.prefix = child.text
+            elif tagname == 'pgn':
+                self.pref_given = child.text
+            elif tagname == 'pcn':
+                self.pref_complete = child.text
         self._build_value()
         self._build_sort_value()
 
     def _build_value(self):
         """Construct a printable name."""
         raw = ''
-        if self.prefix:
-            raw += self.prefix + ' '
-        if self.given:
-            raw += self.given + ' '
-        if self.middle:
-            raw += self.middle + ' '
-        if self.family:
-            raw += self.family
-        if self.suffix:
-            raw += ' ' + self.suffix
+        if self.pref_complete:
+            raw = self.pref_complete
+        else:
+            if self.prefix:
+                raw += self.prefix + ' '
+            if self.pref_given:
+                raw += self.pref_given
+            else:
+                if self.given:
+                    raw += self.given + ' '
+                if self.middle:
+                    raw += self.middle + ' '
+            if self.family:
+                raw += self.family
+            if self.suffix:
+                raw += ' ' + self.suffix
         self.value = raw
 
     def _build_sort_value(self):
         """Construct a string for sorting names."""
         raw = ''
-        if self.family:
-            raw = self.family.casefold() \
-                    + '_' \
-                    + self.given.casefold()
-            if self.middle:
-                raw += '_' + self.middle.casefold()
+        if self.pref_complete:
+            raw = chg_ws(self.pref_complete.casefold())
         else:
-            raw = self.given.casefold()
-            if self.middle:
-                raw += '_' + self.middle
-        if self.suffix:
-            raw += '_' + self.suffix
+            if self.family:
+                raw = chg_ws(self.family.casefold()) + '_'
+                if self.pref_given:
+                    raw += chg_ws(self.pref_given.casefold())
+                else:
+                    raw += chg_ws(self.given.casefold())
+                    if self.middle:
+                        raw += '_' + chg_ws(self.middle.casefold())
+            else:
+                raw = chg_ws(self.given.casefold())
+                if self.middle:
+                    raw += '_' + chg_ws(self.middle)
         self.sort_value = raw
 
     def __str__(self):

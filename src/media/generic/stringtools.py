@@ -44,6 +44,11 @@ def build_filename_string(in_value):
     return level1.translate(level1.maketrans(" \t\n\r", "____"))
 
 
+def chg_ws(in_value):
+    """Convert whitespace characters to underscores"""
+    return in_value.translate(in_value.maketrans(" \t\n\r", "____"))
+
+
 def build_sort_string(in_value):
     '''Build a string suitable for sorting, accounting for language rules.'''
     level1 = transform_string(in_value)
