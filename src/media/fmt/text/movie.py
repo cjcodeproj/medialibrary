@@ -179,6 +179,18 @@ class Brief():
             if self.movie.crew.cinemap:
                 out += hdr_list("Cinemaphotographer",
                                 self.movie.crew.cinemap) + "\n"
+            if self.movie.crew.music:
+                out += self.music() + "\n"
+        return out
+
+    def music(self):
+        '''Report on movie music.'''
+        out = ""
+        music = self.movie.crew.music
+        if music.composers:
+            out += hdr_list("Composer", music.composers) + "\n"
+        if music.music:
+            out += hdr_list("Music", music.music) + "\n"
         return out
 
     def cast(self):

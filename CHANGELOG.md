@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-98](https://github.com/cjcodeproj/medialibrary/issues/98) Improve the basic crew code
  - [medialibrary-96](https://github.com/cjcodeproj/medialibrary/issues/96) Support enhanced schema type for noun choice
  - [medialibrary-94](https://github.com/cjcodeproj/medialibrary/issues/94) Support for new PersonalName elements
  - [medialibrary-95](https://github.com/cjcodeproj/medialibrary/issues/95) Some unit tests failed after fixing 85
