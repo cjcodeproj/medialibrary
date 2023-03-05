@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 
 import unittest
 import xml.etree.ElementTree as ET
-from media.data.nouns import PersonalName
+from media.data.nouns import Noun, PersonalName, noun_dispatcher
 
 CASE1 = '''<?xml version='1.0'?>
 <name xmlns='http://vectortron.com/xml/media/movie'>
@@ -57,6 +57,12 @@ CASE5 = '''<?xml version='1.0'?>
 <name xmlns='http://vectortron.com/xml/media/movie'>
  <pgn>Alicia</pgn><gn>Susan</gn><fn>Swayze</fn>
 </name>
+'''
+
+CASE6 = '''<?xml version='1.0'?>
+<music xmlns='http://vectortron.com/xml/media/movie'>
+ <grp>Rolling Boulders</grp>
+</music>
 '''
 
 
@@ -119,4 +125,21 @@ class TestProperNounPersonalNameSorting(unittest.TestCase):
         self.assertEqual(self.name4.sort_value, 'sasha_x')
 
     def test_preferred_vs_given_sort(self):
+        """Verify that sorting works with a pgn element."""
         self.assertTrue(self.name5 < self.name1)
+
+
+class TestNounDispatchFunction(unittest.TestCase):
+    """Test suite for noun_dispatcher function.
+    """
+    def setUp(self):
+        xmlroot1 = ET.fromstring(CASE6)
+        self.grp1 = noun_dispatcher(xmlroot1)
+
+    def test_noun_dispatcher_group(self):
+        """Verify dispatcher preserves correct value."""
+        self.assertEqual(str(self.grp1), 'Rolling Boulders')
+
+    def test_noun_dispatcher_class(self):
+        """Verify dispatcher sends correct object class."""
+        self.assertIsInstance(self.grp1, Noun)
