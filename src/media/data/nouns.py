@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -57,6 +57,24 @@ class AbstractNoun():
 
     def __eq__(self, other):
         return self.sort_value == other.sort_value
+
+
+def noun_dispatcher(in_element):
+    '''
+    Deliver an appropriate noun object based on
+    the child element sequence discovered in the
+    passed element.
+    '''
+    tagname = Namespaces.ns_strip(in_element[0].tag)
+    if tagname == 'grp':
+        return Noun(in_element[0])
+    if tagname == 'ent':
+        return Noun(in_element[0])
+    if tagname == 'unkn':
+        return Noun(in_element[0])
+    if tagname in ['prefix', 'pcn', 'pgn', 'gn']:
+        return PersonalName(in_element)
+    return None
 
 
 class Noun(AbstractNoun):

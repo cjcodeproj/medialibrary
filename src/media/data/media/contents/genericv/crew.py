@@ -34,7 +34,7 @@ of visual art, like a movie or television show.
 import xml.etree.ElementTree as ET
 from media.xml.functions import xs_bool
 from media.xml.namespaces import Namespaces
-from media.data.nouns import PersonalName
+from media.data.nouns import PersonalName, noun_dispatcher
 
 
 class Crew():
@@ -46,6 +46,7 @@ class Crew():
         self.editors = []
         self.writers = []
         self.cinemap = []
+        self.music = None
         self.cast = None
         if in_element is not None:
             self._process(in_element)
@@ -55,13 +56,15 @@ class Crew():
             tagname = Namespaces.ns_strip(child.tag)
             if tagname == 'directors':
                 self.directors = Directors.load(child)
-            if tagname == 'editors':
+            elif tagname == 'editors':
                 self.editors = SimpleCrew.load(child, 'editor')
-            if tagname == 'cinemaphotographers':
+            elif tagname == 'cinemaphotographers':
                 self.cinemap = SimpleCrew.load(child, 'cinemaphotographer')
-            if tagname == 'writers':
+            elif tagname == 'writers':
                 self.writers = SimpleCrew.load(child, 'writer')
-            if tagname == 'cast':
+            elif tagname == 'music':
+                self.music = Music(child)
+            elif tagname == 'cast':
                 self.cast = Cast(child)
 
 
@@ -126,6 +129,47 @@ class SimpleCrew():
                 out_string += f"{name}. "
             out_string = out_string[:-2]
         return out_string
+
+
+class CrewAssignment():
+    '''
+    An assignment to a crew position.
+    '''
+    def __init__(self, tagname, in_element):
+        self.title = tagname
+        self.uncredited = False
+        self.object = noun_dispatcher(in_element)
+        if 'uncredited' in in_element.attrib:
+            self.uncredited = True
+
+    def __str__(self):
+        return str(self.object)
+
+
+class Music():
+    '''
+    Container object for all music related staff.
+    '''
+    def __init__(self, in_element):
+        self.allowed = ['composer', 'conductor', 'music']
+        self.breakdown = {}
+        self.composers = []
+        self.conductors = []
+        self.music = []
+        self._process(in_element)
+
+    def _process(self, in_element):
+        for child in in_element:
+            tagname = Namespaces.ns_strip(child.tag)
+            if tagname in self.allowed:
+                # nx_element = child[0]
+                crew_obj = CrewAssignment(tagname, child)
+                if tagname == 'composer':
+                    self.composers.append(crew_obj)
+                elif tagname == 'music':
+                    self.music.append(crew_obj)
+                elif tagname == 'conductor':
+                    self.conductors.append(crew_obj)
 
 
 class Cast():
