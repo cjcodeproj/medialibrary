@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,49 +32,48 @@ from media.fmt.text.basics import hdr_list, hdr_list_np, hdr_text, hdr_block
 # Note: The field limit for movie titles should probably be 45.
 
 
-class List():
-    '''Formatting a listing of movies, one per line.'''
+class OneLiner():
+    '''
+    Format for a single line summary of a movie.
+    '''
     def __init__(self, in_movie):
         self.movie = in_movie
-        self._prep_fields()
-        self.output = self.mentry()
+        self.output = ""
+        self.build()
 
-    @classmethod
-    def list_header(cls):
-        '''Generate a simple header'''
-        out = f"{'Title':50s} {'Year':4s} {'Runtime':8s} {'Genre':50s}\n" + \
-              cls.list_header_line()
-        return out
-
-    @classmethod
-    def list_header_line(cls):
+    def build(self):
         """
-        Generate a text line to separate headers vs rows.
+        Construct a one-line summary of a movie.
         """
-        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}"
-
-    def _prep_fields(self):
-        self.title_key = self.movie.unique_key
-        self.runtime = timedelta(seconds=0)
-        if self.movie.technical:
-            if self.movie.technical.runtime:
-                self.runtime = self.movie.technical.runtime.overall
-
-    def mentry(self):
-        '''One line entry'''
-        y_string = 0
-        cat_string = ""
-        if self.movie.catalog is not None:
-            if self.movie.catalog.copyright is not None:
-                y_string = self.movie.catalog.copyright.year
-        if self.movie.classification:
-            cat_string = build_genre_classification(self.movie)
-        out = f"{self.movie.title!s:50s} {y_string:4d} " +\
-              f"{self.runtime!s:>8s} {cat_string:50s}"
-        return out
+        y_string = build_copyright_year(self.movie)
+        runtime = build_runtime(self.movie)
+        category = build_genre_classification(self.movie)
+        self.output = f"{self.movie.title!s:50s} " + \
+                      f"{y_string:4s} " + \
+                      f"{runtime:8s} " + \
+                      f"{category:50s} "
 
     def __str__(self):
         return self.output
+
+    @classmethod
+    def header_fields(cls):
+        """
+        Return header titles for column output.
+        """
+        out = f"{'Title':50s} " + \
+              f"{'Year':4s} " + \
+              f"{'Runtime':8s} " + \
+              f"{'Genre':50s}\n" + \
+              cls.header_line()
+        return out
+
+    @classmethod
+    def header_line(cls):
+        """
+        Return a simple line to go under the header fields.
+        """
+        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}"
 
 
 class MiniEntry():
@@ -121,23 +120,15 @@ class Brief():
     '''Formatting for a brief text record'''
     def __init__(self, in_movie):
         self.movie = in_movie
-        self._prep_fields()
-        self._build_output()
+        self.output = ""
+        self.build()
 
-    def _prep_fields(self):
-        self.title_key = self.movie.unique_key
-        self.runtime = timedelta(seconds=0)
-        if self.movie.technical:
-            if self.movie.technical.runtime:
-                self.runtime = self.movie.technical.runtime.overall
-
-    def _build_output(self):
-        '''
-        The primary output coordinator
-        '''
+    def build(self):
+        """
+        Construct output string based on movie data.
+        """
         self.output = self.entry_header()
         self.output += self.classification_info()
-        self.output += self.technical_info()
         self.output += self.primary_crew()
         self.output += self.cast()
         self.output += self.plot()
@@ -160,19 +151,22 @@ class Brief():
     def classification_info(self):
         '''Basic report on genre information'''
         o_string = ""
-        if self.movie.classification:
-            o_string = build_genre_classification(self.movie)
-            o_string += "\n"
-            if self.movie.classification.genres.subgenres:
-                o_string += build_subgenre_classifications(self.movie)
+        genre_s = build_genre_classification(self.movie)
+        subgenre_s = build_subgenre_classifications(self.movie)
+        if genre_s:
+            o_string += f"{genre_s}\n"
+        if subgenre_s:
+            o_string += f"{subgenre_s}\n"
+        else:
             o_string += "\n"
         return o_string
 
     def technical_info(self):
         '''Basic technical information'''
         o_string = ""
-        if self.runtime:
-            o_string += f"Runtime: {self.runtime}\n\n"
+        rt_s = build_runtime(self.movie)
+        if rt_s:
+            o_string = f"Runtime: {rt_s}\n"
         return o_string
 
     def primary_crew(self):
@@ -185,6 +179,18 @@ class Brief():
             if self.movie.crew.cinemap:
                 out += hdr_list("Cinemaphotographer",
                                 self.movie.crew.cinemap) + "\n"
+            if self.movie.crew.music:
+                out += self.music() + "\n"
+        return out
+
+    def music(self):
+        '''Report on movie music.'''
+        out = ""
+        music = self.movie.crew.music
+        if music.composers:
+            out += hdr_list("Composer", music.composers) + "\n"
+        if music.music:
+            out += hdr_list("Music", music.music) + "\n"
         return out
 
     def cast(self):
@@ -244,7 +250,9 @@ def build_genre_classification(in_movie):
         o_string = "[" + str(classification.category) + "]"
     o_string += " " + build_genre_simple(in_movie)
     if classification.genres.specific:
-        o_string += f" \"{classification.genres.specific}\""
+        class_s = classification.genres.specific.strip()
+        if class_s:
+            o_string += f" \"{class_s}\""
     return o_string
 
 
@@ -252,5 +260,29 @@ def build_subgenre_classifications(in_movie):
     '''
     Build the subgenre list.
     '''
-    s_string = ", ".join(sorted(in_movie.classification.genres.subgenres))
-    return f"({s_string})\n"
+    subgenre_s = ", ".join(sorted(in_movie.classification.genres.subgenres))
+    if subgenre_s:
+        return f"({subgenre_s})\n"
+    return ""
+
+
+def build_copyright_year(in_movie):
+    '''
+    Construct a printable version of the copyright year.
+    '''
+    year_s = "0000"
+    if in_movie.catalog:
+        if in_movie.catalog.copyright:
+            year_s = f"{in_movie.catalog.copyright.year:4d}"
+    return year_s
+
+
+def build_runtime(in_movie):
+    '''
+    Construct a presentable version of the runtime value.
+    '''
+    runtime = timedelta(seconds=0)
+    if in_movie.technical:
+        if in_movie.technical.runtime:
+            runtime = in_movie.technical.runtime.overall
+    return f"{runtime!s}"

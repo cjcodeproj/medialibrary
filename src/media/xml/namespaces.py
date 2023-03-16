@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,8 @@ class Namespaces():
     '''Static data on XML Namespaces'''
     ns = {
             "media": "http://vectortron.com/xml/media/media",
-            "movie": "http://vectortron.com/xml/media/movie"
+            "movie": "http://vectortron.com/xml/media/movie",
+            "authorship": "http://vectortron.com/xml/media/meta/authorship"
         }
 
     @classmethod

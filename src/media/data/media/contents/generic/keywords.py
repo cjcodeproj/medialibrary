@@ -29,7 +29,7 @@ Keywords module
 # pylint: disable=too-few-public-methods
 # pylint: disable=consider-using-dict-items
 
-from media.data.nouns import Noun, Name, Place, Art
+from media.data.nouns import Art, Noun, PersonalName, Place
 from media.xml.namespaces import Namespaces
 
 
@@ -232,7 +232,7 @@ class ProperNounKeyword(AbstractKeyword):
             if tagname in ['thing', 'entity', 'group', 'event']:
                 self.value = Noun(child)
             elif tagname == 'person':
-                self.value = Name(child)
+                self.value = PersonalName(child)
             elif tagname == 'place':
                 self.value = Place(child)
             elif tagname == 'art':
