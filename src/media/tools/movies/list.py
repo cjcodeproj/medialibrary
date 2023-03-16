@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,7 +24,7 @@
 
 """
 List out all movies (or a random sample of all movies),
-one apiece per line.
+one entry per line.
 """
 
 # pylint: disable=R0801
@@ -32,53 +32,59 @@ one apiece per line.
 import os
 import argparse
 import media.fmt.text.movie
-from media.tools.common import (
-        load_media_dev, compile_movies, random_sample_list
-        )
+from media.generic.sorting.groups import (BatchSortOptions)
+from media.generic.sorting.lists import (GroupingOptions, Organizer)
+from media.tools.common import (load_movies)
 
 
-def list_movies(in_list, sort_field=None):
-    '''
-    Provide a summary list of all movies, sorted by title or runtime.
-    '''
-    if sort_field == 'runtime':
-        order_list = sorted(in_list, key=lambda x: x.runtime)
+def list_movie_batches(incoming, sort_field=1):
+    """
+    Iterate through every batch and report on the movie
+    inside the batch.
+    """
+    print(media.fmt.text.movie.OneLiner.header_fields())
+    if len(incoming) == 1:
+        list_batch(incoming[0], sort_field)
     else:
-        order_list = sorted(in_list, key=lambda x: x.title_key)
-    print(media.fmt.text.movie.List.list_header())
-    for movie_out in order_list:
-        print(movie_out)
-    print(media.fmt.text.movie.List.list_header_line())
+        for batch_i in sorted(incoming):
+            print(f"\n -- {batch_i.header} ({len(batch_i.entries)}) --\n")
+            list_batch(batch_i, sort_field)
+    print(media.fmt.text.movie.OneLiner.header_line())
 
 
-def prep_list(in_movies):
-    '''
-    Build the list of output entries.
-    '''
-    out_l = []
-    for movie in in_movies:
-        out_l.append(media.fmt.text.movie.List(movie))
-    return out_l
-
-
-def report_stats(in_full, in_sample):
+def list_batch(batch, sort_field=1):
     """
-    Report on the data collected.
+    Iterate through every movie in a single batch.
     """
-    a_c = len(in_full)
-    s_c = len(in_sample)
-    print(f"  Movie count : {a_c:5d}")
-    if s_c < a_c:
-        c_percent = float(s_c) / a_c * 100
-        print(f"  Sample size : {s_c:5d}  ({c_percent:5.2f}%)")
+    order_list = batch.index_by(sort_field)
+    for movie in order_list:
+        print(media.fmt.text.movie.OneLiner(movie.movie))
+
+
+def report_stats(org):
+    """
+    Report statistics on the data presented.
+    """
+    print(f"  Movie count : {org.original_count:5d}")
+    if org.sample_count < org.original_count:
+        c_percent = float(org.sample_count) / \
+                    org.original_count * 100
+        print(f"  Sample size : {org.sample_count:5d}  " +
+              f"({c_percent:5.2f}%)")
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simple movie list.')
     parser.add_argument('--mediapath', help='path of media library')
     parser.add_argument('--random', type=int, help='print X random entries')
-    parser.add_argument('--sort', choices=['title', 'runtime'],
-                        help='Sort field')
+    parser.add_argument('--group',
+                        choices=['none', 'alphabetical', 'decade', 'genre'],
+                        help='Grouping field',
+                        default='none')
+    parser.add_argument('--sort',
+                        choices=['title', 'year', 'runtime'],
+                        help='Sort field',
+                        default='title')
     parser.add_argument('--stats',
                         action=argparse.BooleanOptionalAction,
                         help='Report statistics')
@@ -86,15 +92,11 @@ if __name__ == '__main__':
     mediapath = args.mediapath or os.environ['MEDIAPATH']
     if not mediapath:
         parser.print_help()
-    devices = load_media_dev(mediapath)
-    all_movies = compile_movies(devices)
-    if args.random:
-        sample = prep_list(random_sample_list(all_movies, args.random))
-    else:
-        sample = prep_list(all_movies)
-    if args.sort:
-        list_movies(sample, args.sort)
-    else:
-        list_movies(sample)
+    all_movies = load_movies(mediapath)
+    organizer = Organizer(all_movies,
+                          args.random,
+                          grouping=GroupingOptions[args.group])
+    batches = organizer.get_batches()
+    list_movie_batches(batches, BatchSortOptions[args.sort])
     if args.stats:
-        report_stats(all_movies, sample)
+        report_stats(organizer)

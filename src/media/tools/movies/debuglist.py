@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ List out all movies, one per line.
 
 import os
 import argparse
-from media.tools.common import load_media_dev, compile_movies
+from media.tools.common import load_movies
 
 
 class DebugList():
@@ -44,6 +44,7 @@ class DebugList():
     def list_header(cls):
         '''Generate a simple header'''
         out = f"{'Title':35s} {'Year':4s} {'Sort Title':35s} " + \
+              f"{'Unique Key':35s}" + \
               f"{'Hash':20s} {'Object Address':18s}\n" + \
               f"{'=' * 35} {'=' * 4} {'=' * 20} {'=' * 18}"
         return out
@@ -56,7 +57,8 @@ class DebugList():
                 y_string = self.movie.catalog.copyright.year
         hash_string = hash(self.movie)
         out = f"{self.movie.title!s:35s} {y_string:4d} " + \
-              f"{self.movie.title.sort_title:35s} " + \
+              f"{'('+self.movie.title.sort_title+')':35s} " + \
+              f"{'('+self.movie.unique_key+')':35s} " + \
               f"{hash_string:20d} {hex(id(self.movie))}"
         return out
 
@@ -83,6 +85,5 @@ if __name__ == '__main__':
     mediapath = args.mediapath or os.environ['MEDIAPATH']
     if not mediapath:
         parser.print_help()
-    devices = load_media_dev(mediapath)
-    all_movies = compile_movies(devices)
+    all_movies = load_movies(mediapath)
     list_movies(all_movies)

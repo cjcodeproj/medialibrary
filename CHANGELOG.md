@@ -1,6 +1,25 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-101](https://github.com/cjcodeproj/medialibrary/issues/101) Document release process
+ - [medialibrary-98](https://github.com/cjcodeproj/medialibrary/issues/98) Improve the basic crew code
+ - [medialibrary-96](https://github.com/cjcodeproj/medialibrary/issues/96) Support enhanced schema type for noun choice
+ - [medialibrary-94](https://github.com/cjcodeproj/medialibrary/issues/94) Support for new PersonalName elements
+ - [medialibrary-95](https://github.com/cjcodeproj/medialibrary/issues/95) Some unit tests failed after fixing 85
+ - [medialibrary-88](https://github.com/cjcodeproj/medialibrary/issues/88) Media output formatting should not have duplicate data fields
+ - [medialibrary-76](https://github.com/cjcodeproj/medialibrary/issues/76) Index objects for output reports
+ - [medialibrary-57](https://github.com/cjcodeproj/medialibrary/issues/57) Movie list tool should have more sort/grouping options
+ - [medialibrary-85](https://github.com/cjcodeproj/medialibrary/issues/85) Title sort problem when both a number and article are present
+ - [medialibrary-82](https://github.com/cjcodeproj/medialibrary/issues/82) Better repo code for handling content objects
+ - [medialibrary-87](https://github.com/cjcodeproj/medialibrary/issues/87) Support additional character roles
+ - [medialibrary-86](https://github.com/cjcodeproj/medialibrary/issues/86) Add more fields to debuglist POC tool
+ - [medialibrary-81](https://github.com/cjcodeproj/medialibrary/issues/81) Code for handling authorship record element
+ - [medialibrary-77](https://github.com/cjcodeproj/medialibrary/issues/77) Handle CharacterName aspect element
+ - [medialibrary-78](https://github.com/cjcodeproj/medialibrary/issues/78) Code to handle schema changes to PNNameType
+ - [medialibrary-75](https://github.com/cjcodeproj/medialibrary/issues/75) CharacterName updates reflecting changed XML elements
+
+
 ## RELEASE 0.1.5
  - [medialibrary-72](https://github.com/cjcodeproj/medialibrary/issues/72) Prep work for first release to PyPi (0.1.5)
  - [medialibrary-50](https://github.com/cjcodeproj/medialibrary/issues/50) More metadata in the pyproject.toml

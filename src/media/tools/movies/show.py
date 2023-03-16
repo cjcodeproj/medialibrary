@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,9 @@
 # SOFTWARE.
 #
 
-'''Simple command line client to list out movies'''
+"""
+Simple command to output details on every movie.
+"""
 
 # pylint: disable=R0801
 
@@ -30,53 +32,57 @@
 import os
 import argparse
 import media.fmt.text.movie
-from media.tools.common import (
-        load_media_dev, compile_movies, random_sample_list
-        )
+from media.generic.sorting.groups import (BatchSortOptions)
+from media.generic.sorting.lists import (GroupingOptions, Organizer)
+from media.tools.common import (load_movies)
 
 
-def show_movies(in_list, in_args):
-    '''
-    Show every movie entry, ordered by either title or runtime.
-    '''
-    sort_field = in_args.sort
-    p_breaks = in_args.pagebreaks
-    if sort_field == 'runtime':
-        order_list = sorted(in_list, key=lambda x: x.runtime)
+def show_movie_batches(incoming, sort_field=1, page_breaks=False):
+    """
+    Iterate through every batch and report on the movie.
+    """
+    if len(incoming) == 1:
+        show_batch(incoming[0], sort_field, page_breaks)
     else:
-        order_list = sorted(in_list, key=lambda x: x.title_key)
-    for movie_out in order_list:
-        print(movie_out)
-        if p_breaks:
+        for batch_i in sorted(incoming):
+            print(f"{'-' * 40}")
+            print(f"-- {batch_i.header} ({len(batch_i.entries)}) --")
+            print(f"{'-' * 40}\n")
+            show_batch(batch_i, sort_field, page_breaks)
+
+
+def show_batch(batch, sort_field=1, page_breaks=False):
+    """
+    Iterate through every movie in a batch and report.
+    """
+    order_list = batch.index_by(sort_field)
+    for movie in order_list:
+        print(media.fmt.text.movie.Brief(movie.movie))
+        if page_breaks:
             print(chr(12))
-
-
-def prep_list(in_movies):
-    '''
-    Build the list of output entries.
-    '''
-    out_l = []
-    for movie in in_movies:
-        out_l.append(media.fmt.text.movie.Brief(movie))
-    return out_l
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Simple movie list.')
     parser.add_argument('--mediapath', help='path of media library')
     parser.add_argument('--random', type=int, help='print X random entries')
-    parser.add_argument('--sort', choices=['title', 'runtime'],
-                        help='Sort field')
+    parser.add_argument('--group',
+                        choices=['none', 'alphabetical', 'decade', 'genre'],
+                        help='Grouping field',
+                        default='none')
+    parser.add_argument('--sort',
+                        choices=['title', 'year', 'runtime'],
+                        help='Sort field',
+                        default='title')
     parser.add_argument('--pagebreaks', action=argparse.BooleanOptionalAction,
                         help='Page break after every movie.')
     args = parser.parse_args()
     moviepath = args.mediapath or os.environ['MEDIAPATH']
     if not moviepath:
         parser.print_help()
-    devices = load_media_dev(moviepath)
-    all_movies = compile_movies(devices)
-    if args.random:
-        chunks = prep_list(random_sample_list(all_movies, args.random))
-    else:
-        chunks = prep_list(all_movies)
-    show_movies(chunks, args)
+    all_movies = load_movies(moviepath)
+    organizer = Organizer(all_movies,
+                          args.random,
+                          grouping=GroupingOptions[args.group])
+    batches = organizer.get_batches()
+    show_movie_batches(batches, BatchSortOptions[args.sort], args.pagebreaks)

@@ -44,13 +44,18 @@ def build_filename_string(in_value):
     return level1.translate(level1.maketrans(" \t\n\r", "____"))
 
 
+def chg_ws(in_value):
+    """Convert whitespace characters to underscores"""
+    return in_value.translate(in_value.maketrans(" \t\n\r", "____"))
+
+
 def build_sort_string(in_value):
     '''Build a string suitable for sorting, accounting for language rules.'''
     level1 = transform_string(in_value)
     word_split = level1.split()
     if word_split[0] in LanguageHelpers.Articles_English:
         article = word_split.pop(0)
-        word_split.append('_'+article)
+        word_split.append('+'+article)
     return '_'.join(word_split)
 
 

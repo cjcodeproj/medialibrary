@@ -41,6 +41,7 @@ CASE1 = '''<?xml version='1.0'?>
    <properNoun><place><ci>Miami</ci><st>Florida</st></place></properNoun>
    <properNoun><entity>US Army</entity></properNoun>
    <properNoun><art type='movie' year='1980'>Xanadu</art></properNoun>
+   <properNoun><person><prefix>Colonel</prefix><fn>Sanders</fn></person></properNoun>
   </keywords>
  </story>
 </movie>
@@ -224,6 +225,32 @@ class TestProperNounArtKeyword(unittest.TestCase):
         """
         keyword = self.movie.story.keywords.pools['generic'][4]
         self.assertEqual(keyword.detail(), 'properNoun/art/Xanadu (movie)')
+
+
+class TestProperNounNameKeyword(unittest.TestCase):
+    """
+    Test against ProperNoun person keywords.
+    """
+    def setUp(self):
+        """
+        Test setup method.
+        """
+        xmlroot1 = ET.fromstring(CASE1)
+        self.movie = Movie(xmlroot1)
+
+    def test_propernoun_person_object(self):
+        """
+        Assert object instance is created.
+        """
+        keyword = self.movie.story.keywords.pools['generic'][5]
+        self.assertIsInstance(keyword, ProperNounKeyword)
+
+    def test_propernoun_person_object_detail(self):
+        """
+        Confirm the value of the person.
+        """
+        keyword = self.movie.story.keywords.pools['generic'][5]
+        self.assertEqual(keyword.detail(), 'properNoun/person/Colonel Sanders')
 
 
 class TestKeywordObject(unittest.TestCase):

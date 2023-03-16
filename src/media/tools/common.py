@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,8 @@
 
 '''Common routines for command line tools'''
 
+# pylint disable=R0801
+
 import random
 import media.fileops.scanner
 import media.fileops.loader
@@ -38,19 +40,18 @@ def load_media_dev(in_path):
     '''Identify suitable files and load them up'''
     repo = media.fileops.repo.Repo(in_path)
     repo.scan()
-    loader = media.fileops.loader.Loader()
-    m_devices = loader.load_media(repo, FilenameMatches.Movie_Media)
-    return m_devices
+    repo.load(FilenameMatches.Movie_Media)
+    return repo.media
 
 
-def compile_movies(media_devices):
-    '''Extract movies from devices'''
-    movies = []
-    for m_dev in media_devices:
-        for movie in m_dev.contents:
-            if movie not in movies:
-                movies.append(movie)
-    return movies
+def load_movies(in_path):
+    '''
+    Load all files that are tied to movie media devices.
+    '''
+    repo = media.fileops.repo.Repo(in_path)
+    repo.scan()
+    repo.load(FilenameMatches.Movie_Media)
+    return repo.get_movies()
 
 
 def random_sample_list(in_list, rand_limit):

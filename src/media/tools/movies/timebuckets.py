@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,10 +32,11 @@ from datetime import timedelta
 
 import os
 import argparse
+from media.generic.sorting.lists import Organizer
+from media.generic.sorting.groups import Batch
 from media.tools.common import (
-        load_media_dev, compile_movies, random_sample_list
+        load_movies, random_sample_list
         )
-from media.tools.movies.list import prep_list
 from media.tools.movies.genrebreakdown import proportion_bar
 
 
@@ -61,7 +62,6 @@ class BucketManager():
         shortest = in_list[0].runtime
         longest = in_list[-1].runtime
         interval = self.get_bucket_interval(shortest, longest)
-        # print(f"Interval is {interval}\n")
         start_i = shortest
         for _ in range(1, self.limit + 1):
             self.buckets.append(Bucket(start_i, interval, len(in_list)))
@@ -222,10 +222,10 @@ if __name__ == '__main__':
     mediapath = args.mediapath or os.environ['MEDIAPATH']
     if not mediapath:
         parser.print_help()
-    devices = load_media_dev(mediapath)
-    all_movies = compile_movies(devices)
-    list_entries = prep_list(all_movies)
-    sorted_movies = sorted(list_entries, key=lambda x: x.runtime)
+    all_movies = load_movies(mediapath)
+    organizer = Organizer(all_movies)
+    single_batch = organizer.get_batches()[0]
+    sorted_movies = single_batch.index_by(Batch.S_RUNTIME)
     if args.buckets:
         buckets = BucketManager(args.buckets)
     else:

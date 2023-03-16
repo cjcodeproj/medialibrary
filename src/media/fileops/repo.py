@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -34,6 +34,8 @@ It contains an object that does the actual scanning work
 and creation of the media objects.
 '''
 
+from media.data.media.contents.movie import Movie
+from media.fileops.loader import Loader
 from media.fileops.scanner import Walker
 
 
@@ -46,6 +48,8 @@ class Repo():
         self.walker = Walker([in_path])
         self.dirs = []
         self.files = []
+        self.media = []
+        self.content = []
 
     def set_walker(self, in_object):
         '''
@@ -70,4 +74,28 @@ class Repo():
         for fname in self.files:
             if in_pattern.search(fname):
                 out.append(fname)
+        return out
+
+    def load(self, pattern=None):
+        '''
+        Load all media files and generate the media objects.
+        '''
+        loader = Loader()
+        self.media = loader.load_media(self, pattern)
+        self._extract_content()
+
+    def _extract_content(self):
+        for m_dev in self.media:
+            for con_obj in m_dev.contents:
+                if con_obj not in self.content:
+                    self.content.append(con_obj)
+
+    def get_movies(self):
+        '''
+        Extract all content objects that are the Movie class.
+        '''
+        out = []
+        for con_obj in self.content:
+            if issubclass(con_obj.__class__, Movie):
+                out.append(con_obj)
         return out

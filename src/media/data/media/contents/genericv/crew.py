@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,10 +29,12 @@ of visual art, like a movie or television show.
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=R0801
+# pylint: disable=too-many-instance-attributes
 
+import xml.etree.ElementTree as ET
 from media.xml.functions import xs_bool
 from media.xml.namespaces import Namespaces
-from media.data.nouns import Name
+from media.data.nouns import PersonalName, noun_dispatcher
 
 
 class Crew():
@@ -44,6 +46,7 @@ class Crew():
         self.editors = []
         self.writers = []
         self.cinemap = []
+        self.music = None
         self.cast = None
         if in_element is not None:
             self._process(in_element)
@@ -53,13 +56,15 @@ class Crew():
             tagname = Namespaces.ns_strip(child.tag)
             if tagname == 'directors':
                 self.directors = Directors.load(child)
-            if tagname == 'editors':
+            elif tagname == 'editors':
                 self.editors = SimpleCrew.load(child, 'editor')
-            if tagname == 'cinemaphotographers':
+            elif tagname == 'cinemaphotographers':
                 self.cinemap = SimpleCrew.load(child, 'cinemaphotographer')
-            if tagname == 'writers':
+            elif tagname == 'writers':
                 self.writers = SimpleCrew.load(child, 'writer')
-            if tagname == 'cast':
+            elif tagname == 'music':
+                self.music = Music(child)
+            elif tagname == 'cast':
                 self.cast = Cast(child)
 
 
@@ -75,7 +80,7 @@ class Directors():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == 'director':
-                    out.append(Name(child))
+                    out.append(PersonalName(child))
         return out
 
 
@@ -93,7 +98,7 @@ class Writers():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == 'writer':
-                    out.append(Name(child))
+                    out.append(PersonalName(child))
 
 
 class SimpleCrew():
@@ -109,7 +114,7 @@ class SimpleCrew():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == desired_tag:
-                    out.append(Name(child))
+                    out.append(PersonalName(child))
         return out
 
     @classmethod
@@ -124,6 +129,47 @@ class SimpleCrew():
                 out_string += f"{name}. "
             out_string = out_string[:-2]
         return out_string
+
+
+class CrewAssignment():
+    '''
+    An assignment to a crew position.
+    '''
+    def __init__(self, tagname, in_element):
+        self.title = tagname
+        self.uncredited = False
+        self.object = noun_dispatcher(in_element)
+        if 'uncredited' in in_element.attrib:
+            self.uncredited = True
+
+    def __str__(self):
+        return str(self.object)
+
+
+class Music():
+    '''
+    Container object for all music related staff.
+    '''
+    def __init__(self, in_element):
+        self.allowed = ['composer', 'conductor', 'music']
+        self.breakdown = {}
+        self.composers = []
+        self.conductors = []
+        self.music = []
+        self._process(in_element)
+
+    def _process(self, in_element):
+        for child in in_element:
+            tagname = Namespaces.ns_strip(child.tag)
+            if tagname in self.allowed:
+                # nx_element = child[0]
+                crew_obj = CrewAssignment(tagname, child)
+                if tagname == 'composer':
+                    self.composers.append(crew_obj)
+                elif tagname == 'music':
+                    self.music.append(crew_obj)
+                elif tagname == 'conductor':
+                    self.conductors.append(crew_obj)
 
 
 class Cast():
@@ -152,13 +198,17 @@ class Role():
             for child in in_element:
                 tagname = Namespaces.ns_strip(child.tag)
                 if tagname == 'actor':
-                    self.actor = Name(child)
+                    self.actor = PersonalName(child)
                 if tagname == 'as':
                     child_tag = Namespaces.ns_strip(child[0].tag)
                     if child_tag == 'narrator':
                         self.portrays.append(PortraysNarrator())
                     elif child_tag == 'self':
                         self.portrays.append(PortraysSelf(child))
+                    elif child_tag == 'background':
+                        self.portrays.append(PortraysBackground())
+                    elif child_tag == 'additionalVoices':
+                        self.portrays.append(PortraysAdditionalVoices())
                     elif child_tag == 'title':
                         self.portrays.append(CharacterTitle(child))
                     else:
@@ -211,6 +261,40 @@ class PortraysNarrator(Portrays):
         self.formal = 'Narrator'
         self.sort_value = 'narrator'
 
+    def to_element(self):
+        '''
+        Generate an empty additionalVoices element.
+        '''
+        return ET.Element('additionalVoices')
+
+
+class PortraysBackground(Portrays):
+    '''
+    Class for special background character role.
+    '''
+    def __init__(self):
+        super().__init__()
+        self.value = 'Background'
+        self.formal = 'Background'
+        self.sort_value = 'background'
+
+    def to_element(self):
+        '''
+        Generate an empty background element.
+        '''
+        return ET.Element('background')
+
+
+class PortraysAdditionalVoices(Portrays):
+    '''
+    Class for special additionalVoices character role.
+    '''
+    def __init__(self):
+        super().__init__()
+        self.value = 'Additional Voices'
+        self.formal = 'Additional Voices'
+        self.sort_value = 'additional voices'
+
 
 class PortraysSelf(Portrays):
     '''
@@ -261,14 +345,22 @@ class CharacterName(Portrays):
         super().__init__()
         self.value = ''
         self.chunk = {}
-        self.pre_title = ''
-        self.post_title = ''
+        self.prefix = ''
+        self.suffix = ''
+        self.addendum = ''
         self.variant = ''
+        self.aspect = ''
         if in_element is not None:
             self._process(in_element)
 
     def _process(self, in_element):
-        '''Build the object based on the data'''
+        '''
+        Build the attribute values, while also keeping
+        track of the order that the elements are processed.
+
+        Treat nicknames differently by surrounding them
+        in single quote marks.
+        '''
         order = []
         for child in in_element:
             tagname = Namespaces.ns_strip(child.tag)
@@ -281,54 +373,26 @@ class CharacterName(Portrays):
                     self.chunk[CharacterName.name_matrix[tagname]] = child.text
                 order.append(CharacterName.name_matrix[tagname])
                 tagcount += 1
-            elif tagname == 'preTitle':
-                self.pre_title = child.text
-            elif tagname == 'postTitle':
-                self.post_title = child.text
+            elif tagname == 'prefix':
+                self.prefix = child.text
+            elif tagname == 'suffix':
+                self.suffix = child.text
+            elif tagname == 'addendum':
+                self.addendum = child.text
             elif tagname == 'variant':
                 self.variant = child.text
+            elif tagname == 'aspect':
+                self.aspect = child.text
         self._build_value(order)
         self._build_formal()
         self._build_sort(order)
 
-#    def _process2(self, in_element):
-#        '''Build the object based on the data'''
-#        for child in in_element:
-#            tagname = Namespaces.ns_strip(child.tag)
-#            tagcount = 1
-#            order = []
-#            if tagname == 'self':
-#                self.chunk['self'] = "(self)"
-#                order = ['self']
-#                self._build_value(order)
-#                return
-#            if tagname == 'narrator':
-#                self.chunk['narrator'] = "(narrator)"
-#                order = ['narrator']
-#                self._build_value(order)
-#                return
-#            if tagname == 'title':
-#                self.chunk['title'] = child.text
-#                order = ['title']
-#                self._build_value(order)
-#                return
-#            if tagname == 'nick':
-#                self.chunk['nick'] = child.text
-#                order.append('nick')
-#            if tagname == 'gn':
-#                self.chunk['given'] = child.text
-#                order.append('given')
-#            if tagname == 'mn':
-#                self.chunk['middle'] = child.text
-#                order.append('middle')
-#            if tagname == 'fn':
-#                self.chunk['family'] = child.text
-#                order.append('family')
-#            tagcount += 1
-#        self._build_value(order)
-#        return
-
     def _build_value(self, order):
+        '''
+        Build the name value by piecing each
+        element together in the order they
+        were read.
+        '''
         raw = ''
         for chunk_i in order:
             raw += self.chunk[chunk_i] + ' '
@@ -337,17 +401,26 @@ class CharacterName(Portrays):
 
     def _build_formal(self):
         raw = ''
-        if self.pre_title:
-            raw = self.pre_title + ' ' + self.value
+        if self.prefix:
+            raw = self.prefix + ' ' + self.value
         else:
             raw = self.value
-        if self.post_title:
-            raw += ' ' + self.post_title
+        if self.suffix:
+            raw += ' ' + self.suffix
+        if self.addendum:
+            raw += ' (' + self.addendum + ')'
         if self.variant:
             raw += ' (' + self.variant + ')'
+        if self.aspect:
+            raw += ' (' + self.aspect + ')'
         self.formal = raw
 
     def _build_sort(self, order):
+        '''
+        Build an explicit sort value by
+        taking the family name, given name,
+        and finally the middle name.
+        '''
         order = ['family', 'given', 'middle']
         raw = ''
         for o_i in order:
@@ -355,18 +428,6 @@ class CharacterName(Portrays):
                 raw += self.chunk[o_i].casefold() + '_'
         raw = raw[:-1]
         self.sort_value = raw
-
-#    def complete(self):
-#        out = ''
-#        if self.pre_title:
-#            out = self.pre_title + ' ' + self.value
-#        else:
-#            out = self.value
-#        if self.post_title:
-#            out += ' ' + self.post_title
-#        if self.variant:
-#            out += ' (' + self.variant + ')'
-#        return out
 
     def __str__(self):
         return f"{self.value}"

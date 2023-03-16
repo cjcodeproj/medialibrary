@@ -138,7 +138,7 @@ class TestTitle(unittest.TestCase):
         '''
         Assert Title instance has correct sort_value.
         '''
-        self.assertEqual(self.movie.title.sort_title, "river_turns_inward__a")
+        self.assertEqual(self.movie.title.sort_title, "river_turns_inward_+a")
 
     def test_title_file_title(self):
         '''

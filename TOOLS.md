@@ -6,8 +6,10 @@ be called directly from the command line.
 
 
 ```
+media.tools.media.authorrecords
 media.tools.media.list
 media.tools.media.show
+media.tools.meta.authorship
 media.tools.movies.list
 media.tools.movies.show
 media.tools.movies.namelist
@@ -44,11 +46,29 @@ Every tool uses Python argparse for argument parsing, and provides a help option
 ## Media Tools
 
 ```
+media.tools.media.authorrecords
 media.tools.media.list
 media.tools.media.show
 ```
 
 The media tools report on data related to physical media.
+
+### Media Author Records 
+
+```
+python -m media.tools.media.authorrecords [--mediapath (path)]
+```
+
+Identifies any authorship records present in a repository.
+
+```
+$ python -m media.tools.media.authorrecords
+
+Record for 'Mad Max'                     (Bob)
+--------------------------------------------------
+Created: 2021-06-28
+
+```
 
 ### Media List
 
@@ -102,6 +122,36 @@ Contents > Movies
   48 Hrs.                                  1982 Action/Comedy       
 
 ```
+
+## Metadata Tools
+
+```
+media.tools.meta.authorship
+```
+
+### Authorship Record Creator Tool
+
+```
+python -m media.tools.meta.authorship [--title (title)] [--author (author_name)] [--email (author_email)]
+```
+
+Generates an XML authorship record based on command line arguments.
+
+```
+$ python -m media.tools.meta.authorship --title "Record for 'Mad Max'"
+<?xml version='1.0' encoding='us-ascii'?>
+<authorshipRecord xmlns="http://vectortron.com/xml/media/meta/authorship">
+  <title>Record for 'Mad Max'</title>
+  <catalog />
+  <changelog>
+    <creation>
+      <date>2023-01-15</date>
+    </creation>
+  </changelog>
+</authorshipRecord>
+
+```
+
 
 ## Movie Tools
 
@@ -374,26 +424,20 @@ The objects are returned as an array, which can be accessed directly.
 
 ```
 $ python
-Python 3.9.7 (default, Sep  3 2021, 12:15:38) 
-[GCC 10.2.0] on sunos5
+Python 3.10.8 (main, Oct 31 2022, 11:27:36) [GCC 12.2.0] on sunos5
 Type "help", "copyright", "credits" or "license" for more information.
->>> import media.fileops.loader
 >>> import media.fileops.repo
->>> r=media.fileops.repo.Repo('/home/user/xml/vtmedia-schema/examples/movies')
->>> r.scan()
->>> loader = media.fileops.loader.Loader()
->>> dev_list = loader.load_media(r)
->>> print(dev_list[0].contents[0].title)
-Killing Season
->>> print(dev_list[0].contents[1].title)
-Red Lights
->>> print(dev_list[1].contents[0].title)
-All The President's Men
->>> print(dev_list[2].contents[0].title)
-Unstoppable
->>> print(dev_list[3].contents[0].title)
-Road House 2: Last Call
->>> print(dev_list[4].contents[0].title)
-The Last Starfighter
->>> 
+>>> repo = media.fileops.repo.Repo('/home/user/xml/movies/data')
+>>> repo.scans()
+>>> repo.load()
+>>> print(len(repo.media))
+575
+>>> print(len(repo.content))
+591
+>>> mo = repo.get_movies()
+>>> print(mo[126].title)
+Collateral
+>>> print(mo[126].crew.cast.cast[0].actor)
+Tom Cruise
+>>> quit()
 ```
