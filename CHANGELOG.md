@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-102](https://github.com/cjcodeproj/medialibrary/issues/102) Prep work for 0.1.7 release to PyPi
  - [medialibrary-101](https://github.com/cjcodeproj/medialibrary/issues/101) Document release process
  - [medialibrary-98](https://github.com/cjcodeproj/medialibrary/issues/98) Improve the basic crew code
  - [medialibrary-96](https://github.com/cjcodeproj/medialibrary/issues/96) Support enhanced schema type for noun choice
