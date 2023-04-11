@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -42,6 +42,7 @@ class Story():
         self.plot = None
         self.keywords = None
         self.themes = []
+        self.characters = []
         self._process(in_element)
 
     def _process(self, in_element):

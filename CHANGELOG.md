@@ -1,6 +1,10 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-107](https://github.com/cjcodeproj/medialibrary/issues/107) First level objects to represent characters
+
+
 ## RELEASE 0.1.7
  - [medialibrary-102](https://github.com/cjcodeproj/medialibrary/issues/102) Prep work for 0.1.7 release to PyPi
  - [medialibrary-101](https://github.com/cjcodeproj/medialibrary/issues/101) Document release process
