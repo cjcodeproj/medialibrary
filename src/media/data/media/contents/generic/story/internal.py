@@ -23,8 +23,8 @@
 #
 
 '''
-Object classes related to the plot of a piece of
-visual media.
+Object classes related to the story/plot
+of a given piece of media.
 '''
 
 # pylint: disable=too-few-public-methods
