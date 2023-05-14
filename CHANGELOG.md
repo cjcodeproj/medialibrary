@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-111](https://github.com/cjcodeproj/medialibrary/issues/111) Missing space between preferred given name and family name
  - [medialibrary-108](https://github.com/cjcodeproj/medialibrary/issues/108) Update Role code to handle new schema change
  - [medialibrary-107](https://github.com/cjcodeproj/medialibrary/issues/107) First level objects to represent characters
 

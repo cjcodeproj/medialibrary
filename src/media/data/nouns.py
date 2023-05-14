@@ -224,7 +224,7 @@ class PersonalName(AbstractNoun):
             if self.prefix:
                 raw += self.prefix + ' '
             if self.pref_given:
-                raw += self.pref_given
+                raw += self.pref_given + ' '
             else:
                 if self.given:
                     raw += self.given + ' '
