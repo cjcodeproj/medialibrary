@@ -83,6 +83,17 @@ class TestProperNounName(unittest.TestCase):
         self.assertEqual(str(self.name), 'Patrick Swayze')
 
 
+class TestProperNounNameSet2(unittest.TestCase):
+    """Test for PersonalName (set 2)
+    """
+    def setUp(self):
+        xmlroot = ET.fromstring(CASE5)
+        self.name = PersonalName(xmlroot)
+
+    def test_name_value_with_pgn(self):
+        """Assert string value of a name with a pgn is correct."""
+        self.assertEqual(str(self.name), 'Alicia Swayze')
+
 class TestProperNounPersonalNameSorting(unittest.TestCase):
     """Test suite for PersonalName sorting.
     """

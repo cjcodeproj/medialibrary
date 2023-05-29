@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -23,8 +23,8 @@
 #
 
 '''
-Object classes related to the plot of a piece of
-visual media.
+Object classes related to the story/plot
+of a given piece of media.
 '''
 
 # pylint: disable=too-few-public-methods
@@ -42,6 +42,7 @@ class Story():
         self.plot = None
         self.keywords = None
         self.themes = []
+        self.characters = []
         self._process(in_element)
 
     def _process(self, in_element):
