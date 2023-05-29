@@ -32,7 +32,7 @@ from media.xml.namespaces import Namespaces
 from media.data.media.contents.generic.catalog import (
         Title, TitleValueException, Catalog
         )
-from media.data.media.contents.genericv.story import Story
+from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
 from media.data.media.contents.movie.classification import Classification

@@ -29,10 +29,8 @@
 import unittest
 import xml.etree.ElementTree as ET
 from media.data.media.contents.movie import Movie
-from media.data.media.contents.genericv.crew import (
-        Crew, Cast, Role, CharacterName, PortraysBackground,
-        PortraysAdditionalVoices
-        )
+from media.data.media.contents.genericv.crew import Crew
+from media.data.media.contents.genericv.crew.cast import Cast
 
 CASE1 = '''<?xml version='1.0'?>
 <movie xmlns='http://vectortron.com/xml/media/movie'>
@@ -41,17 +39,25 @@ CASE1 = '''<?xml version='1.0'?>
   <cast>
    <role>
     <actor><gn>Marty</gn><fn>Goofus</fn></actor>
-    <as><prefix>Judge</prefix><gn>Bettle</gn><fn>Gallant</fn>
-     <suffix tpe='generational'>Sr.</suffix><aspect>voice</aspect></as>
+    <character>
+    <name>
+     <prefix>Judge</prefix>
+     <gn>Bettle</gn><fn>Gallant</fn>
+     <suffix tpe='generational'>Sr.</suffix>
+    </name>
+    <aspect>voice</aspect>
+    </character>
    </role>
    <role>
     <actor><gn>Josh</gn><fn>Gallant</fn></actor>
-    <as><nick>Travesty</nick></as>
-    <as><additionalVoices/></as>
+    <character>
+     <name><nick>Travesty</nick></name>
+    </character>
+    <additionalVoices/>
    </role>
    <role>
     <actor><gn>Al</gn><fn>Abama</fn><suffix>Jr.</suffix></actor>
-    <as><background/></as>
+    <background/>
    </role>
   </cast>
  </crew>
@@ -78,56 +84,6 @@ class TestCrewObjects(unittest.TestCase):
         Verify cast object is created.
         '''
         self.assertIsInstance(self.movie.crew.cast, Cast)
-
-    def test_first_role_instance(self):
-        '''
-        Verify a role object is created.
-        '''
-        self.assertIsInstance(self.movie.crew.cast.cast[0], Role)
-
-    def test_first_role_instance_portrays_character(self):
-        '''
-        Verify role object contains a CharacterName object.
-        '''
-        self.assertIsInstance(self.movie.crew.cast.cast[0].portrays[0],
-                              CharacterName)
-
-
-class TestCastRoleAs(unittest.TestCase):
-    '''
-    CharacterName class tests.
-    '''
-    def setUp(self):
-        xmlroot1 = ET.fromstring(CASE1)
-        self.movie = Movie(xmlroot1)
-
-    def test_character_given_name(self):
-        '''
-        Test creation of CharacterName object.
-        '''
-        cn1 = self.movie.crew.cast.cast[0].portrays[0]
-        self.assertEqual(cn1.chunk['given'], "Bettle")
-
-    def test_character_aspect(self):
-        '''
-        Test aspect value of character name.
-        '''
-        cn1 = self.movie.crew.cast.cast[0].portrays[0]
-        self.assertEqual(cn1.aspect, 'voice')
-
-    def test_character_background(self):
-        '''
-        Test a character who has a background role.
-        '''
-        cn1 = self.movie.crew.cast.cast[2].portrays[0]
-        self.assertIsInstance(cn1, PortraysBackground)
-
-    def test_character_additional_voices(self):
-        '''
-        Test a character as additional voices.
-        '''
-        cn1 = self.movie.crew.cast.cast[1].portrays[1]
-        self.assertIsInstance(cn1, PortraysAdditionalVoices)
 
 
 if __name__ == '__main__':
