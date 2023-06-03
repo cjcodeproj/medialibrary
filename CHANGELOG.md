@@ -1,6 +1,10 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-106](https://github.com/cjcodeproj/medialibrary/issues/106) Repo: Skip directories based on presence of ignore file
+
+
 ## RELEASE 0.1.9
  - [medialibrary-114](https://github.com/cjcodeproj/medialibrary/issues/114) Prep work for 0.1.9 release
  - [medialibrary-111](https://github.com/cjcodeproj/medialibrary/issues/111) Missing space between preferred given name and family name
