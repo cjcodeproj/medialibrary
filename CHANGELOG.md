@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-109](https://github.com/cjcodeproj/medialibrary/issues/109) README.md should reflect location of distribution on PyPi
  - [medialibrary-106](https://github.com/cjcodeproj/medialibrary/issues/106) Repo: Skip directories based on presence of ignore file
 
 

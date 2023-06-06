@@ -31,12 +31,27 @@ code.
 Neither of these are required for module operation, but they both contain sample data and documentation on
 how to build your own files.
 
+
+## Package Distribution
+
+[![PyPi version](https://img.shields.io/[y[i/v/medialibrary)](https://pypi.org/project/medialibrary/)
+
 ## Installing
 
 Installaiton of the module wheel file.
 
 ```
-$ python -m pip install --user medialibrary-0.1-py3-none-any.whl
+$ python -m pip install --user medialibrary
+```
+
+### Quick Start
+
+Once you have the software installed, and you have a repository (either your own, or something you downloaded), you can
+immediately start using the software.
+
+```
+$ export MEDIAPATH=~/xml/mediafiles
+$ python -m media.tools.movies.list
 ```
 
 
