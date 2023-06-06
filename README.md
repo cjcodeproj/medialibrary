@@ -34,7 +34,7 @@ how to build your own files.
 
 ## Package Distribution
 
-[![PyPi version](https://img.shields.io/[y[i/v/medialibrary)](https://pypi.org/project/medialibrary/)
+[![PyPi version](https://img.shields.io/pypi/v/medialibrary)](https://pypi.org/project/medialibrary/)
 
 ## Installing
 
