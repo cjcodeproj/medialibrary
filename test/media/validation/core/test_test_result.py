@@ -77,12 +77,21 @@ class TestTestResultSkipped(unittest.TestCase):
         self.test_r.skip()
 
     def test_test_result_skipped(self):
+        '''
+        Confirm the skipped test value is true.
+        '''
         self.assertTrue(self.test_r.skipped)
 
     def test_test_max_score_when_skipped(self):
+        '''
+        Confirm the skipped max score is 0.
+        '''
         self.assertEqual(self.test_r.possible, 0)
 
     def test_test_real_score_when_skipped(self):
+        '''
+        Confirm the skipped possible score is 0.
+        '''
         self.assertEqual(self.test_r.score, 0)
 
 

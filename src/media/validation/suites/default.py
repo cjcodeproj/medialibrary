@@ -22,20 +22,30 @@
 # SOFTWARE.
 #
 
+'''
+Classes related to test suites.
+'''
+
 from media.validation.tests.media import MediaValidator
 
 
 class DefaultValidatorSuite():
+    '''
+    Default class containing most commonly used validator classes.
+    '''
     def __init__(self):
-        self.foo = True
         self.tests = []
         self.setup_test_suite()
 
     def setup_test_suite(self):
+        '''
+        Set up the testing suite.
+        '''
         self.tests.append(MediaValidator())
 
     def run(self, in_media, in_level=5):
-        # Run through all of the tests for a single movie
-        self.report = True
+        '''
+        Run all of the tests in the suite.
+        '''
         for tst in self.tests:
             tst.run_standard_tests(in_media, in_level)
