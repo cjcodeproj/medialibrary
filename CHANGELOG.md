@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-128](https://github.com/cjcodeproj/medialibrary/issues/128) Plot string has trailing whitespace
  - [medialibrary-131](https://github.com/cjcodeproj/medialibrary/issues/131) Post validation style tweeks
  - [medialibrary-118](https://github.com/cjcodeproj/medialibrary/issues/118) Validation tool should work at the media level
  - [medialibrary-109](https://github.com/cjcodeproj/medialibrary/issues/109) README.md should reflect location of distribution on PyPi
