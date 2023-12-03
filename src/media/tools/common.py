@@ -26,7 +26,6 @@
 
 # pylint disable=R0801
 
-import random
 import media.fileops.scanner
 import media.fileops.loader
 import media.fileops.repo
@@ -52,21 +51,3 @@ def load_movies(in_path):
     repo.scan()
     repo.load(FilenameMatches.Movie_Media)
     return repo.get_movies()
-
-
-def random_sample_list(in_list, rand_limit):
-    '''
-    Take a large list, and turn it into a random sample.
-    '''
-    total = len(in_list)-1
-    if rand_limit > len(in_list):
-        rand_limit = len(in_list)
-    slots = []
-    out = []
-    while len(slots) <= rand_limit-1:
-        r_num = random.randint(0, total)
-        if r_num not in slots:
-            slots.append(r_num)
-    for slot_i in slots:
-        out.append(in_list[slot_i])
-    return out

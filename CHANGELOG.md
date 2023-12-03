@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-127](https://github.com/cjcodeproj/medialibrary/issues/127) Consider deprecating random_sample_list()
  - [medialibrary-128](https://github.com/cjcodeproj/medialibrary/issues/128) Plot string has trailing whitespace
  - [medialibrary-131](https://github.com/cjcodeproj/medialibrary/issues/131) Post validation style tweeks
  - [medialibrary-118](https://github.com/cjcodeproj/medialibrary/issues/118) Validation tool should work at the media level
