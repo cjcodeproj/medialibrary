@@ -1,7 +1,7 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.2.1
  - [medialibrary-125](https://github.com/cjcodeproj/medialibrary/issues/125) Create simple example documentation
  - [medialibrary-127](https://github.com/cjcodeproj/medialibrary/issues/127) Consider deprecating random_sample_list()
  - [medialibrary-128](https://github.com/cjcodeproj/medialibrary/issues/128) Plot string has trailing whitespace
