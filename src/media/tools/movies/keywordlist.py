@@ -30,9 +30,8 @@ Module to report on all keywords within a movie
 
 import os
 import argparse
-from media.tools.common import (
-        load_movies, random_sample_list
-        )
+from media.generic.sorting.lists import Organizer
+from media.tools.common import load_movies
 
 
 class KeywordTitleMap():
@@ -126,6 +125,6 @@ if __name__ == '__main__':
     all_keywords = grab_keywords(all_movies)
     if args.random:
         rand_limit = args.random
-        list_keywords(random_sample_list(all_keywords, rand_limit))
+        list_keywords(Organizer.get_random_sample(all_keywords, rand_limit))
     else:
         list_keywords(all_keywords)

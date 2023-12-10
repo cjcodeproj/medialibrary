@@ -34,9 +34,7 @@ import os
 import argparse
 from media.generic.sorting.lists import Organizer
 from media.generic.sorting.groups import Batch
-from media.tools.common import (
-        load_movies, random_sample_list
-        )
+from media.tools.common import load_movies
 from media.tools.movies.genrebreakdown import proportion_bar
 
 
@@ -202,7 +200,7 @@ class Bucket():
         for illustrative purposes.  Also show a random movie title.
         '''
         tick_bar = proportion_bar(len(self.movies), self.total_count)
-        movie = random_sample_list(self.movies, 1)
+        movie = Organizer.get_random_sample(self.movies, 1)
         if len(movie) > 0:
             mov_title = str(movie[0].movie.title)
             perc = float(len(self.movies) / self.total_count * 100)

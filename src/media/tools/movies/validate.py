@@ -32,9 +32,8 @@ Run simple validation tests against the movies, report any incomplete data.
 import os
 import argparse
 from datetime import timedelta
-from media.tools.common import (
-        load_movies, random_sample_list
-        )
+from media.generic.sorting.lists import Organizer
+from media.tools.common import load_movies
 
 
 class Status():
@@ -187,7 +186,7 @@ if __name__ == '__main__':
         parser.print_help()
     all_movies = load_movies(mediapath)
     if args.random:
-        sample = random_sample_list(all_movies, args.random)
+        sample = Organizer.get_random_sample(all_movies, args.random)
     else:
         sample = all_movies
     status_reports = validate_movies(sample)

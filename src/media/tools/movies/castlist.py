@@ -30,9 +30,8 @@ Module to report on all named within a movie
 
 import os
 import argparse
-from media.tools.common import (
-        load_movies, random_sample_list
-        )
+from media.generic.sorting.lists import Organizer
+from media.tools.common import load_movies
 
 
 class ActorRoleMap():
@@ -246,7 +245,7 @@ if __name__ == '__main__':
             print(f"{str(mi.title)}")
     if args.random:
         rand_limit = args.random
-        sample_names = random_sample_list(names, rand_limit)
+        sample_names = Organizer.get_random_sample(names, rand_limit)
     else:
         sample_names = names
     list_names(sample_names)

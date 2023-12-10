@@ -22,32 +22,35 @@
 # SOFTWARE.
 #
 
-'''Common routines for command line tools'''
 
-# pylint disable=R0801
+'''
+generic validation module media/content/movie
+'''
 
-import media.fileops.scanner
-import media.fileops.loader
-import media.fileops.repo
-from media.fileops.filenames import FilenameMatches
-
-# Walker module walks the filesystem
-# Loader module reads in the discovered files
+from media.validation.tests.media.contents.movie import MovieValidator
+from media.data.media.contents.movie import Movie
 
 
-def load_media_dev(in_path):
-    '''Identify suitable files and load them up'''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.media
-
-
-def load_movies(in_path):
+class ValidateContentTests():
     '''
-    Load all files that are tied to movie media devices.
+    Class to add content testing to the test lists.
     '''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.get_movies()
+    def __init__(self):
+        self.tests = []
+        self.setup()
+
+    def setup(self):
+        '''
+        Set up content validation objects for testing.
+        '''
+        self.tests.append(MovieValidator())
+
+    def run_standard_tests(self, in_dish, in_level=5):
+        '''
+        Run the standard tests by identifying the media type.
+        '''
+        for con in in_dish.status.contents:
+            obj = con.item
+            if issubclass(obj.__class__, Movie):
+                movie_v = MovieValidator()
+                movie_v.run_standard_tests(con, in_level)

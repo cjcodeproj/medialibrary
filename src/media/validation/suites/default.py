@@ -22,32 +22,30 @@
 # SOFTWARE.
 #
 
-'''Common routines for command line tools'''
+'''
+Classes related to test suites.
+'''
 
-# pylint disable=R0801
-
-import media.fileops.scanner
-import media.fileops.loader
-import media.fileops.repo
-from media.fileops.filenames import FilenameMatches
-
-# Walker module walks the filesystem
-# Loader module reads in the discovered files
+from media.validation.tests.media import MediaValidator
 
 
-def load_media_dev(in_path):
-    '''Identify suitable files and load them up'''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.media
-
-
-def load_movies(in_path):
+class DefaultValidatorSuite():
     '''
-    Load all files that are tied to movie media devices.
+    Default class containing most commonly used validator classes.
     '''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.get_movies()
+    def __init__(self):
+        self.tests = []
+        self.setup_test_suite()
+
+    def setup_test_suite(self):
+        '''
+        Set up the testing suite.
+        '''
+        self.tests.append(MediaValidator())
+
+    def run(self, in_media, in_level=5):
+        '''
+        Run all of the tests in the suite.
+        '''
+        for tst in self.tests:
+            tst.run_standard_tests(in_media, in_level)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,8 @@ List out all physical media, one per line.
 import os
 import argparse
 import media.fmt.text.media
-from media.tools.common import (
-        load_media_dev, random_sample_list
-        )
+from media.generic.sorting.lists import Organizer
+from media.tools.common import load_media_dev
 
 
 def list_devices(in_list):
@@ -67,7 +66,7 @@ if __name__ == '__main__':
         parser.print_help()
     devices = load_media_dev(mediapath)
     if args.random:
-        chunks = prep_list(random_sample_list(devices, args.random))
+        chunks = prep_list(Organizer.get_random_sample(devices, args.random))
     else:
         chunks = prep_list(devices)
     list_devices(chunks)

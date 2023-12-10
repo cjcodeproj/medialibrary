@@ -94,6 +94,7 @@ class TestProperNounNameSet2(unittest.TestCase):
         """Assert string value of a name with a pgn is correct."""
         self.assertEqual(str(self.name), 'Alicia Swayze')
 
+
 class TestProperNounPersonalNameSorting(unittest.TestCase):
     """Test suite for PersonalName sorting.
     """

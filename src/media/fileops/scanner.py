@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,6 +36,8 @@ from os.path import isdir, isfile
 
 class Walker():
     '''Scans directory for media XML files'''
+    IGNORE = '.vtmignore'
+
     def __init__(self, in_paths, debug=False):
         self.dirs = []
         self.files = []
@@ -45,32 +47,25 @@ class Walker():
         self.debug = debug
         self.dirs.append(in_paths[0])
 
-    def filename_match(self, in_match):
-        '''Pass filename matching regex'''
-        self.match_re = in_match
-
     def scan(self):
         '''Scan the directory tree for files'''
         tstart = time.time()
         for s_dir in self.dirs:
-            for s_file in listdir(s_dir):
-                full_path = os.path.join(s_dir, s_file)
-                if self.debug:
-                    print(f"{s_dir!s} {s_file!s} {full_path!s}")
-                if isdir(full_path):
-                    if not s_file.startswith('.'):
-                        self.dirs.append(full_path)
-                elif isfile(full_path):
-                    self.files.append(full_path)
+            file_list = listdir(s_dir)
+            if Walker.IGNORE in file_list:
+                file_list = []
+            if file_list:
+                for s_file in file_list:
+                    full_path = os.path.join(s_dir, s_file)
+                    if self.debug:
+                        print(f"{s_dir!s} {s_file!s} {full_path!s}")
+                    if isdir(full_path):
+                        if not s_file.startswith('.'):
+                            self.dirs.append(full_path)
+                    elif isfile(full_path):
+                        self.files.append(full_path)
         tend = time.time()
         self.elapsed = tend - tstart
-
-    def name_match(self, in_filename):
-        '''Test a filename to ensure it matches our search pattern'''
-        if self.match_re:
-            if self.match_re.search(in_filename):
-                return True
-        return False
 
     def stats(self):
         '''Simple statistical output'''

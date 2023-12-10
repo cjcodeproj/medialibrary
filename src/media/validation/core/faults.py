@@ -22,32 +22,44 @@
 # SOFTWARE.
 #
 
-'''Common routines for command line tools'''
+'''
+Objects pertaining to validation test faults.
+'''
 
-# pylint disable=R0801
-
-import media.fileops.scanner
-import media.fileops.loader
-import media.fileops.repo
-from media.fileops.filenames import FilenameMatches
-
-# Walker module walks the filesystem
-# Loader module reads in the discovered files
+# pylint: disable=R0903
 
 
-def load_media_dev(in_path):
-    '''Identify suitable files and load them up'''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.media
-
-
-def load_movies(in_path):
+class FaultLevel():
     '''
-    Load all files that are tied to movie media devices.
+    Fault levels.
     '''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.get_movies()
+    NOTICE = 1
+    WARNING = 2
+    CRITICAL = 3
+
+
+class Fault():
+    '''
+    A fault is the equivelant of an exception
+    when validating media records.
+    '''
+    def __init__(self, in_level, in_message, in_text=None):
+        self.level = in_level
+        self.message = in_message
+        self.text = in_text
+
+    def lvl_str(self):
+        '''
+        Return the fault level as a string.
+        '''
+        matrix = {
+                  FaultLevel.NOTICE: 'NOTICE',
+                  FaultLevel.WARNING: 'WARNING',
+                  FaultLevel.CRITICAL: 'CRITICAL'
+                 }
+        return matrix[self.level]
+
+    def __str__(self):
+        if self.text:
+            return f"{self.lvl_str()}: {self.message} ({self.text})"
+        return f"{self.lvl_str()}: {self.message}"
