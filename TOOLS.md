@@ -9,6 +9,7 @@ be called directly from the command line.
 media.tools.media.authorrecords
 media.tools.media.list
 media.tools.media.show
+media.tools.media.validate
 media.tools.meta.authorship
 media.tools.movies.list
 media.tools.movies.show
@@ -120,6 +121,75 @@ Contents > Movies
   Title                                    Year Genre               
   ---------------------------------------- ---- --------------------
   48 Hrs.                                  1982 Action/Comedy       
+
+```
+
+### Media Validate
+
+```
+python -m media.tools.media.validate [--level {1-5}] [--filter {passing,failed,none}]
+                                     [--list/--no-list]  [--details/--no-details] [--stats]
+                                     [--random (int)] [--mediapath (path)]
+```
+
+Runs validation tests against media.
+
+```
+$ python -m media.tools.movies.validate
+...
+Media                                    Type       Score      Run/Skip Pass/Fail Faults
+---------------------------------------- ---------- ---------- -------- --------- ------
+Unstoppable                              Blu-Ray     10.0/10.0  14    3   14    0      0
+
+========================================================================
+Unstoppable                                                      Blu-Ray
+========================================================================
+
+                           Score : 10.0/10.0
+                       Tests Run : 14
+                   Tests Skipped : 3
+                          Passed : 14
+                          Failed : 0
+
+
+No   Test                                     Result  Score Max   Faults
+---- ---------------------------------------- ------- ----- ----- ------
+   1 media.title                              Pass        5     5      0
+   2 media.title.main                         Pass        5     5      0
+   3 media.title.main.value                   Pass        5     5      0
+   4 media.title.edition                      Skipped     -     -      -
+   5 media.title.edition.value                Skipped     -     -      -
+   6 media.title.main.whitespace              Pass        5     5      0
+   7 media.title.edition.whitespace           Skipped     -     -      -
+
+Content: Unstoppable                                             (Movie)
+------------------------------------------------------------------------
+
+No   Test                                     Result  Score Max   Faults
+---- ---------------------------------------- ------- ----- ----- ------
+   1 generic.catalog                          Pass        5     5      0
+   2 generic.catalog.copyright                Pass        5     5      0
+   3 generic.catalog.copyright.year           Pass        5     5      0
+   4 generic.catalog.copyright.holders        Pass        5     5      0
+   5 generic.story.plot                       Pass        5     5      0
+   6 generic.story.plot.whitesapce            Pass        5     5      0
+   7 generic.story.plot.length                Pass        5     5      0
+   8 genericv.technical.runtime               Pass        5     5      0
+   9 genericv.technical.runtime.value         Pass        5     5      0
+  10 movie.technical.runtime.value            Pass        5     5      0
+
+
+                     Entire Set
+                     ----------
+Total Media:                  1
+Perfect:                      1
+Failed:                       0
+
+Overall Percentage:     100.00%
+
+ Program Start Time : 2023-11-05 21:58:36.477136
+   Program End Time : 2023-11-05 21:58:36.487409
+         Duration   : 0:00:00.010273
 
 ```
 

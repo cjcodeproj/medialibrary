@@ -22,32 +22,37 @@
 # SOFTWARE.
 #
 
-'''Common routines for command line tools'''
 
-# pylint disable=R0801
+'''
+Status objects.
+'''
 
-import media.fileops.scanner
-import media.fileops.loader
-import media.fileops.repo
-from media.fileops.filenames import FilenameMatches
-
-# Walker module walks the filesystem
-# Loader module reads in the discovered files
+# pylint: disable=R0903
 
 
-def load_media_dev(in_path):
-    '''Identify suitable files and load them up'''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.media
-
-
-def load_movies(in_path):
+class StatusCode():
     '''
-    Load all files that are tied to movie media devices.
+    Simple status code values.
     '''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.get_movies()
+    PASS = 0
+    FAIL = 1
+
+
+class ResultSet():
+    '''
+    Simple pairing of media and results.
+    '''
+    def __init__(self, in_media):
+        self.media = in_media
+        self.results = []
+
+
+class Result():
+    '''
+    Simple result.
+    '''
+    def __init__(self):
+        self.status = 0
+        self.severity = 5
+        self.message = ""
+        self.area = ""

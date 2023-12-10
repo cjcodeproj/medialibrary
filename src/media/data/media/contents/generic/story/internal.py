@@ -78,7 +78,7 @@ class Plot():
                 out.append(child.tail)
         out_string = "".join(out)
         out_string = re.sub(r'\s+', ' ', out_string)
-        self.plot = out_string
+        self.plot = out_string.rstrip()
 
     def __str__(self):
         return self.plot

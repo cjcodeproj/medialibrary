@@ -22,32 +22,7 @@
 # SOFTWARE.
 #
 
-'''Common routines for command line tools'''
 
-# pylint disable=R0801
-
-import media.fileops.scanner
-import media.fileops.loader
-import media.fileops.repo
-from media.fileops.filenames import FilenameMatches
-
-# Walker module walks the filesystem
-# Loader module reads in the discovered files
-
-
-def load_media_dev(in_path):
-    '''Identify suitable files and load them up'''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.media
-
-
-def load_movies(in_path):
-    '''
-    Load all files that are tied to movie media devices.
-    '''
-    repo = media.fileops.repo.Repo(in_path)
-    repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
-    return repo.get_movies()
+'''
+generic validation module
+'''

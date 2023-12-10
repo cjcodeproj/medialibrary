@@ -30,9 +30,8 @@ Module to report on all named within a movie
 
 import os
 import argparse
-from media.tools.common import (
-        load_movies, random_sample_list
-        )
+from media.generic.sorting.lists import Organizer
+from media.tools.common import load_movies
 
 
 class NameJobTitleMap():
@@ -163,6 +162,6 @@ if __name__ == '__main__':
     all_names = grab_crew_names(all_movies)
     if args.random:
         rand_limit = args.random
-        list_names(random_sample_list(all_names, rand_limit))
+        list_names(Organizer.get_random_sample(all_names, rand_limit))
     else:
         list_names(all_names)

@@ -1,6 +1,16 @@
 medialibrary CHANGELOG
 ======================
 
+## RELEASE 0.2.1
+ - [medialibrary-125](https://github.com/cjcodeproj/medialibrary/issues/125) Create simple example documentation
+ - [medialibrary-127](https://github.com/cjcodeproj/medialibrary/issues/127) Consider deprecating random_sample_list()
+ - [medialibrary-128](https://github.com/cjcodeproj/medialibrary/issues/128) Plot string has trailing whitespace
+ - [medialibrary-131](https://github.com/cjcodeproj/medialibrary/issues/131) Post validation style tweeks
+ - [medialibrary-118](https://github.com/cjcodeproj/medialibrary/issues/118) Validation tool should work at the media level
+ - [medialibrary-109](https://github.com/cjcodeproj/medialibrary/issues/109) README.md should reflect location of distribution on PyPi
+ - [medialibrary-106](https://github.com/cjcodeproj/medialibrary/issues/106) Repo: Skip directories based on presence of ignore file
+
+
 ## RELEASE 0.1.9
  - [medialibrary-114](https://github.com/cjcodeproj/medialibrary/issues/114) Prep work for 0.1.9 release
  - [medialibrary-111](https://github.com/cjcodeproj/medialibrary/issues/111) Missing space between preferred given name and family name
