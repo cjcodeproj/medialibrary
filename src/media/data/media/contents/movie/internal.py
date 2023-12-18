@@ -104,6 +104,21 @@ class Movie():
             self.sort_title = self.title.sort_title
             self.unique_key = self.sort_title + "-0000-1"
 
+    def catalog_title(self):
+        '''
+        Return a catalog title for the movie.
+        '''
+        ukv = 1
+        cpy = '0000'
+        if self.catalog:
+            if self.catalog.copyright:
+                cpy = str(self.catalog.copyright.year)
+            if self.catalog.unique_index:
+                ukv = self.catalog.unique_index.index
+        if ukv == 1:
+            return f"{self.title!s} ({cpy})"
+        return f"{self.title!s} ({cpy}/{ukv})"
+
     def __hash__(self):
         return hash(self.unique_key)
 
