@@ -29,9 +29,7 @@
 
 from datetime import timedelta
 from media.xml.namespaces import Namespaces
-from media.data.media.contents.generic.catalog import (
-        Title, TitleValueException, Catalog
-        )
+from media.data.media.contents import AbstractContent, ContentException
 from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
@@ -39,16 +37,15 @@ from media.data.media.contents.movie.classification import Classification
 from media.generic.sorting.lists import ContentIndex
 
 
-class Movie():
+class Movie(AbstractContent):
     '''Movie object'''
-    def __init__(self, in_chunk):
-        self.title = None
-        self.catalog = None
+    def __init__(self, in_element):
+        super().__init__()
         self.technical = None
         self.crew = None
         self.sort_title = ""
         self.unique_key = ""
-        self._process(in_chunk)
+        self._process(in_element)
 
     def build_index_object(self):
         """
@@ -57,15 +54,9 @@ class Movie():
         """
         return MovieIndexEntry(self)
 
-    def _process(self, in_chunk):
-        for child in in_chunk:
-            if child.tag == Namespaces.nsf('movie') + 'title':
-                try:
-                    self.title = Title(child.text)
-                except TitleValueException as tve:
-                    raise MovieException(tve.message) from tve
-            if child.tag == Namespaces.nsf('movie') + 'catalog':
-                self.catalog = Catalog(child)
+    def _process(self, in_element):
+        super()._process(in_element)
+        for child in in_element:
             if child.tag == Namespaces.nsf('movie') + 'classification':
                 self.classification = Classification(child)
             if child.tag == Namespaces.nsf('movie') + 'technical':
@@ -172,7 +163,7 @@ class MovieIndexEntry(ContentIndex):
         self.first_letter = self.sort_title[0]
 
 
-class MovieException(Exception):
+class MovieException(ContentException):
     '''Exception raised when there is an issue with a movie.'''
     def __init__(self, message):
         super().__init__(message)

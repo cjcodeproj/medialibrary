@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-144](https://github.com/cjcodeproj/medialibrary/issues/144) Base class for all content objects
  - [medialibrary-140](https://github.com/cjcodeproj/medialibrary/issues/140) Output a catalog title
 
 ## RELEASE 0.2.1
