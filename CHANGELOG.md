@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-80](https://github.com/cjcodeproj/medialibrary/issues/80) Comparator framework
  - [medialibrary-144](https://github.com/cjcodeproj/medialibrary/issues/144) Base class for all content objects
  - [medialibrary-140](https://github.com/cjcodeproj/medialibrary/issues/140) Output a catalog title
 
