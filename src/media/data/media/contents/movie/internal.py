@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -43,8 +43,6 @@ class Movie(AbstractContent):
         super().__init__()
         self.technical = None
         self.crew = None
-        self.sort_title = ""
-        self.unique_key = ""
         self._process(in_element)
 
     def build_index_object(self):
@@ -67,48 +65,7 @@ class Movie(AbstractContent):
                 self.story = Story(child)
             if child.tag == Namespaces.nsf('movie') + 'crew':
                 self.crew = Crew(child)
-        if self.title is not None:
-            self._build_unique_key()
-
-    def _build_unique_key(self):
-        ukv = None
-        cpy = None
-        if self.catalog is not None:
-            if self.catalog.alt_titles is not None:
-                if self.catalog.alt_titles.variant_sort is True:
-                    self.sort_title = \
-                            self.catalog.alt_titles.variant_title.sort_title
-                    self.unique_key = self.sort_title
-                else:
-                    self.sort_title = self.title.sort_title
-                    self.unique_key = self.sort_title
-            if self.catalog.copyright is not None:
-                cpy = str(self.catalog.copyright.year)
-            else:
-                cpy = "0000"
-            if self.catalog.unique_index is not None:
-                ukv = str(self.catalog.unique_index.index)
-            else:
-                ukv = "1"
-            self.unique_key += "-" + cpy + "-" + ukv
-        else:
-            self.sort_title = self.title.sort_title
-            self.unique_key = self.sort_title + "-0000-1"
-
-    def catalog_title(self):
-        '''
-        Return a catalog title for the movie.
-        '''
-        ukv = 1
-        cpy = '0000'
-        if self.catalog:
-            if self.catalog.copyright:
-                cpy = str(self.catalog.copyright.year)
-            if self.catalog.unique_index:
-                ukv = self.catalog.unique_index.index
-        if ukv == 1:
-            return f"{self.title!s} ({cpy})"
-        return f"{self.title!s} ({cpy}/{ukv})"
+        self._post_load_process()
 
     def __hash__(self):
         return hash(self.unique_key)

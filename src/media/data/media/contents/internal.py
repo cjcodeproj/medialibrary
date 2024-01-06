@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,6 +32,7 @@ from media.xml.namespaces import Namespaces
 from media.data.media.contents.generic.catalog import (
         Title, TitleValueException, Catalog
         )
+from media.generic.titletools import TitleMunger
 
 
 class AbstractContent():
@@ -43,6 +44,8 @@ class AbstractContent():
     def __init__(self):
         self.title = None
         self.catalog = None
+        self.sort_title = ""
+        self.unique_key = ""
 
     def _process(self, in_element):
         for child in in_element:
@@ -54,6 +57,23 @@ class AbstractContent():
                     raise ContentException(tve.message) from tve
             if tagname == 'catalog':
                 self.catalog = Catalog(child)
+
+    def _post_load_process(self):
+        if self.title:
+            self._build_unique_key()
+
+    def _build_unique_key(self):
+        self.sort_title = TitleMunger.build_sort_cat_title(
+                self.title, self.catalog)
+        self.unique_key = TitleMunger.build_unique_key_string(
+                self.title, self.catalog)
+
+    def catalog_title(self):
+        '''
+        Return a formatted title that inclues the copyright year.
+        '''
+        return TitleMunger.build_catalog_title(
+                self.title, self.catalog)
 
 
 class ContentException(Exception):
