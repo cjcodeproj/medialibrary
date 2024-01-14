@@ -25,7 +25,7 @@
 '''Common code related to manipulating titles.'''
 
 from media.generic.stringtools import transform_string, build_sort_string
-# from media.generic.language import LanguageHelpers
+from media.generic.language import LanguageHelpers
 
 
 class TitleMunger():
@@ -91,6 +91,24 @@ class TitleMunger():
             if in_catalog.unique_index:
                 idx = f"{in_catalog.unique_index.index:d}"
         return level1 + '-' + year + '-' + idx
+
+    @classmethod
+    def build_title_path(cls, in_title):
+        '''
+        Create a path string based on a title,
+
+        Ex: "The 3 Ugly Bridges" becomes "3/3us"
+        '''
+        level1 = transform_string(str(in_title))
+        word_split = level1.split()
+        if word_split[0] in LanguageHelpers.Articles_English:
+            word_split.pop(0)
+        first_letter = word_split[0][0]
+        second_letter = word_split[0][1]
+        last_letter = word_split[-1][-1]
+        path_string = f"/{first_letter}/" + \
+                      f"{first_letter}{second_letter}{last_letter}/"
+        return path_string
 
     @classmethod
     def build_catalog_title(cls, in_title, in_catalog):

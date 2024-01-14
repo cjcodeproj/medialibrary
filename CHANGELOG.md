@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-149](https://github.com/cjcodeproj/medialibrary/issues/149) TitleMunger could provide directory path inforamtion
  - [medialibrary-150](https://github.com/cjcodeproj/medialibrary/issues/150) Add the xlink and xml namespaces
  - [medialibrary-145](https://github.com/cjcodeproj/medialibrary/issues/145) Derivative content title objects may benefit from refactoring
  - [medialibrary-80](https://github.com/cjcodeproj/medialibrary/issues/80) Comparator framework
