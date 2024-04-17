@@ -23,7 +23,26 @@
 #
 
 '''
-Placeholder for all abstract content object imports.
+Compare all of the movies against each other.
 '''
 
-from .internal import *
+# pylint: disable=R0801
+
+import os
+import argparse
+from media.generic.compare.movie import MovieComparator
+from media.tools.common import load_movies
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Simple movie list.')
+    parser.add_argument('--mediapath', help='path of media library')
+    args = parser.parse_args()
+    mediapath = args.mediapath or os.environ['MEDIAPATH']
+    if not mediapath:
+        parser.print_help()
+    all_movies = load_movies(mediapath)
+    comparator = MovieComparator()
+    comparator.load_data(all_movies)
+    comparator.compare()
+    comparator.report()

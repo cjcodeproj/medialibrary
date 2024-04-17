@@ -1,6 +1,14 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-149](https://github.com/cjcodeproj/medialibrary/issues/149) TitleMunger could provide directory path inforamtion
+ - [medialibrary-150](https://github.com/cjcodeproj/medialibrary/issues/150) Add the xlink and xml namespaces
+ - [medialibrary-145](https://github.com/cjcodeproj/medialibrary/issues/145) Derivative content title objects may benefit from refactoring
+ - [medialibrary-80](https://github.com/cjcodeproj/medialibrary/issues/80) Comparator framework
+ - [medialibrary-144](https://github.com/cjcodeproj/medialibrary/issues/144) Base class for all content objects
+ - [medialibrary-140](https://github.com/cjcodeproj/medialibrary/issues/140) Output a catalog title
+`
 ## RELEASE 0.2.1
  - [medialibrary-125](https://github.com/cjcodeproj/medialibrary/issues/125) Create simple example documentation
  - [medialibrary-127](https://github.com/cjcodeproj/medialibrary/issues/127) Consider deprecating random_sample_list()

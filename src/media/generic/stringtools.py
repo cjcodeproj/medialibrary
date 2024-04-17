@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,9 +24,8 @@
 
 '''Common code related to sorting operations.'''
 
-# pylint: disable=too-few-public-methods
-
 import string
+from media.generic.language import LanguageHelpers
 
 
 def transform_string(in_value):
@@ -57,8 +56,3 @@ def build_sort_string(in_value):
         article = word_split.pop(0)
         word_split.append('+'+article)
     return '_'.join(word_split)
-
-
-class LanguageHelpers():
-    '''Static data on languages.'''
-    Articles_English = ['a', 'an', 'the']

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2023 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,8 @@
 
 import unittest
 import xml.etree.ElementTree as ET
-from media.data.media.contents.movie import Movie, MovieException
+from media.data.media.contents.movie import Movie
+from media.data.media.contents import ContentException
 
 CASE1 = '''<?xml version='1.0'?>
 <movie xmlns='http://vectortron.com/xml/media/movie'>
@@ -169,8 +170,8 @@ class TestMovieVariantTitle(unittest.TestCase):
 class TestMovieTitleException(unittest.TestCase):
     '''Movie title exception'''
     def test_title_exception(self):
-        '''Text exception with title triggers Movie object exception.'''
+        '''Test exception with title triggers Content object exception.'''
         xmlroot1 = ET.fromstring(CASE5)
-        with self.assertRaises(MovieException):
+        with self.assertRaises(ContentException):
             movie1 = Movie(xmlroot1)
             del movie1
