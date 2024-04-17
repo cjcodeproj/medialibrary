@@ -21,9 +21,3 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-
-'''
-Placeholder for all abstract content object imports.
-'''
-
-from .internal import *

@@ -1,11 +1,11 @@
 [project]
 name = "medialibrary"
-version = "0.2.1"
-description = "Library for reading vtmedia XML files"
+version = "0.2.3"
+description = "Package for reading vtmedia XML files describing a movie/music media library"
 readme = "README.md"
 requires-python = ">3.8"
 license = {text = "MIT License"}
-keywords = ["xml", "movies", "dvds"]
+keywords = ["xml", "movies", "dvds", "music"]
 authors = [
   {email = "cjcodeproj@fastmail.com", name = "Chris J"}
 ]
@@ -16,7 +16,10 @@ classifiers = [
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  "Topic :: Text Processing :: Markup :: XML"
+  "Topic :: Text Processing :: Markup :: XML",
+  "Topic :: Multimedia",
+  "Topic :: Multimedia :: Sound/Audio",
+  "Topic :: Multimedia :: Video"
 ]
 
 [project.urls]

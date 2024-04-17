@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,8 +22,11 @@
 # SOFTWARE.
 #
 
-'''
-Placeholder for all abstract content object imports.
-'''
+'''Common code related to sorting operations.'''
 
-from .internal import *
+# pylint: disable=too-few-public-methods
+
+
+class LanguageHelpers():
+    '''Static data on languages.'''
+    Articles_English = ['a', 'an', 'the']
