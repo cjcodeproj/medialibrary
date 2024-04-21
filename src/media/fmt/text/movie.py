@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -51,7 +51,7 @@ class OneLiner():
         self.output = f"{self.movie.title!s:50s} " + \
                       f"{y_string:4s} " + \
                       f"{runtime:8s} " + \
-                      f"{category:50s} "
+                      f"{category:s}"
 
     def __str__(self):
         return self.output

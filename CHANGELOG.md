@@ -1,6 +1,9 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-157](https://github.com/cjcodeproj/medialibrary/issues/157) POC tools may have padded whitespace output
+
 ## RELEASE 0.2.3
  - [medialibrary-162](https://github.com/cjcodeproj/medialibrary/issues/162) Release 0.2.3
  - [medialibrary-149](https://github.com/cjcodeproj/medialibrary/issues/149) TitleMunger could provide directory path inforamtion
