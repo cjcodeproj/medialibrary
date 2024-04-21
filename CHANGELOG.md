@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-159](https://github.com/cjcodeproj/medialibrary/issues/159) Abstract catalog object
  - [medialibrary-157](https://github.com/cjcodeproj/medialibrary/issues/157) POC tools may have padded whitespace output
 
 ## RELEASE 0.2.3

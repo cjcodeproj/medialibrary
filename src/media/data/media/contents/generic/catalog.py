@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -69,10 +69,11 @@ class TitleValueException(Exception):
         return self.message
 
 
-class Catalog():
+class AbstractCatalog():
     '''
-    The catalog is for identify references to the media, and external
-    references pointing to the media
+    Abstract class for all content objects.
+    Identifies references to the media, and
+    pointers to the media.
     '''
     def __init__(self, in_chunk):
         self.copyright = None
@@ -80,8 +81,6 @@ class Catalog():
         self.unique_index = None
         if in_chunk is not None:
             self._process(in_chunk)
-        if not self.alt_titles:
-            self.alt_titles = AlternateTitles(None)
 
     def _process(self, in_chunk):
         for child in in_chunk:
@@ -92,6 +91,17 @@ class Catalog():
                 self.alt_titles = AlternateTitles(child)
             if e_name == 'ucIndex':
                 self.unique_index = UniqueConstraints(child)
+        self._post_load_process()
+
+    def _post_load_process(self):
+        if not self.alt_titles:
+            self.alt_titles = AlternateTitles(None)
+
+
+class Catalog(AbstractCatalog):
+    '''
+    Empty catalog class.
+    '''
 
 
 class Copyright():
