@@ -38,7 +38,7 @@ how to build your own files.
 
 ## Installing
 
-Installaiton of the module wheel file.
+Installation of the module wheel file.
 
 ```
 $ python -m pip install --user medialibrary
