@@ -75,21 +75,19 @@ class AbstractCatalog():
     Identifies references to the media, and
     pointers to the media.
     '''
-    def __init__(self, in_chunk):
+    def __init__(self):
         self.copyright = None
         self.alt_titles = None
         self.unique_index = None
-        if in_chunk is not None:
-            self._process(in_chunk)
 
-    def _process(self, in_chunk):
-        for child in in_chunk:
+    def _process(self, in_element):
+        for child in in_element:
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'copyright':
                 self.copyright = Copyright(child)
-            if e_name == 'altTitles':
+            elif e_name == 'altTitles':
                 self.alt_titles = AlternateTitles(child)
-            if e_name == 'ucIndex':
+            elif e_name == 'ucIndex':
                 self.unique_index = UniqueConstraints(child)
         self._post_load_process()
 
@@ -102,6 +100,10 @@ class Catalog(AbstractCatalog):
     '''
     Empty catalog class.
     '''
+    def __init__(self, in_element):
+        super().__init__()
+        if in_element is not None:
+            self._process(in_element)
 
 
 class Copyright():
