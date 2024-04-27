@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -39,7 +39,7 @@ def load_media_dev(in_path):
     '''Identify suitable files and load them up'''
     repo = media.fileops.repo.Repo(in_path)
     repo.scan()
-    repo.load(FilenameMatches.Movie_Media)
+    repo.load(FilenameMatches.All_Media)
     return repo.media
 
 

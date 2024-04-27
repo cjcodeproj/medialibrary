@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,6 +33,7 @@ class FilenameMatches():
     '''Static data on filename matches'''
     Movie_Media = re.compile("-(dvd|bluray|bluray3d|ultrahd|vhs)" +
                              "(-[\\d+])?\\.xml$")
-    All_Media_Xml = re.compile("-(dvd|bluray|bluray3d|ultrahd|vhs)" +
-                               "(-[\\d+])?\\.xml$")
+    Music_Media = re.compile("-(audiocd)" + "(-[\\d+])?\\.xml$")
+    All_Media = re.compile("-(dvd|bluray|bluray3d|ultrahd|vhs|audiocd)" +
+                           "(-[\\d+])?\\.xml$")
     All_Xml = re.compile("\\.xml$")

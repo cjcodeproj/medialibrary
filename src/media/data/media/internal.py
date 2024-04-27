@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ from media.generic.stringtools import build_sort_string
 from media.xml.namespaces import Namespaces
 import media.data.media.library
 import media.data.media.medium
+import media.data.media.contents.audio.album
 import media.data.media.contents.movie
 import media.data.media.meta.authorship as MA
 
@@ -70,6 +71,9 @@ class Media():
             if element.tag == Namespaces.nsf('movie') + 'movie':
                 self.contents.append(
                         media.data.media.contents.movie.Movie(element))
+            if element.tag == Namespaces.nsf('audio') + 'album':
+                self.contents.append(
+                        media.data.media.contents.audio.album.Album(element))
 
     def __str__(self):
         return f"{self.title!s}"

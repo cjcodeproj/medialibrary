@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-168](https://github.com/cjcodeproj/medialibrary/issues/168) Initial support for albums in POC tools
  - [medialibrary-167](https://github.com/cjcodeproj/medialibrary/issues/167) Fix typo in README.md
  - [medialibrary-160](https://github.com/cjcodeproj/medialibrary/issues/160) Album support
  - [medialibrary-159](https://github.com/cjcodeproj/medialibrary/issues/159) Abstract catalog object
