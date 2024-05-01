@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-169](https://github.com/cjcodeproj/medialibrary/issues/169) Add support for vinyl records
  - [medialibrary-168](https://github.com/cjcodeproj/medialibrary/issues/168) Initial support for albums in POC tools
  - [medialibrary-167](https://github.com/cjcodeproj/medialibrary/issues/167) Fix typo in README.md
  - [medialibrary-160](https://github.com/cjcodeproj/medialibrary/issues/160) Album support

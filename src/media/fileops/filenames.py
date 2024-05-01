@@ -33,7 +33,8 @@ class FilenameMatches():
     '''Static data on filename matches'''
     Movie_Media = re.compile("-(dvd|bluray|bluray3d|ultrahd|vhs)" +
                              "(-[\\d+])?\\.xml$")
-    Music_Media = re.compile("-(audiocd)" + "(-[\\d+])?\\.xml$")
-    All_Media = re.compile("-(dvd|bluray|bluray3d|ultrahd|vhs|audiocd)" +
+    Music_Media = re.compile("-(audiocd|record)" + "(-[\\d+])?\\.xml$")
+    All_Media = re.compile("-(dvd|bluray|bluray3d|ultrahd|vhs|" +
+                           "audiocd|record)" +
                            "(-[\\d+])?\\.xml$")
     All_Xml = re.compile("\\.xml$")
