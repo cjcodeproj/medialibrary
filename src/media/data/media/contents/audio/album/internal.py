@@ -31,6 +31,8 @@ Album objects
 from media.data.media.contents.internal import AbstractContent
 from media.data.media.contents.generic.catalog import Title
 from media.data.media.contents.audio.album.catalog import AlbumCatalog
+from media.data.media.contents.audio.elements.song import Song
+from media.data.media.contents.audio.elements.dialogue import Dialogue
 from media.xml.namespaces import Namespaces
 
 
@@ -42,6 +44,7 @@ class Album(AbstractContent):
         super().__init__()
         self.title = ''
         self.catalog = None
+        self.elements = []
         self._process(in_element)
 
     def _process(self, in_element):
@@ -54,3 +57,16 @@ class Album(AbstractContent):
                 self.title = Title(child.text)
             elif tagname == 'catalog':
                 self.catalog = AlbumCatalog(child)
+            elif tagname == 'elements':
+                self._load_elements(child)
+
+    def _load_elements(self, in_element):
+        '''
+        Load element objects and pack them in the elements array.
+        '''
+        for child in in_element:
+            tagname = Namespaces.ns_strip(child.tag)
+            if tagname == 'song':
+                self.elements.append(Song(child, self))
+            elif tagname == 'dialogue':
+                self.elements.append(Dialogue(child, self))

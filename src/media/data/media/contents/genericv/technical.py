@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -76,9 +76,17 @@ def process_iso_duration(in_string):
     Process an ISO duration value
 
     Ex: like P01H20M37S (1 hour, 20 minutes, 37 seconds)
+
+    Regex breakdown:
+
+    PT followed by...
+       Optional: 1-2 digits and a H character
+       Optional: 1-2 digits and a M character
+       Optional: 1-2 digits, an optional decimal with more
+                 figits, and a S character
     '''
     duration_regex = r"PT(?P<hours>\d{1,2}H)?(?P<minutes>\d{1,2}M)?" +\
-                     r"(?P<seconds>\d{1,2}S)?"
+                     r"(?P<seconds>\d{1,2}(\.\d+)?S)?"
     dur_match = re.match(duration_regex, in_string)
     if dur_match is not None:
         if dur_match.group('hours') is not None:
@@ -90,7 +98,7 @@ def process_iso_duration(in_string):
         else:
             in_minutes = 0
         if dur_match.group('seconds') is not None:
-            in_seconds = int(dur_match.group('seconds').rstrip('S'))
+            in_seconds = float(dur_match.group('seconds').rstrip('S'))
         else:
             in_seconds = 0
         return timedelta(hours=in_hours,
