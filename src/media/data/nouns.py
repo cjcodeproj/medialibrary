@@ -72,9 +72,9 @@ def noun_dispatcher(in_element):
     '''
     tagname = Namespaces.ns_strip(in_element[0].tag)
     if tagname == 'grp':
-        return Noun(in_element[0])
+        return Group(in_element[0])
     if tagname == 'ent':
-        return Noun(in_element[0])
+        return Entity(in_element[0])
     if tagname == 'unkn':
         return Noun(in_element[0])
     if tagname in ['prefix', 'pcn', 'pgn', 'gn']:
@@ -116,7 +116,7 @@ class Entity(AbstractNoun):
         super().__init__()
         self.value = in_entity.text
         if 'acronym' in in_entity.attrib:
-            sefl.acronym = in_entity.attrib['acronym']
+            self.acronym = in_entity.attrib['acronym']
         self.sort_value = build_sort_string(in_entity.text)
         self.tagname = Namespaces.ns_strip(in_entity.tag)
 
