@@ -29,6 +29,7 @@ Song object structure
 # pylint: disable=too-few-public-methods
 # pylint: disable=R0801
 
+from media.data.media.contents.genericv.technical import process_iso_duration
 from media.data.media.contents.audio.elements import (
         AbstractElement, ElementTechnical
         )
@@ -51,4 +52,40 @@ class Dialogue(AbstractElement):
         for child in in_element:
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'technical':
-                self.technical = ElementTechnical(child)
+                self.technical = DialogueTechnical(child)
+
+
+class DialogueTechnical(ElementTechnical):
+    '''
+    Object representation of a song's technical data.
+    '''
+    def __init__(self, in_element):
+        super().__init__(in_element)
+        self.recording = None
+        if in_element is not None:
+            self._process(in_element)
+
+    def _process(self, in_element):
+        super()._process(in_element)
+        for child in in_element:
+            e_name = Namespaces.ns_strip(child.tag)
+            if e_name == 'runtime':
+                self.runtime = DialogueTechnicalRuntime(child)
+
+
+class DialogueTechnicalRuntime():
+    '''
+    Song runtime data.
+    '''
+    def __init__(self, in_element):
+        self.overall = None
+        if in_element is not None:
+            self._process(in_element)
+
+    def _process(self, in_element):
+        for child in in_element:
+            e_name = Namespaces.ns_strip(child.tag)
+            if e_name == 'overall':
+                dur_string = child.text
+                dur_value = process_iso_duration(dur_string)
+                self.overall = dur_value
