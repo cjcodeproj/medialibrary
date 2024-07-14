@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-174](https://github.com/cjcodeproj/medialibrary/issues/174) ElementTree DecpreciationWarning
  - [medialibrary-182](https://github.com/cjcodeproj/medialibrary/issues/182) Method noun_dispatcher might be overused
  - [medialibrary-177](https://github.com/cjcodeproj/medialibrary/issues/177) Albums will need an index structure
  - [medialibrary-173](https://github.com/cjcodeproj/medialibrary/issues/173) Albums need a post_load_process

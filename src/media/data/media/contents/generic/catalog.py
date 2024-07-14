@@ -171,7 +171,7 @@ class UniqueConstraints():
     def __init__(self, in_chunk):
         self.index = 0
         self.note = ""
-        if in_chunk:
+        if in_chunk is not None:
             self._process(in_chunk)
 
     def _process(self, in_chunk):
