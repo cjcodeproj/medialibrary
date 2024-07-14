@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-179](https://github.com/cjcodeproj/medialibrary/issues/179) Finally need a group noun
  - [medialibrary-171](https://github.com/cjcodeproj/medialibrary/issues/171) Content Index objects should get their own hierarchy
  - [medialibrary-170](https://github.com/cjcodeproj/medialibrary/issues/170) Song support
  - [medialibrary-169](https://github.com/cjcodeproj/medialibrary/issues/169) Add support for vinyl records
