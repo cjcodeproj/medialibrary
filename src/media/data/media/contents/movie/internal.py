@@ -34,7 +34,7 @@ from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
 from media.data.media.contents.movie.classification import Classification
-from media.generic.sorting.lists import ContentIndex
+from media.generic.sorting.index import ContentIndex
 
 
 class Movie(AbstractContent):

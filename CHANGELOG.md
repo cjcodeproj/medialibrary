@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-171](https://github.com/cjcodeproj/medialibrary/issues/171) Content Index objects should get their own hierarchy
  - [medialibrary-170](https://github.com/cjcodeproj/medialibrary/issues/170) Song support
  - [medialibrary-169](https://github.com/cjcodeproj/medialibrary/issues/169) Add support for vinyl records
  - [medialibrary-168](https://github.com/cjcodeproj/medialibrary/issues/168) Initial support for albums in POC tools

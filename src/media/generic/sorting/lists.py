@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -120,11 +120,3 @@ GroupingOptions = {
         'decade': Organizer.G_DECADE,
         'genre': Organizer.G_GENRE
 }
-
-
-class ContentIndex():
-    '''
-    Abstract root class for all content index objects.
-    '''
-    def __init__(self):
-        self.sort_title = None
