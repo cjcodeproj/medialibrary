@@ -2,6 +2,8 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-177](https://github.com/cjcodeproj/medialibrary/issues/177) Albums will need an index structure
+ - [medialibrary-173](https://github.com/cjcodeproj/medialibrary/issues/173) Albums need a post_load_process
  - [medialibrary-181](https://github.com/cjcodeproj/medialibrary/issues/181) Dialogue Runtime
  - [medialibrary-180](https://github.com/cjcodeproj/medialibrary/issues/180) Simple Album classification
  - [medialibrary-179](https://github.com/cjcodeproj/medialibrary/issues/179) Finally need a group noun

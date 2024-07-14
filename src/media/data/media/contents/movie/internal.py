@@ -26,6 +26,7 @@
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=R0801
 
 from datetime import timedelta
 from media.xml.namespaces import Namespaces
