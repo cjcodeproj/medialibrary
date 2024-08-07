@@ -77,9 +77,6 @@ class Movie(AbstractContent):
     def __gt__(self, other):
         return self.unique_key > other.unique_key
 
-    def __eq__(self, other):
-        return self.unique_key == other.unique_key
-
 
 class MovieIndexEntry(ContentIndex):
     '''

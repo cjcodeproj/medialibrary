@@ -75,6 +75,10 @@ class AbstractContent():
         return TitleMunger.build_catalog_title(
                 self.title, self.catalog)
 
+    def __eq__(self, other):
+        return self.__class__ == other.__class__ and \
+                self.unique_key == other.unique_key
+
 
 class ContentException(Exception):
     '''
