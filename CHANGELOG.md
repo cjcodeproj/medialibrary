@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-161](https://github.com/cjcodeproj/medialibrary/issues/161) Album output tool
  - [medialibrary-183](https://github.com/cjcodeproj/medialibrary/issues/183) Albums will need grouping and batching code
  - [medialibrary-184](https://github.com/cjcodeproj/medialibrary/issues/184) Repo content objects clobber each other
  - [medialibrary-174](https://github.com/cjcodeproj/medialibrary/issues/174) ElementTree DecpreciationWarning
