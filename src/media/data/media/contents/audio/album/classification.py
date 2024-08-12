@@ -39,6 +39,7 @@ class AlbumClassification():
     def __init__(self, in_element):
         super().__init__()
         self.genres = None
+        self.soundtrack = None
         if in_element is not None:
             self._process(in_element)
 
@@ -47,6 +48,8 @@ class AlbumClassification():
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'genres':
                 self.genres = AlbumClassificationGenres(child)
+            elif e_name == 'soundtrack':
+                self.soundtrack = AlbumClassificationSoundtrack()
 
 
 class AlbumClassificationGenres():
@@ -75,3 +78,11 @@ class AlbumClassificationGenres():
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'subgenre':
                 self.subgenres.append(in_element.text)
+
+
+class AlbumClassificationSoundtrack():
+    '''
+    Optional element for albums that are soundtracks or scores.
+    '''
+    def __init__(self):
+        self.content = []

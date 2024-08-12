@@ -22,4 +22,27 @@
 # SOFTWARE.
 #
 
-'''Common code related to content object sorting and grouping.'''
+'''
+Album Catalog objects
+'''
+
+# pylint: disable=too-few-public-methods
+
+from datetime import timedelta
+
+
+class AlbumTechnical():
+    '''
+    Subclass for handling catalog data specific
+    to a music album.
+    '''
+    def __init__(self, in_album):
+        self.runtime = timedelta(0)
+        self._build_total_runtime(in_album)
+
+    def _build_total_runtime(self, in_album):
+        for elem in in_album.elements:
+            if elem.technical is not None:
+                if elem.technical.runtime is not None:
+                    rtime = elem.technical.runtime.overall
+                    self.runtime += rtime

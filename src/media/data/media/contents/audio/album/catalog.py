@@ -29,7 +29,7 @@ Album Catalog objects
 # pylint: disable=too-few-public-methods
 
 from media.data.media.contents.generic.catalog import AbstractCatalog
-from media.data.nouns import noun_dispatcher
+from media.data.nouns import AbstractNoun, noun_dispatcher
 from media.xml.namespaces import Namespaces
 
 
@@ -57,3 +57,17 @@ class AlbumCatalog(AbstractCatalog):
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'artist':
                 self.artists.append(noun_dispatcher(child))
+            elif e_name == 'variousArtists':
+                self.artists.append(VariousArtists())
+                break
+
+
+class VariousArtists(AbstractNoun):
+    '''
+    Representing a collection of multiple
+    artists, either individuals or groups.
+    '''
+    def __init__(self):
+        super().__init__()
+        self.value = 'Various Artists'
+        self.sort_value = 'zzz_various_artists'
