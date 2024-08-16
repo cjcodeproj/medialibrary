@@ -159,7 +159,8 @@ class AlbumList():
             self.group = grouping
         if sorting:
             self.asort = sorting
-        self.sample = min(sample, 0)
+        if self.sample == 0:
+            self.sample = max(sample, 0)
         if stats:
             self.stats = stats
         out = ''
@@ -175,6 +176,7 @@ class AlbumList():
             for batch_i in sorted(batches):
                 out += f"  -- {batch_i.header} ({len(batch_i.entries)}) --\n"
                 out += self._out_batch(batch_i, self.asort)
+        out = out[:-1]
         out += media.fmt.text.audio.album.OneLiner.header_line()
         if self.stats:
             out += self._stats()
