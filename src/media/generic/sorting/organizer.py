@@ -107,7 +107,7 @@ class AbstractOrganizer():
             self.grouping = grouping
         if sample_limit:
             self.working = AbstractOrganizer.get_random_sample(self.entries,
-                                                            sample_limit)
+                                                               sample_limit)
         else:
             self.working = self.entries
         self._build_batches()
@@ -124,7 +124,6 @@ class AbstractOrganizer():
             self.batches = GroupPrimaryGenre.group(self.working)
         else:
             self.batches = GroupAll.group(self.working)
-            print('group parameter did not match')
 
 
 class Organizer(AbstractOrganizer):
