@@ -44,6 +44,7 @@ class AbstractContent():
     def __init__(self):
         self.title = None
         self.catalog = None
+        self.classification = None
         self.sort_title = ""
         self.unique_key = ""
 
