@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -70,7 +70,7 @@ class PrimaryBucket():
         out = f"{' ' * 55} {'<<< Primary Genres >>>'}\n\n"
         out += f"{'Primary Genre':15s} {'Count':5s} {'Perc':6s} " + \
                f"{'Ratio':50s} {'Sample Title'}\n"
-        out += f"{'-' * 15}  {'-' * 5} {'-' * 6} {'-' * 50} {'-' *45}\n"
+        out += f"{'-' * 15}  {'-' * 5} {'-' * 6} {'-' * 50} {'-' * 45}\n"
         for genre in sorted(self.genres):
             pg_tally = len(self.genres[genre])
             perc = float(pg_tally / self.movie_count * 100)
@@ -78,7 +78,7 @@ class PrimaryBucket():
             rand_movie = random_movie(self.bucket(genre))
             out += f"{genre:15s}  {pg_tally:5d} {perc:5.1f}% " + \
                    f"{text_pro_bar:50s} {rand_movie.title!s}\n"
-        out += f"{'-' * 15}  {'-' * 5} {'-' * 6} {'-' * 50} {'-' *45}\n"
+        out += f"{'-' * 15}  {'-' * 5} {'-' * 6} {'-' * 50} {'-' * 45}\n"
         out += f"Total movie count {self.movie_count}\n\n"
         return out
 
