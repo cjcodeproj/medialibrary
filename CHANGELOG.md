@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-186](https://github.com/cjcodeproj/medialibrary/issues/186) Update movie list and show code
  - [medialibrary-187](https://github.com/cjcodeproj/medialibrary/issues/187) AbstractContent needs a classification attribute
  - [medialibrary-161](https://github.com/cjcodeproj/medialibrary/issues/161) Album output tool
  - [medialibrary-183](https://github.com/cjcodeproj/medialibrary/issues/183) Albums will need grouping and batching code

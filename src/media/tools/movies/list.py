@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,74 +29,35 @@ one entry per line.
 
 # pylint: disable=R0801
 
-import os
-import argparse
-import media.fmt.text.movie
-from media.generic.sorting.groups import (BatchSortOptions)
-from media.generic.sorting.lists import (GroupingOptions, Organizer)
-from media.tools.common import (load_movies)
+from media.fileops.filenames import FilenameMatches
+from media.fileops.repo import Repo
+from media.tools.movies.common import (
+                                       Controller,
+                                       MovieReport)
 
 
-def list_movie_batches(incoming, sort_field=1):
-    """
-    Iterate through every batch and report on the movie
-    inside the batch.
-    """
-    print(media.fmt.text.movie.OneLiner.header_fields())
-    if len(incoming) == 1:
-        list_batch(incoming[0], sort_field)
-    else:
-        for batch_i in sorted(incoming):
-            print(f"\n -- {batch_i.header} ({len(batch_i.entries)}) --\n")
-            list_batch(batch_i, sort_field)
-    print(media.fmt.text.movie.OneLiner.header_line())
+def main_cli():
+    '''
+    Entry point for script.
 
+    Steps:
+      1. Argument parsing/environment setup
+      2. Repository loading
+      3. Batch processing
+      4. Listing
+    '''
+    controller = Controller()
+    controller.setup()
 
-def list_batch(batch, sort_field=1):
-    """
-    Iterate through every movie in a single batch.
-    """
-    order_list = batch.index_by(sort_field)
-    for movie in order_list:
-        print(media.fmt.text.movie.OneLiner(movie.movie))
-
-
-def report_stats(org):
-    """
-    Report statistics on the data presented.
-    """
-    print(f"  Movie count : {org.original_count:5d}")
-    if org.sample_count < org.original_count:
-        c_percent = float(org.sample_count) / \
-                    org.original_count * 100
-        print(f"  Sample size : {org.sample_count:5d}  " +
-              f"({c_percent:5.2f}%)")
+    repo = Repo(controller.mediapath)
+    repo.scan()
+    repo.load(FilenameMatches.All_Media)
+    movies = repo.get_movies()
+    movie_report = MovieReport()
+    movie_report.set_movies(movies)
+    movie_report.params_from_controller(controller)
+    print(movie_report.report())
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Simple movie list.')
-    parser.add_argument('--mediapath', help='path of media library')
-    parser.add_argument('--random', type=int, help='print X random entries')
-    parser.add_argument('--group',
-                        choices=['none', 'alphabetical', 'decade', 'genre'],
-                        help='Grouping field',
-                        default='none')
-    parser.add_argument('--sort',
-                        choices=['title', 'year', 'runtime'],
-                        help='Sort field',
-                        default='title')
-    parser.add_argument('--stats',
-                        action=argparse.BooleanOptionalAction,
-                        help='Report statistics')
-    args = parser.parse_args()
-    mediapath = args.mediapath or os.environ['MEDIAPATH']
-    if not mediapath:
-        parser.print_help()
-    all_movies = load_movies(mediapath)
-    organizer = Organizer(all_movies,
-                          args.random,
-                          grouping=GroupingOptions[args.group])
-    batches = organizer.get_batches()
-    list_movie_batches(batches, BatchSortOptions[args.sort])
-    if args.stats:
-        report_stats(organizer)
+    main_cli()

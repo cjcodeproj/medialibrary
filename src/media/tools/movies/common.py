@@ -22,26 +22,55 @@
 # SOFTWARE.
 #
 
-"""
-Simple command to output details on every movie.
-"""
+'''
+Shared classes and subroutines for the list and show
+modules.
+'''
 
-# pylint: disable=R0801
+
 # pylint: disable=too-few-public-methods
 
-# brief movie report
+
 import argparse
+import os
 import media.fmt.text.movie
-from media.fileops.filenames import FilenameMatches
-from media.fileops.repo import Repo
-from media.tools.movies.common import (Controller,
-                                       MovieReport)
+from media.generic.sorting.organizer import Organizer
+from media.generic.sorting.batch import Batch
+
+CliGroupingOptions = {
+        'none': Organizer.G_NONE,
+        'alphabetical': Organizer.G_ANY_ALPHA,
+        'decade': Organizer.G_ANY_DECADE,
+        'genre': Organizer.G_ANY_GENRE,
+}
 
 
-class ShowController(Controller):
+CliSortOptions = {
+        'title': Batch.S_TITLE,
+        'year': Batch.S_YEAR,
+        'runtime': Batch.S_RUNTIME,
+}
+
+
+class Controller():
     '''
-    Subclass of default Controller class.
+    The Controller class manages aspects of the command
+    execution.  It processes all of the CLI arguments,
+    and tests file paths to make sure they exist.
     '''
+    def __init__(self):
+        self.args = None
+        self.mediapath = None
+
+    def setup(self):
+        '''
+        Initialize the command line parser, and make sure
+        the mediapath exists.
+        '''
+        parser = self._setup_parser()
+        self.args = parser.parse_args()
+        self._determine_path()
+
     def _setup_parser(self):
         '''
         Set up the parser object.
@@ -60,27 +89,61 @@ class ShowController(Controller):
                             choices=['title', 'year', 'runtime'],
                             help='Album sorting',
                             default='title')
-        parser.add_argument('--pagebreaks',
-                            action=argparse.BooleanOptionalAction,
-                            help='Page breaks on output')
         parser.add_argument('--stats',
                             action=argparse.BooleanOptionalAction,
                             help='Report statistics')
         return parser
 
+    def _determine_path(self):
+        '''
+        Verify that the media path with the XML files exists.
+        '''
+        mediapath = self.args.mediapath
+        if not mediapath:
+            if 'MEDIAPATH' in os.environ:
+                mediapath = os.environ['MEDIAPATH']
+        self.mediapath = mediapath
 
-class MovieShowReport(MovieReport):
+
+class MovieReport():
     '''
-    Subclass of MovieReport class.
+    Class that does all the listing work.
+
+    Accepts a list of movies as input,
+    and generates a report output as a string.
+
+    Should also be directly callable from
+    an interactive Python prompt.
     '''
     def __init__(self):
-        super().__init__()
-        self.pagebreaks = False
+        self.organizer = None
+        self.movies = []
+        self.sample = 0
+        self.group = Organizer.G_ANY_ALPHA
+        self.asort = Batch.S_TITLE
+        self.stats = False
+
+    def set_movies(self, in_movies, in_controller=None):
+        '''
+        Pass all the Album content objects that were
+        found in the repository.
+        '''
+        if len(in_movies) > 0:
+            self.movies = in_movies
+            self.organizer = Organizer(in_movies)
+            if in_controller:
+                self.params_from_controller(in_controller)
 
     def params_from_controller(self, in_controller):
-        super().params_from_controller(in_controller)
-        if in_controller.args.pagebreaks:
-            self.pagebreaks = True
+        '''
+        Get the parameters from the controller object.
+        '''
+        self.group = CliGroupingOptions[in_controller.args.group]
+        self.asort = CliSortOptions[in_controller.args.sort]
+        if in_controller.args.random:
+            self.sample = in_controller.args.random
+        if in_controller.args.stats:
+            self.stats = True
 
     def report(self, grouping=None, sorting=None, sample=0, stats=False):
         '''
@@ -96,7 +159,7 @@ class MovieShowReport(MovieReport):
         if stats:
             self.stats = stats
         out = ''
-        # out += media.fmt.text.movie.OneLiner.header_fields()
+        out += media.fmt.text.movie.OneLiner.header_fields()
         self.organizer.set_grouping(self.group)
         if self.sample > 0:
             batches = self.organizer.create_batches(self.group, self.sample)
@@ -108,8 +171,8 @@ class MovieShowReport(MovieReport):
             for batch_i in sorted(batches):
                 out += f"  -- {batch_i.header} ({len(batch_i.entries)}) --\n"
                 out += self._out_batch(batch_i, self.asort)
-            out = out[:-1]
-        # out += media.fmt.text.movie.OneLiner.header_line()
+        out = out[:-1]
+        out += media.fmt.text.movie.OneLiner.header_line()
         if self.stats:
             out += self._stats()
         return out
@@ -122,8 +185,7 @@ class MovieShowReport(MovieReport):
         '''
         all_c = len(self.organizer.entries)
         wrk_c = len(self.organizer.working)
-        out = "\n    ---- Movie Statistics ----\n\n"
-        out += f"  {'Movie count':12s} : {all_c:5d}\n"
+        out = f"  {'Movie count':12s} : {all_c:5d}\n"
         if wrk_c < all_c:
             wrk_p = float(wrk_c) / all_c * 100
             out += f"  {'Sample count':12s} : {wrk_c:5d} ({wrk_p:5.2f}%)\n"
@@ -136,35 +198,6 @@ class MovieShowReport(MovieReport):
         out = ''
         order_list = batch.index_by(sort_field)
         for movie in order_list:
-            out += str(media.fmt.text.movie.Brief(movie.movie))
-            out += "\n"
-            if self.pagebreaks:
-                out += chr(12)
+            out += str(media.fmt.text.movie.OneLiner(movie.movie))
+        out += "\n"
         return out
-
-
-def main_cli():
-    '''
-    Entry point for script.
-
-    Steps:
-      1. Argument parsing/environment setup
-      2. Repository loading
-      3. Batch processing
-      4. Listing
-    '''
-    controller = ShowController()
-    controller.setup()
-
-    repo = Repo(controller.mediapath)
-    repo.scan()
-    repo.load(FilenameMatches.All_Media)
-    movies = repo.get_movies()
-    movie_report = MovieShowReport()
-    movie_report.set_movies(movies)
-    movie_report.params_from_controller(controller)
-    print(movie_report.report())
-
-
-if __name__ == '__main__':
-    main_cli()

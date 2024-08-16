@@ -44,6 +44,7 @@ class Movie(AbstractContent):
         super().__init__()
         self.technical = None
         self.crew = None
+        self.s_index = None
         self._process(in_element)
 
     def build_index_object(self):
@@ -67,6 +68,10 @@ class Movie(AbstractContent):
             if child.tag == Namespaces.nsf('movie') + 'crew':
                 self.crew = Crew(child)
         self._post_load_process()
+
+    def _post_load_process(self):
+        super()._post_load_process()
+        self.s_index = MovieIndexEntry(self)
 
     def __hash__(self):
         return hash(self.unique_key)
