@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ List out all physical media in a detailed report.
 import os
 import argparse
 import media.fmt.text.media
-from media.generic.sorting.lists import Organizer
+from media.generic.sorting.organizer import Organizer
 from media.tools.common import load_media_dev
 
 

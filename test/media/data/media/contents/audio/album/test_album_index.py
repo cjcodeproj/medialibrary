@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -83,57 +83,57 @@ class TestAlbumIndexEntryObject(unittest.TestCase):
     def setUp(self):
         xmlroot1 = ET.fromstring(CASE1)
         self.album = Album(xmlroot1)
-        self.album_index = self.album.album_index
+        self.s_index = self.album.s_index
 
     def test_album_index_object(self):
         '''
         Assert index is created.
         '''
-        self.assertIsInstance(self.album_index, AlbumIndexEntry)
+        self.assertIsInstance(self.s_index, AlbumIndexEntry)
 
     def test_ai_sort_title(self):
         '''
         Assert sort title is correct.
         '''
-        self.assertEqual(self.album_index.sort_title,
+        self.assertEqual(self.s_index.sort_title,
                          'road_calls_my_name_+the')
 
     def test_ai_first_letter(self):
         '''
         Assert the first letter value is correct.
         '''
-        self.assertEqual(self.album_index.first_letter, 'r')
+        self.assertEqual(self.s_index.first_letter, 'r')
 
     def test_ai_year(self):
         '''
         Assert year value is correct.
         '''
-        self.assertEqual(self.album_index.year, 1987)
+        self.assertEqual(self.s_index.year, 1987)
 
     def test_ai_decade(self):
         '''
         Assert the computed decade value is correct.
         '''
-        self.assertEqual(self.album_index.decade, 198)
+        self.assertEqual(self.s_index.decade, 198)
 
     def test_ai_primary_genre(self):
         '''
         Assert the genre value is correct.
         '''
-        self.assertEqual(self.album_index.primary_g, 'Country')
+        self.assertEqual(self.s_index.primary_g, 'Country')
 
     def test_ai_merge_artists(self):
         '''
         Assert the artist value is correct.
         '''
-        self.assertEqual(self.album_index.artists,
+        self.assertEqual(self.s_index.artists.sort_string,
                          'mcphereson_bob_heavy_haulers_+the')
 
     def test_ai_runtime(self):
         '''
         Assert the total runtime is correct.
         '''
-        self.assertEqual(self.album_index.runtime,
+        self.assertEqual(self.s_index.runtime,
                          timedelta(seconds=424))
 
 

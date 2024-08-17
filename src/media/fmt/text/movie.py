@@ -51,7 +51,7 @@ class OneLiner():
         self.output = f"{self.movie.title!s:50s} " + \
                       f"{y_string:4s} " + \
                       f"{runtime:8s} " + \
-                      f"{category:s}"
+                      f"{category:s}\n"
 
     def __str__(self):
         return self.output
@@ -73,7 +73,7 @@ class OneLiner():
         """
         Return a simple line to go under the header fields.
         """
-        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}"
+        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}\n"
 
 
 class MiniEntry():

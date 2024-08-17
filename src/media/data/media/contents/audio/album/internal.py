@@ -37,6 +37,8 @@ from media.data.media.contents.generic.catalog import Title
 from media.data.media.contents.audio.album.catalog import AlbumCatalog
 from media.data.media.contents.audio.album.classification \
     import AlbumClassification
+from media.data.media.contents.audio.album.technical \
+    import AlbumTechnical
 from media.data.media.contents.audio.elements.song import Song
 from media.data.media.contents.audio.elements.dialogue import Dialogue
 from media.generic.sorting.index import ContentIndex
@@ -52,9 +54,10 @@ class Album(AbstractContent):
         self.title = ''
         self.catalog = None
         self.classification = None
+        self.technical = None
         self.elements = []
         self.runtime = timedelta(seconds=0)
-        self.album_index = None
+        self.s_index = None
         self._process(in_element)
 
     def _process(self, in_element):
@@ -86,12 +89,8 @@ class Album(AbstractContent):
 
     def _post_load_process(self):
         super()._post_load_process()
-        for elem in self.elements:
-            if elem.technical is not None:
-                if elem.technical.runtime is not None:
-                    rtime = elem.technical.runtime.overall
-                    self.runtime += rtime
-        self.album_index = AlbumIndexEntry(self)
+        self.technical = AlbumTechnical(self)
+        self.s_index = AlbumIndexEntry(self)
 
 
 class AlbumIndexEntry(ContentIndex):
@@ -110,29 +109,80 @@ class AlbumIndexEntry(ContentIndex):
         self._extract_fields()
 
     def _extract_fields(self):
+        '''
+        Extract the title, the artist(s), the copyright year,
+        and the genre.  If there's no genre, but there is
+        a soundtrack element, then create a pseudo-genre called
+        Soundtrack.
+        '''
         if self.album.catalog:
             cat = self.album.catalog
             if cat.copyright:
                 self.year = cat.copyright.year
                 self.decade = int(self.year / 10)
             if cat.artists:
-                self.artists = self._merge_artists(cat.artists)
-            if self.album.classification:
-                cls = self.album.classification
-                if cls.genres:
-                    if cls.genres.primary:
-                        self.primary_g = cls.genres.primary
-        self.runtime = self.album.runtime
+                self.artists = AlbumIndexArtists(cat.artists)
+        if self.album.classification:
+            cls = self.album.classification
+            if cls.genres:
+                if cls.genres.primary:
+                    self.primary_g = cls.genres.primary
+            if cls.soundtrack:
+                self.primary_g = 'Soundtrack'
+        if not self.artists:
+            # It's unlikely we will ever reach this point.
+            self.artists = AlbumIndexArtists()
+        self.runtime = self.album.technical.runtime
         self.sort_title = self.album.sort_title
         self.first_letter = self.sort_title[0]
 
-    def _merge_artists(self, in_artists):
+
+class AlbumIndexArtists():
+    '''
+    An object that works to manage one or more
+    artist names with a mechanism for sorting
+    and presentation.
+    '''
+    def __init__(self, in_artists=None):
+        self.artists = []
+        self.sort_string = ''
+        self.formal_string = ''
+        if in_artists:
+            self.artists = in_artists
+            self._build_data()
+
+    def _build_data(self):
         '''
-        We need to build a string representing a sorted
-        value for an album artist, but it also
-        has to take multiple artists into account.
+        Build strings suitable for sorting
+        the album artists, and also
+        presenting the album artists.
         '''
         sort_str = ''
-        for art in in_artists:
-            sort_str += art.sort_value + '_'
-        return sort_str[:-1]
+        form_str = ''
+        if self.artists:
+            for art in self.artists:
+                sort_str += art.sort_value + '_'
+                form_str += str(art) + ', '
+            self.sort_string = sort_str[:-1]
+            self.formal_string = form_str[:-2]
+        else:
+            self.sort_string = 'unknown'
+            self.formal_string = 'Unknown'
+
+    def __lt__(self, other):
+        return self.sort_string < other.sort_string
+
+    def __rt__(self, other):
+        return self.sort_string > other.sort_string
+
+    def __eq__(self, other):
+        return self.sort_string == other.sort_string
+
+    def __str__(self):
+        return self.formal_string
+
+    def __hash__(self):
+        '''
+        We need to generate the hash value ourselves.
+        '''
+        return hash(self.sort_string + self.formal_string)

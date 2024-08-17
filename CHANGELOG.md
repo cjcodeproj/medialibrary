@@ -2,6 +2,12 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-185](https://github.com/cjcodeproj/medialibrary/issues/185) Fix references to Organizer object class
+ - [medialibrary-186](https://github.com/cjcodeproj/medialibrary/issues/186) Update movie list and show code
+ - [medialibrary-187](https://github.com/cjcodeproj/medialibrary/issues/187) AbstractContent needs a classification attribute
+ - [medialibrary-161](https://github.com/cjcodeproj/medialibrary/issues/161) Album output tool
+ - [medialibrary-183](https://github.com/cjcodeproj/medialibrary/issues/183) Albums will need grouping and batching code
+ - [medialibrary-184](https://github.com/cjcodeproj/medialibrary/issues/184) Repo content objects clobber each other
  - [medialibrary-174](https://github.com/cjcodeproj/medialibrary/issues/174) ElementTree DecpreciationWarning
  - [medialibrary-182](https://github.com/cjcodeproj/medialibrary/issues/182) Method noun_dispatcher might be overused
  - [medialibrary-177](https://github.com/cjcodeproj/medialibrary/issues/177) Albums will need an index structure

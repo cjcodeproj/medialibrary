@@ -34,36 +34,36 @@ from media.generic.sorting.groups import (
         GroupDecade, GroupPrimaryGenre)
 
 
-class Organizer():
+class AbstractOrganizer():
     '''
-    Class that generates Batch objects based on content input.
+    The AbstractOrganizer class takes a list of content objects and creates
+    an output list of one or more batch objects, which contain the same
+    content, collated in a desired structure.  IE, for a list of 30
+    movies, the class will examine each movie, and divide it into
+    batches based on criteria like the first letter of the title,
+    the genre, or the decade it was made.
 
-    Batches are organized by title, year, or genre.
-
-    If no Grouping parameter is presented, then all of
-    the movies are put in a single batch.
+    This is an abstract class not meant to be instantiated.  Subclasses
+    can add additional organization criteria.
     '''
-    G_NONE = 0
-    G_ALPHA = 1
-    G_DECADE = 2
-    G_GENRE = 3
+    G_NONE = 1
+    G_ANY_ALPHA = 2
+    G_ANY_DECADE = 3
+    G_ANY_GENRE = 4
 
-    def __init__(self, in_list, sample_limit=None, grouping=None):
+    def __init__(self, in_list, grouping=None):
         self.batches = {}
         self.grouping = grouping
         self.entries = []
+        self.working = []
         self.original_count = len(in_list)
-        if sample_limit:
-            work_list = Organizer.get_random_sample(in_list, sample_limit)
-        else:
-            work_list = in_list
-        if grouping:
-            self.grouping = grouping
-        else:
-            self.grouping = Organizer.G_NONE
-        self._build_entry_objects(work_list)
-        self.sample_count = len(work_list)
-        self._build_batches()
+        self._add_index_objects(in_list)
+        if self.grouping is not None:
+            self.grouping = AbstractOrganizer.G_NONE
+
+    def _add_index_objects(self, in_list):
+        for con in in_list:
+            self.entries.append(con.s_index)
 
     @classmethod
     def get_random_sample(cls, in_list, limit):
@@ -93,30 +93,43 @@ class Organizer():
             out.append(in_list[slot_i])
         return out
 
-    def _build_entry_objects(self, in_list):
-        for content_i in in_list:
-            self.entries.append(content_i.build_index_object())
+    def set_grouping(self, in_group):
+        '''
+        Set the grouping attribute value.
+        '''
+        self.grouping = in_group
 
-    def _build_batches(self):
-        if self.grouping == Organizer.G_NONE:
-            self.batches = GroupAll.group(self.entries)
-        elif self.grouping == Organizer.G_ALPHA:
-            self.batches = GroupTitleAlphabetical.group(self.entries)
-        elif self.grouping == Organizer.G_DECADE:
-            self.batches = GroupDecade.group(self.entries)
-        elif self.grouping == Organizer.G_GENRE:
-            self.batches = GroupPrimaryGenre.group(self.entries)
-
-    def get_batches(self):
-        """
-        Return all of the batches that were created.
-        """
+    def create_batches(self, grouping=None, sample_limit=None):
+        '''
+        Create the Batch objects.
+        '''
+        if grouping:
+            self.grouping = grouping
+        if sample_limit:
+            self.working = AbstractOrganizer.get_random_sample(self.entries,
+                                                               sample_limit)
+        else:
+            self.working = self.entries
+        self._build_batches()
         return list(self.batches.values())
 
+    def _build_batches(self):
+        if self.grouping == AbstractOrganizer.G_NONE:
+            self.batches = GroupAll.group(self.working)
+        elif self.grouping == AbstractOrganizer.G_ANY_ALPHA:
+            self.batches = GroupTitleAlphabetical.group(self.working)
+        elif self.grouping == AbstractOrganizer.G_ANY_DECADE:
+            self.batches = GroupDecade.group(self.working)
+        elif self.grouping == AbstractOrganizer.G_ANY_GENRE:
+            self.batches = GroupPrimaryGenre.group(self.working)
+        else:
+            self.batches = GroupAll.group(self.working)
 
-GroupingOptions = {
-        'none': Organizer.G_NONE,
-        'alphabetical': Organizer.G_ALPHA,
-        'decade': Organizer.G_DECADE,
-        'genre': Organizer.G_GENRE
-}
+
+class Organizer(AbstractOrganizer):
+    '''
+    Direct subclass of AbstractOrganizer, with no
+    additions or changes, meant to be used as the
+    default organizer choice.  Use this class if
+    there is no additional organiztion criteria.
+    '''

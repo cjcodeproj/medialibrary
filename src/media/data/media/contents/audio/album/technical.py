@@ -22,42 +22,27 @@
 # SOFTWARE.
 #
 
-"""
-List out all movies (or a random sample of all movies),
-one entry per line.
-"""
+'''
+Album Catalog objects
+'''
 
-# pylint: disable=R0801
+# pylint: disable=too-few-public-methods
 
-from media.fileops.filenames import FilenameMatches
-from media.fileops.repo import Repo
-from media.tools.movies.common import (
-                                       Controller,
-                                       MovieReport)
+from datetime import timedelta
 
 
-def main_cli():
+class AlbumTechnical():
     '''
-    Entry point for script.
-
-    Steps:
-      1. Argument parsing/environment setup
-      2. Repository loading
-      3. Batch processing
-      4. Listing
+    Subclass for handling catalog data specific
+    to a music album.
     '''
-    controller = Controller()
-    controller.setup()
+    def __init__(self, in_album):
+        self.runtime = timedelta(0)
+        self._build_total_runtime(in_album)
 
-    repo = Repo(controller.mediapath)
-    repo.scan()
-    repo.load(FilenameMatches.All_Media)
-    movies = repo.get_movies()
-    movie_report = MovieReport()
-    movie_report.set_movies(movies)
-    movie_report.params_from_controller(controller)
-    print(movie_report.report())
-
-
-if __name__ == '__main__':
-    main_cli()
+    def _build_total_runtime(self, in_album):
+        for elem in in_album.elements:
+            if elem.technical is not None:
+                if elem.technical.runtime is not None:
+                    rtime = elem.technical.runtime.overall
+                    self.runtime += rtime
