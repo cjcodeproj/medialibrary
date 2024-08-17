@@ -92,8 +92,9 @@ class Noun(AbstractNoun):
     '''
     def __init__(self, in_element):
         super().__init__()
-        self.value = in_element.text
-        self.sort_value = self.value.casefold()
+        if in_element.text:
+            self.value = in_element.text
+            self.sort_value = self.value.casefold()
         self.tagname = Namespaces.ns_strip(in_element.tag)
 
 
