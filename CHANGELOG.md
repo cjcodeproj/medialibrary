@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-192](https://github.com/cjcodeproj/medialibrary/issues/192) Support Scores as well as Soundtracks
  - [medialibrary-189](https://github.com/cjcodeproj/medialibrary/issues/189) Noun casefold bug
  - [medialibrary-185](https://github.com/cjcodeproj/medialibrary/issues/185) Fix references to Organizer object class
  - [medialibrary-186](https://github.com/cjcodeproj/medialibrary/issues/186) Update movie list and show code

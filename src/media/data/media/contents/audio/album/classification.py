@@ -40,6 +40,7 @@ class AlbumClassification():
         super().__init__()
         self.genres = None
         self.soundtrack = None
+        self.score = None
         if in_element is not None:
             self._process(in_element)
 
@@ -50,6 +51,8 @@ class AlbumClassification():
                 self.genres = AlbumClassificationGenres(child)
             elif e_name == 'soundtrack':
                 self.soundtrack = AlbumClassificationSoundtrack()
+            elif e_name == 'score':
+                self.score = AlbumClassificationSoundtrack()
 
 
 class AlbumClassificationGenres():

@@ -112,8 +112,8 @@ class AlbumIndexEntry(ContentIndex):
         '''
         Extract the title, the artist(s), the copyright year,
         and the genre.  If there's no genre, but there is
-        a soundtrack element, then create a pseudo-genre called
-        Soundtrack.
+        a soundtrack or score element, then create a pseudo-genre
+        called Soundtrack or Score respestively.
         '''
         if self.album.catalog:
             cat = self.album.catalog
@@ -129,6 +129,8 @@ class AlbumIndexEntry(ContentIndex):
                     self.primary_g = cls.genres.primary
             if cls.soundtrack:
                 self.primary_g = 'Soundtrack'
+            if cls.score:
+                self.primary_g = 'Score'
         if not self.artists:
             # It's unlikely we will ever reach this point.
             self.artists = AlbumIndexArtists()

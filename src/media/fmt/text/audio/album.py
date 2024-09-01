@@ -102,6 +102,9 @@ def build_genre_classification(in_album):
     if classification.soundtrack:
         if not o_string:
             o_string = 'Soundtrack'
+    elif classification.score:
+        if not o_string:
+            o_string = 'Score'
     return o_string
 
 
