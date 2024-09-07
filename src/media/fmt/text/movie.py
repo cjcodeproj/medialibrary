@@ -190,7 +190,7 @@ class Brief():
         if music.composers:
             out += hdr_list("Composer", music.composers) + "\n"
         if music.music:
-            out += hdr_list("Music", music.music) + "\n"
+            out += hdr_list_np("Music", music.music) + "\n"
         return out
 
     def cast(self):
