@@ -87,7 +87,7 @@ def output_timestamp(in_start_time):
     end_time = datetime.now()
     out = f"\n {'Program Start Time'} : {in_start_time}\n" + \
           f"   {'Program End Time'} : {end_time}\n" + \
-          f"         {'Duration'}   : {end_time - start_time}\n"
+          f"         {'Duration'}   : {end_time - in_start_time}\n"
     return out
 
 
@@ -152,13 +152,13 @@ def output_stats(in_start_time, in_results, in_filtered):
     '''
     Output overall statistics, including time metrics.
     '''
-    o_total = len(results)
-    f_total = len(filtered_results)
+    o_total = len(in_results)
+    f_total = len(in_filtered)
     output = ''
     if f_total == o_total:
         output = single_column_stats(in_results)
     else:
-        output = double_column_stats(results, in_filtered)
+        output = double_column_stats(in_results, in_filtered)
     output += output_timestamp(in_start_time)
     print(output)
 

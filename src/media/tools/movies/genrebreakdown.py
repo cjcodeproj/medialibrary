@@ -91,6 +91,8 @@ class SecondaryBucket():
     Each key is still based on the value of 'primary', but the value is another
     dictionary, with each key of the smaller dictionary being the values of
     the 'secondary' elements, and the value being a list of movie objects.
+
+    NOTE: The structure is essentially dict -> dict -> array
     '''
     def __init__(self):
         self.genres = {}
@@ -151,12 +153,17 @@ class SecondaryBucket():
         return len(out)
 
     def _count_secondary_occurences(self, in_primary_g):
+        '''
+        Could occurences of a passed genre (in_primary_g)
+        being used as a secondary genre against all
+        movies in the bucket.
+        '''
         sec_occur = 0
-        for prim_g in self.genres:
-            for sec_g in self.genres[prim_g]:
-                if sec_g == in_primary_g:
+        for secondary_dict in self.genres.values():
+            for secondary_g in secondary_dict:
+                if secondary_g == in_primary_g:
                     # sec_occur += 1
-                    sec_occur += len(self.genres[prim_g][sec_g])
+                    sec_occur += len(secondary_dict[secondary_g])
         return sec_occur
 
     def bucket(self, in_primary, in_secondary):

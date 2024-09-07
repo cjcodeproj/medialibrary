@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -70,7 +70,7 @@ class ListEntry():
         '''
         output = f"{'Title':45s} {'Media Type':10s} {'Copies':6s} " + \
                  f"{'Date':19s}\n" + \
-                 f"{'-' * 45} {'-' * 10} {'-' *6} {'-' * 19}"
+                 f"{'-' * 45} {'-' * 10} {'-' * 6} {'-' * 19}"
         return output
 
 
@@ -135,7 +135,7 @@ class BriefEntry():
                 out += "Library > Instances\n\n"
                 out += f"{' ' * indent}{'ID Label'} {'Acquisition':30s} " + \
                        f"{'Date':19s}\n" + \
-                       f"{' ' * indent}{'-' * 8} {'-' *30} {'-' * 19}\n"
+                       f"{' ' * indent}{'-' * 8} {'-' * 30} {'-' * 19}\n"
                 for inst_i in lib.instances:
                     if not inst_i.local_id:
                         id_val = 'UNDEF'
