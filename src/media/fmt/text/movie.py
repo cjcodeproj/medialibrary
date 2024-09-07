@@ -26,6 +26,8 @@
 Standard text format reports for movies.
 '''
 
+# pylint: disable=R0801
+
 from datetime import timedelta
 from media.fmt.text.basics import hdr_list, hdr_list_np, hdr_text, hdr_block
 
@@ -233,10 +235,11 @@ def build_genre_simple(in_movie):
     '''
     o_string = ''
     classification = in_movie.classification
-    if classification.genres.primary:
-        o_string = f"{classification.genres.primary}"
-    if classification.genres.secondary:
-        o_string += '/' + '/'.join(classification.genres.secondary)
+    if classification.genres:
+        if classification.genres.primary:
+            o_string = f"{classification.genres.primary}"
+        if classification.genres.secondary:
+            o_string += '/' + '/'.join(classification.genres.secondary)
     return o_string
 
 

@@ -26,6 +26,8 @@
 Standard text format reports for audio albums.
 '''
 
+# pylint: disable=R0801
+
 from datetime import timedelta
 
 

@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-195](https://github.com/cjcodeproj/medialibrary/issues/195) Media movie list genre bug
  - [medialibrary-176](https://github.com/cjcodeproj/medialibrary/issues/176) Plural of music is still music
  - [medialibrary-192](https://github.com/cjcodeproj/medialibrary/issues/192) Support Scores as well as Soundtracks
  - [medialibrary-189](https://github.com/cjcodeproj/medialibrary/issues/189) Noun casefold bug
