@@ -1,7 +1,8 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.2.5
+ - [medialibrary-196](https://github.com/cjcodeproj/medialibrary/issues/196) Release 0.2.5
  - [medialibrary-175](https://github.com/cjcodeproj/medialibrary/issues/175) Some code formatting fixes
  - [medialibrary-195](https://github.com/cjcodeproj/medialibrary/issues/195) Media movie list genre bug
  - [medialibrary-176](https://github.com/cjcodeproj/medialibrary/issues/176) Plural of music is still music
