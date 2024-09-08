@@ -30,6 +30,7 @@ class Namespaces():
     ns = {
             'media': 'http://vectortron.com/xml/media/media',
             'movie': 'http://vectortron.com/xml/media/movie',
+            'audio': 'http://vectortron.com/xml/media/audio',
             'authorship': 'http://vectortron.com/xml/media/meta/authorship',
             'xml': 'http://www.w3.org/XML/1998/namespace',
             'xlink': 'http://www.w3.org/1999/xlink'

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -42,10 +42,7 @@ def hdr_list(header, i_list):
     else:
         hdr_string = f"{header}s: "
         bfr_string = " " * len(hdr_string)
-        str_list = ""
-        for i_name in i_list:
-            str_list += f"{i_name}, "
-        str_list = str_list[:-2]
+        str_list = ', '.join([str(i_name) for i_name in i_list])
         out_ar = textwrap.wrap(str_list, width=DEF_WIDTH,
                                initial_indent=hdr_string,
                                subsequent_indent=bfr_string)
@@ -62,10 +59,7 @@ def hdr_block(header, i_list):
         out_string = f"{header}:\n{i_list[0]}"
     else:
         hdr_string = f"{header}s:"
-        str_list = ""
-        for i_name in i_list:
-            str_list += f"{i_name}, "
-        str_list = str_list[:-2]
+        str_list = ', '.join([str(i_name) for i_name in i_list])
         out_ar = textwrap.wrap(str_list, width=DEF_WIDTH,
                                initial_indent=' ',
                                subsequent_indent=' ')
@@ -82,10 +76,7 @@ def hdr_list_np(header, i_list):
     out_string = ""
     hdr_string = f"{header}: "
     bfr_string = " " * len(hdr_string)
-    str_list = ""
-    for i_name in i_list:
-        str_list += f"{i_name}, "
-    str_list = str_list[:-2]
+    str_list = ', '.join([str(i_name) for i_name in i_list])
     out_ar = textwrap.wrap(str_list, width=DEF_WIDTH,
                            initial_indent=hdr_string,
                            subsequent_indent=bfr_string)

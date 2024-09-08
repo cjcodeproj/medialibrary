@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -69,29 +69,41 @@ class TitleValueException(Exception):
         return self.message
 
 
-class Catalog():
+class AbstractCatalog():
     '''
-    The catalog is for identify references to the media, and external
-    references pointing to the media
+    Abstract class for all content objects.
+    Identifies references to the media, and
+    pointers to the media.
     '''
-    def __init__(self, in_chunk):
+    def __init__(self):
         self.copyright = None
         self.alt_titles = None
         self.unique_index = None
-        if in_chunk is not None:
-            self._process(in_chunk)
-        if not self.alt_titles:
-            self.alt_titles = AlternateTitles(None)
 
-    def _process(self, in_chunk):
-        for child in in_chunk:
+    def _process(self, in_element):
+        for child in in_element:
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'copyright':
                 self.copyright = Copyright(child)
-            if e_name == 'altTitles':
+            elif e_name == 'altTitles':
                 self.alt_titles = AlternateTitles(child)
-            if e_name == 'ucIndex':
+            elif e_name == 'ucIndex':
                 self.unique_index = UniqueConstraints(child)
+        self._post_load_process()
+
+    def _post_load_process(self):
+        if not self.alt_titles:
+            self.alt_titles = AlternateTitles(None)
+
+
+class Catalog(AbstractCatalog):
+    '''
+    Empty catalog class.
+    '''
+    def __init__(self, in_element):
+        super().__init__()
+        if in_element is not None:
+            self._process(in_element)
 
 
 class Copyright():
@@ -159,7 +171,7 @@ class UniqueConstraints():
     def __init__(self, in_chunk):
         self.index = 0
         self.note = ""
-        if in_chunk:
+        if in_chunk is not None:
             self._process(in_chunk)
 
     def _process(self, in_chunk):

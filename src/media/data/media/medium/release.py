@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -78,7 +78,7 @@ class ReleaseException(Exception):
 class FormalType():
     '''Static output representation on media types.'''
     f_map = {
-            "cd": "CD",
+            "audiocd": "Audio CD",
             "casette": "Casette",
             "record": "Record",
             "dvd": "DVD",

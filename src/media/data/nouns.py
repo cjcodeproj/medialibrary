@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,6 +30,7 @@ Objects for representation of proper nouns used in keywords.
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-instance-attributes
 
+from media.generic.stringtools import build_sort_string
 from media.generic.stringtools import chg_ws
 from media.xml.namespaces import Namespaces
 
@@ -64,12 +65,16 @@ def noun_dispatcher(in_element):
     Deliver an appropriate noun object based on
     the child element sequence discovered in the
     passed element.
+
+    This code only works for crew elements
+    where the value is either a personal name
+    or a group/entity, or unknown.
     '''
     tagname = Namespaces.ns_strip(in_element[0].tag)
     if tagname == 'grp':
-        return Noun(in_element[0])
+        return Group(in_element[0])
     if tagname == 'ent':
-        return Noun(in_element[0])
+        return Entity(in_element[0])
     if tagname == 'unkn':
         return Noun(in_element[0])
     if tagname in ['prefix', 'pcn', 'pgn', 'gn']:
@@ -80,16 +85,41 @@ def noun_dispatcher(in_element):
 class Noun(AbstractNoun):
     '''
     Simplest class to represent proper nouns
-    for Thing, Event, Group, Entity
+    for Thing, or Event
 
     value represents the value that is displayed
     sort_value represents the value for sorting
     '''
     def __init__(self, in_element):
         super().__init__()
-        self.value = in_element.text
-        self.sort_value = self.value.casefold()
+        if in_element.text:
+            self.value = in_element.text
+            self.sort_value = self.value.casefold()
         self.tagname = Namespaces.ns_strip(in_element.tag)
+
+
+class Group(AbstractNoun):
+    '''
+    A proper noun representing a group of invdividuals.
+    '''
+    def __init__(self, in_group):
+        super().__init__()
+        self.value = in_group.text
+        self.sort_value = build_sort_string(in_group.text)
+        self.tagname = Namespaces.ns_strip(in_group.tag)
+
+
+class Entity(AbstractNoun):
+    '''
+    A proper noun representing a collective group.
+    '''
+    def __init__(self, in_entity):
+        super().__init__()
+        self.value = in_entity.text
+        if 'acronym' in in_entity.attrib:
+            self.acronym = in_entity.attrib['acronym']
+        self.sort_value = build_sort_string(in_entity.text)
+        self.tagname = Namespaces.ns_strip(in_entity.tag)
 
 
 class Place(AbstractNoun):

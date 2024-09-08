@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ from datetime import timedelta
 
 import os
 import argparse
-from media.generic.sorting.lists import Organizer
+from media.generic.sorting.organizer import Organizer
 from media.generic.sorting.groups import Batch
 from media.tools.common import load_movies
 from media.tools.movies.genrebreakdown import proportion_bar
@@ -222,7 +222,7 @@ if __name__ == '__main__':
         parser.print_help()
     all_movies = load_movies(mediapath)
     organizer = Organizer(all_movies)
-    single_batch = organizer.get_batches()[0]
+    single_batch = organizer.create_batches()[0]
     sorted_movies = single_batch.index_by(Batch.S_RUNTIME)
     if args.buckets:
         buckets = BucketManager(args.buckets)

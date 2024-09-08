@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@ Keywords module
 # pylint: disable=too-few-public-methods
 # pylint: disable=consider-using-dict-items
 
-from media.data.nouns import Art, Noun, PersonalName, Place
+from media.data.nouns import Art, Noun, PersonalName, Place, Group, Entity
 from media.xml.namespaces import Namespaces
 
 
@@ -229,12 +229,16 @@ class ProperNounKeyword(AbstractKeyword):
             child = in_element[0]
             tagname = Namespaces.ns_strip(child.tag)
             self.tagtype = tagname
-            if tagname in ['thing', 'entity', 'group', 'event']:
+            if tagname in ['thing', 'event']:
                 self.value = Noun(child)
             elif tagname == 'person':
                 self.value = PersonalName(child)
             elif tagname == 'place':
                 self.value = Place(child)
+            elif tagname == 'group':
+                self.value = Group(child)
+            elif tagname == 'entity':
+                self.value = Entity(child)
             elif tagname == 'art':
                 self.value = Art(child)
 

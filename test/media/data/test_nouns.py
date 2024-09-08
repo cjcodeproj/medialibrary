@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 
 import unittest
 import xml.etree.ElementTree as ET
-from media.data.nouns import Noun, PersonalName, noun_dispatcher
+from media.data.nouns import PersonalName, Group, noun_dispatcher
 
 CASE1 = '''<?xml version='1.0'?>
 <name xmlns='http://vectortron.com/xml/media/movie'>
@@ -154,4 +154,4 @@ class TestNounDispatchFunction(unittest.TestCase):
 
     def test_noun_dispatcher_class(self):
         """Verify dispatcher sends correct object class."""
-        self.assertIsInstance(self.grp1, Noun)
+        self.assertIsInstance(self.grp1, Group)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -45,7 +45,7 @@ class Loader():
         if pattern is not None:
             files = repo.file_match(pattern)
         else:
-            files = repo.file_match(FilenameMatches.All_Media_Xml)
+            files = repo.file_match(FilenameMatches.All_Media)
         for in_file in files:
             self.file_count += 1
             m_obj.extend(self.parser.load_file(in_file))
