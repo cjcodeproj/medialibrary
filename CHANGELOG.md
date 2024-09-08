@@ -1,6 +1,35 @@
 medialibrary CHANGELOG
 ======================
 
+## RELEASE 0.2.5
+ - [medialibrary-196](https://github.com/cjcodeproj/medialibrary/issues/196) Release 0.2.5
+ - [medialibrary-175](https://github.com/cjcodeproj/medialibrary/issues/175) Some code formatting fixes
+ - [medialibrary-195](https://github.com/cjcodeproj/medialibrary/issues/195) Media movie list genre bug
+ - [medialibrary-176](https://github.com/cjcodeproj/medialibrary/issues/176) Plural of music is still music
+ - [medialibrary-192](https://github.com/cjcodeproj/medialibrary/issues/192) Support Scores as well as Soundtracks
+ - [medialibrary-189](https://github.com/cjcodeproj/medialibrary/issues/189) Noun casefold bug
+ - [medialibrary-185](https://github.com/cjcodeproj/medialibrary/issues/185) Fix references to Organizer object class
+ - [medialibrary-186](https://github.com/cjcodeproj/medialibrary/issues/186) Update movie list and show code
+ - [medialibrary-187](https://github.com/cjcodeproj/medialibrary/issues/187) AbstractContent needs a classification attribute
+ - [medialibrary-161](https://github.com/cjcodeproj/medialibrary/issues/161) Album output tool
+ - [medialibrary-183](https://github.com/cjcodeproj/medialibrary/issues/183) Albums will need grouping and batching code
+ - [medialibrary-184](https://github.com/cjcodeproj/medialibrary/issues/184) Repo content objects clobber each other
+ - [medialibrary-174](https://github.com/cjcodeproj/medialibrary/issues/174) ElementTree DecpreciationWarning
+ - [medialibrary-182](https://github.com/cjcodeproj/medialibrary/issues/182) Method noun_dispatcher might be overused
+ - [medialibrary-177](https://github.com/cjcodeproj/medialibrary/issues/177) Albums will need an index structure
+ - [medialibrary-173](https://github.com/cjcodeproj/medialibrary/issues/173) Albums need a post_load_process
+ - [medialibrary-181](https://github.com/cjcodeproj/medialibrary/issues/181) Dialogue Runtime
+ - [medialibrary-180](https://github.com/cjcodeproj/medialibrary/issues/180) Simple Album classification
+ - [medialibrary-179](https://github.com/cjcodeproj/medialibrary/issues/179) Finally need a group noun
+ - [medialibrary-171](https://github.com/cjcodeproj/medialibrary/issues/171) Content Index objects should get their own hierarchy
+ - [medialibrary-170](https://github.com/cjcodeproj/medialibrary/issues/170) Song support
+ - [medialibrary-169](https://github.com/cjcodeproj/medialibrary/issues/169) Add support for vinyl records
+ - [medialibrary-168](https://github.com/cjcodeproj/medialibrary/issues/168) Initial support for albums in POC tools
+ - [medialibrary-167](https://github.com/cjcodeproj/medialibrary/issues/167) Fix typo in README.md
+ - [medialibrary-160](https://github.com/cjcodeproj/medialibrary/issues/160) Album support
+ - [medialibrary-159](https://github.com/cjcodeproj/medialibrary/issues/159) Abstract catalog object
+ - [medialibrary-157](https://github.com/cjcodeproj/medialibrary/issues/157) POC tools may have padded whitespace output
+
 ## RELEASE 0.2.3
  - [medialibrary-162](https://github.com/cjcodeproj/medialibrary/issues/162) Release 0.2.3
  - [medialibrary-149](https://github.com/cjcodeproj/medialibrary/issues/149) TitleMunger could provide directory path inforamtion

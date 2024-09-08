@@ -1,11 +1,11 @@
 [project]
 name = "medialibrary"
-version = "0.2.3"
+version = "0.2.5"
 description = "Package for reading vtmedia XML files describing a movie/music media library"
 readme = "README.md"
 requires-python = ">3.8"
 license = {text = "MIT License"}
-keywords = ["xml", "movies", "dvds", "music"]
+keywords = ["xml", "movies", "dvds", "music", "cds", "albums"]
 authors = [
   {email = "cjcodeproj@fastmail.com", name = "Chris J"}
 ]

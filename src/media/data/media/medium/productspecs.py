@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -65,9 +65,7 @@ class Inventory():
                     self.inventory.append(sub_c)
 
     def __str__(self):
-        out = ''
-        for itm in self.inventory:
-            out += f"{itm!s}"
+        out = ''.join([str(itm) for itm in self.inventory])
         return out
 
 
@@ -111,6 +109,9 @@ class Dimensions():
         units, like Envelopes have a height value
         so low, it's almost not worth recording.
         '''
+        length = 0
+        width = 0
+        height = 0
         if 'length' in in_element.attrib:
             length = float(in_element.attrib['length'])
         if 'width' in in_element.attrib:
@@ -120,11 +121,9 @@ class Dimensions():
         if length > 0 and width > 0:
             self.length = length
             self.width = width
-            if height > 0:
-                self.height = height
+            self.height = max(height, self.height)
 
     def _process_weight(self, in_element):
         if in_element.text:
             weight = float(in_element.text)
-            if weight > 0:
-                self.weight = weight
+            self.weight = max(weight, self.weight)

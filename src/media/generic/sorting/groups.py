@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,76 +26,7 @@
 
 # pylint: disable=too-few-public-methods
 
-import random
-
-
-class Batch():
-    '''
-    Represents a subset of Entry objects tied together by
-    a common grouping factor.
-
-    Contains the list of entries, and the sub-header value.
-    '''
-    S_TITLE = 1
-    S_YEAR = 2
-    S_RUNTIME = 3
-
-    def __init__(self, index_key=None, header=None, first_entry=None):
-        self.index_key = index_key
-        self.header = header
-        if first_entry:
-            self.entries = [first_entry]
-        else:
-            self.entries = []
-
-    def append(self, entry):
-        '''
-        Add another Entry object to the array.
-        '''
-        self.entries.append(entry)
-
-    def extend(self, entries):
-        '''
-        Add an entire array of entries to a set.
-        '''
-        self.entries.extend(entries)
-
-    def index_by(self, index_key=1):
-        """
-        Return the entries after sorting by a
-        particular trait.
-        """
-        order_list = []
-        if index_key == Batch.S_TITLE:
-            order_list = sorted(self.entries, key=lambda x: x.sort_title)
-        elif index_key == Batch.S_YEAR:
-            order_list = sorted(self.entries, key=lambda x: x.year)
-        elif index_key == Batch.S_RUNTIME:
-            order_list = sorted(self.entries, key=lambda x: x.runtime)
-        return order_list
-
-    def random_entry(self):
-        '''
-        Return a single random entry.
-        '''
-        r_num = random.randint(0, len(self.entries)-1)
-        return self.entries[r_num]
-
-    def __lt__(self, other):
-        return self.header < other.header
-
-    def __rt__(self, other):
-        return self.header > other.header
-
-    def __eq__(self, other):
-        return self.header == other.header
-
-
-BatchSortOptions = {
-        'title': Batch.S_TITLE,
-        'year': Batch.S_YEAR,
-        'runtime': Batch.S_RUNTIME
-}
+from media.generic.sorting.batch import Batch
 
 
 class Grouping():

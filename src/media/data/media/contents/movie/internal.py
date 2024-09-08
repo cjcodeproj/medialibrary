@@ -26,6 +26,7 @@
 
 # pylint: disable=too-few-public-methods
 # pylint: disable=too-many-instance-attributes
+# pylint: disable=R0801
 
 from datetime import timedelta
 from media.xml.namespaces import Namespaces
@@ -34,7 +35,7 @@ from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
 from media.data.media.contents.movie.classification import Classification
-from media.generic.sorting.lists import ContentIndex
+from media.generic.sorting.index import ContentIndex
 
 
 class Movie(AbstractContent):
@@ -43,6 +44,7 @@ class Movie(AbstractContent):
         super().__init__()
         self.technical = None
         self.crew = None
+        self.s_index = None
         self._process(in_element)
 
     def build_index_object(self):
@@ -67,6 +69,10 @@ class Movie(AbstractContent):
                 self.crew = Crew(child)
         self._post_load_process()
 
+    def _post_load_process(self):
+        super()._post_load_process()
+        self.s_index = MovieIndexEntry(self)
+
     def __hash__(self):
         return hash(self.unique_key)
 
@@ -75,9 +81,6 @@ class Movie(AbstractContent):
 
     def __gt__(self, other):
         return self.unique_key > other.unique_key
-
-    def __eq__(self, other):
-        return self.unique_key == other.unique_key
 
 
 class MovieIndexEntry(ContentIndex):

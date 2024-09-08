@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,6 +35,7 @@ and creation of the media objects.
 '''
 
 from media.data.media.contents.movie import Movie
+from media.data.media.contents.audio.album import Album
 from media.fileops.loader import Loader
 from media.fileops.scanner import Walker
 
@@ -97,5 +98,15 @@ class Repo():
         out = []
         for con_obj in self.content:
             if issubclass(con_obj.__class__, Movie):
+                out.append(con_obj)
+        return out
+
+    def get_albums(self):
+        '''
+        Extract all content objects that are the Album class.
+        '''
+        out = []
+        for con_obj in self.content:
+            if issubclass(con_obj.__class__, Album):
                 out.append(con_obj)
         return out

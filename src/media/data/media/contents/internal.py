@@ -44,6 +44,7 @@ class AbstractContent():
     def __init__(self):
         self.title = None
         self.catalog = None
+        self.classification = None
         self.sort_title = ""
         self.unique_key = ""
 
@@ -74,6 +75,10 @@ class AbstractContent():
         '''
         return TitleMunger.build_catalog_title(
                 self.title, self.catalog)
+
+    def __eq__(self, other):
+        return self.__class__ == other.__class__ and \
+                self.unique_key == other.unique_key
 
 
 class ContentException(Exception):

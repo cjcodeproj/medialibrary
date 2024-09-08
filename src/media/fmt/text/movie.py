@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2024 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,6 +25,8 @@
 '''
 Standard text format reports for movies.
 '''
+
+# pylint: disable=R0801
 
 from datetime import timedelta
 from media.fmt.text.basics import hdr_list, hdr_list_np, hdr_text, hdr_block
@@ -51,7 +53,7 @@ class OneLiner():
         self.output = f"{self.movie.title!s:50s} " + \
                       f"{y_string:4s} " + \
                       f"{runtime:8s} " + \
-                      f"{category:50s} "
+                      f"{category:s}\n"
 
     def __str__(self):
         return self.output
@@ -73,7 +75,7 @@ class OneLiner():
         """
         Return a simple line to go under the header fields.
         """
-        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}"
+        return f"{'=' * 50} {'=' * 4} {'=' * 8} {'=' * 50}\n"
 
 
 class MiniEntry():
@@ -190,7 +192,7 @@ class Brief():
         if music.composers:
             out += hdr_list("Composer", music.composers) + "\n"
         if music.music:
-            out += hdr_list("Music", music.music) + "\n"
+            out += hdr_list_np("Music", music.music) + "\n"
         return out
 
     def cast(self):
@@ -233,10 +235,11 @@ def build_genre_simple(in_movie):
     '''
     o_string = ''
     classification = in_movie.classification
-    if classification.genres.primary:
-        o_string = f"{classification.genres.primary}"
-    if classification.genres.secondary:
-        o_string += '/' + '/'.join(classification.genres.secondary)
+    if classification.genres:
+        if classification.genres.primary:
+            o_string = f"{classification.genres.primary}"
+        if classification.genres.secondary:
+            o_string += '/' + '/'.join(classification.genres.secondary)
     return o_string
 
 
