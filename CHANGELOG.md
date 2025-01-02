@@ -1,6 +1,9 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+ - [medialibrary-178](https://github.com/cjcodeproj/medialibrary/issues/178) Output format framework
+
 ## RELEASE 0.2.5
  - [medialibrary-196](https://github.com/cjcodeproj/medialibrary/issues/196) Release 0.2.5
  - [medialibrary-175](https://github.com/cjcodeproj/medialibrary/issues/175) Some code formatting fixes
