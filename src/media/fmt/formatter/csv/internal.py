@@ -28,16 +28,16 @@ Code for handling plain text output.
 
 # pylint: disable=R0903
 
+from media.fmt.formatter.abstract import AbstractFormatter
 from media.fmt.formatter.csv.table import Table
+import media.fmt.structure.table
 
 
-class DriverMain():
+class DriverMain(AbstractFormatter):
     '''
     The CSV output formatter.
     '''
 
-    def get_table(self):
-        '''
-        Return an object for generating CSV tables.
-        '''
-        return Table()
+    structure_matrix = {
+            media.fmt.structure.table.Table: Table,
+            }

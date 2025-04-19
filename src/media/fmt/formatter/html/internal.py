@@ -26,18 +26,22 @@
 Code for handling HTML output formatting.
 '''
 
-# pylint:disable=R0903
+# pylint:disable=R0903, R0801
 
+from media.fmt.formatter.abstract import AbstractFormatter
 from media.fmt.formatter.html.table import Table
+from media.fmt.formatter.html.basics import Basics
+import media.fmt.structure.table
+import media.fmt.structure.basics
 
 
-class DriverMain():
+class DriverMain(AbstractFormatter):
     '''
     Code for the HTML output formatter.
     '''
 
-    def get_table(self):
-        '''
-        Return an object for formatting HTML tables.
-        '''
-        return Table()
+    structure_matrix = {
+            media.fmt.structure.table.Table: Table,
+            media.fmt.structure.basics.Paragraph: Basics,
+            media.fmt.structure.basics.Header: Basics,
+            }

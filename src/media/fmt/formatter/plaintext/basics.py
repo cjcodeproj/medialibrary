@@ -23,25 +23,42 @@
 #
 
 '''
-Code for handling plain text output.
+Plain text formatting for basic text structures.
 '''
 
-# pylint: disable=R0903, R0801
+# pylint: disable=R0801
 
-from media.fmt.formatter.abstract import AbstractFormatter
-from media.fmt.formatter.plaintext.table import Table
-from media.fmt.formatter.plaintext.basics import Basics
-import media.fmt.structure.table
 import media.fmt.structure.basics
 
 
-class DriverMain(AbstractFormatter):
+class Basics():
     '''
-    Formatter class for plain text output.
+    Basic rendering.
     '''
 
-    structure_matrix = {
-            media.fmt.structure.table.Table: Table,
-            media.fmt.structure.basics.Paragraph: Basics,
-            media.fmt.structure.basics.Header: Basics,
-            }
+    def render(self, in_object):
+        '''
+        Call the appropriate function based on the object
+        passed.
+        '''
+        out = ''
+        if in_object:
+            if issubclass(in_object.__class__,
+                          media.fmt.structure.basics.Paragraph):
+                out = self.render_para(in_object)
+            elif issubclass(in_object.__class__,
+                            media.fmt.structure.basics.Header):
+                out = self.render_header(in_object)
+        return out
+
+    def render_para(self, in_structure):
+        '''
+        Render a paragraph.
+        '''
+        return f"\n{in_structure!s}\n"
+
+    def render_header(self, in_structure):
+        '''
+        Render a header.
+        '''
+        return f"\n{in_structure!s}\n"

@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-213](https://github.com/cjcodeproj/medialibrary/issues/213) Output structures for paragraphs and headings
  - [medialibrary-178](https://github.com/cjcodeproj/medialibrary/issues/178) Output format framework
 
 ## RELEASE 0.2.5

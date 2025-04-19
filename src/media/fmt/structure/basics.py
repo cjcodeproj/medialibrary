@@ -23,25 +23,41 @@
 #
 
 '''
-Code for handling plain text output.
+Data structures for output elements.
 '''
 
-# pylint: disable=R0903, R0801
-
-from media.fmt.formatter.abstract import AbstractFormatter
-from media.fmt.formatter.plaintext.table import Table
-from media.fmt.formatter.plaintext.basics import Basics
-import media.fmt.structure.table
-import media.fmt.structure.basics
+# pylint: disable=R0903
 
 
-class DriverMain(AbstractFormatter):
+class AbstractStructure():
     '''
-    Formatter class for plain text output.
+    Abstract class.
     '''
+    def __init__(self):
+        pass
 
-    structure_matrix = {
-            media.fmt.structure.table.Table: Table,
-            media.fmt.structure.basics.Paragraph: Basics,
-            media.fmt.structure.basics.Header: Basics,
-            }
+
+class Header(AbstractStructure):
+    '''
+    Header structure.
+    '''
+    def __init__(self, in_text):
+        self.text = None
+        if in_text:
+            self.text = in_text
+
+    def __str__(self):
+        return self.text
+
+
+class Paragraph(AbstractStructure):
+    '''
+    Paragraph text structure.
+    '''
+    def __init__(self, in_text):
+        self.text = None
+        if in_text:
+            self.text = in_text
+
+    def __str__(self):
+        return self.text
