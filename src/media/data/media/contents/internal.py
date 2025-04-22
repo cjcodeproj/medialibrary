@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ from media.xml.namespaces import Namespaces
 from media.data.media.contents.generic.catalog import (
         Title, TitleValueException, Catalog
         )
-from media.generic.titletools import TitleMunger
+from media.general.titletools import TitleMunger
 
 
 class AbstractContent():

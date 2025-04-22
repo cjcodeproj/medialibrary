@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ Compare all of the movies against each other.
 
 import os
 import argparse
-from media.generic.compare.movie import MovieComparator
+from media.general.compare.movie import MovieComparator
 from media.tools.common import load_movies
 
 

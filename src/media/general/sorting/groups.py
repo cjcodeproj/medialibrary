@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 
 # pylint: disable=too-few-public-methods
 
-from media.generic.sorting.batch import Batch
+from media.general.sorting.batch import Batch
 
 
 class Grouping():

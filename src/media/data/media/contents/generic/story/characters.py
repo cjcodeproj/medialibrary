@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@ Object classes for characters in a story.
 
 
 from media.xml.namespaces import Namespaces
-from media.generic.stringtools import build_sort_string
+from media.general.stringtools import build_sort_string
 
 
 class AbstractCharacter():
