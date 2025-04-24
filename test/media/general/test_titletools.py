@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 
 import unittest
 import xml.etree.ElementTree as ET
-from media.generic.titletools import TitleMunger
+from media.development.titletools import TitleMunger
 from media.data.media.contents.movie import Movie
 
 
