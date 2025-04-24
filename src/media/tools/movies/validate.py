@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ Run simple validation tests against the movies, report any incomplete data.
 import os
 import argparse
 from datetime import timedelta
-from media.generic.sorting.organizer import Organizer
+from media.general.sorting.organizer import Organizer
 from media.tools.common import load_movies
 
 

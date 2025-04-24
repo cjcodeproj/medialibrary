@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,14 +28,14 @@ modules.
 '''
 
 
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods, R0801
 
 
 import argparse
 import os
 import media.fmt.text.movie
-from media.generic.sorting.organizer import Organizer
-from media.generic.sorting.batch import Batch
+from media.general.sorting.organizer import Organizer
+from media.general.sorting.batch import Batch
 
 CliGroupingOptions = {
         'none': Organizer.G_NONE,
@@ -61,6 +61,8 @@ class Controller():
     def __init__(self):
         self.args = None
         self.mediapath = None
+        self.group = Organizer.G_NONE
+        self.sort = Batch.S_TITLE
 
     def setup(self):
         '''
@@ -69,13 +71,14 @@ class Controller():
         '''
         parser = self._setup_parser()
         self.args = parser.parse_args()
+        self._convert_args()
         self._determine_path()
 
     def _setup_parser(self):
         '''
         Set up the parser object.
         '''
-        parser = argparse.ArgumentParser(description='Album list')
+        parser = argparse.ArgumentParser(description='Movie list')
         parser.add_argument('--mediapath', help='path of media repository')
         parser.add_argument('--random', type=int,
                             help='print X random entries')
@@ -83,16 +86,22 @@ class Controller():
                             choices=['none', 'alphabetical',
                                      'decade',
                                      'genre'],
-                            help='Album grouping',
+                            help='Movie grouping',
                             default='none')
         parser.add_argument('--sort',
                             choices=['title', 'year', 'runtime'],
-                            help='Album sorting',
+                            help='Movie sorting',
                             default='title')
         parser.add_argument('--stats',
                             action=argparse.BooleanOptionalAction,
                             help='Report statistics')
         return parser
+
+    def _convert_args(self):
+        if self.args.group in CliGroupingOptions:
+            self.group = CliGroupingOptions[self.args.group]
+        if self.args.sort in CliSortOptions:
+            self.sort = CliSortOptions[self.args.sort]
 
     def _determine_path(self):
         '''
@@ -125,7 +134,7 @@ class MovieReport():
 
     def set_movies(self, in_movies, in_controller=None):
         '''
-        Pass all the Album content objects that were
+        Pass all the Movie content objects that were
         found in the repository.
         '''
         if len(in_movies) > 0:
@@ -160,7 +169,7 @@ class MovieReport():
             self.stats = stats
         out = ''
         out += media.fmt.text.movie.OneLiner.header_fields()
-        self.organizer.set_grouping(self.group)
+        # self.organizer.set_grouping(self.group)  (Why this??)
         if self.sample > 0:
             batches = self.organizer.create_batches(self.group, self.sample)
         else:

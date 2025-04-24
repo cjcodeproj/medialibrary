@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,8 +30,8 @@ Objects for representation of proper nouns used in keywords.
 # pylint: disable=too-many-branches
 # pylint: disable=too-many-instance-attributes
 
-from media.generic.stringtools import build_sort_string
-from media.generic.stringtools import chg_ws
+from media.general.stringtools import build_sort_string
+from media.general.stringtools import chg_ws
 from media.xml.namespaces import Namespaces
 
 

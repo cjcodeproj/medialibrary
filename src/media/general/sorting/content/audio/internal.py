@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,16 +28,18 @@
 # pylint: disable=too-few-public-methods
 
 
-from media.generic.sorting.groups import (
+from media.general.sorting.groups import (
         Grouping, GroupAll, GroupTitleAlphabetical,
         GroupDecade, GroupPrimaryGenre)
-from media.generic.sorting.batch import Batch
-from media.generic.sorting.organizer import AbstractOrganizer
+from media.general.sorting.batch import Batch
+from media.general.sorting.organizer import AbstractOrganizer
 
 
 class AlbumOrganizer(AbstractOrganizer):
     '''
-    DOCO
+    The AlbumOrganizer is a custom organizer sublcass for music
+    albums, that allows for one additional grouping parameter,
+    grouping by the name of the music artist.
     '''
     G_ARTIST = 10
 
@@ -55,6 +57,7 @@ class AlbumOrganizer(AbstractOrganizer):
         else:
             self.batches = GroupAll.group(self.working)
             print('group parameter did not match')
+            # maybe we throw an exception at this point??
 
 
 class GroupArtist(Grouping):

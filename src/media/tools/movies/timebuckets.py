@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,8 +32,8 @@ from datetime import timedelta
 
 import os
 import argparse
-from media.generic.sorting.organizer import Organizer
-from media.generic.sorting.groups import Batch
+from media.general.sorting.organizer import Organizer
+from media.general.sorting.groups import Batch
 from media.tools.common import load_movies
 from media.tools.movies.genrebreakdown import proportion_bar
 

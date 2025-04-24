@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,7 @@
 
 
 import random
-from media.generic.sorting.groups import (
+from media.general.sorting.groups import (
         GroupAll, GroupTitleAlphabetical,
         GroupDecade, GroupPrimaryGenre)
 
