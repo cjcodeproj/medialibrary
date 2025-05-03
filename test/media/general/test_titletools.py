@@ -28,7 +28,7 @@
 
 import unittest
 import xml.etree.ElementTree as ET
-from media.development.titletools import TitleMunger
+from media.general.titletools import TitleMunger
 from media.data.media.contents.movie import Movie
 
 
