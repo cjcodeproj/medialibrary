@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 '''Common code related to sorting operations.'''
 
 import string
-from media.generic.language import LanguageHelpers
+from media.general.language import LanguageHelpers
 
 
 def transform_string(in_value):

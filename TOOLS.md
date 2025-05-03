@@ -497,8 +497,9 @@ $ python
 Python 3.10.8 (main, Oct 31 2022, 11:27:36) [GCC 12.2.0] on sunos5
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import media.fileops.repo
+>>> import media.general.inspector
 >>> repo = media.fileops.repo.Repo('/home/user/xml/movies/data')
->>> repo.scans()
+>>> repo.scan()
 >>> repo.load()
 >>> print(len(repo.media))
 575
@@ -509,5 +510,19 @@ Type "help", "copyright", "credits" or "license" for more information.
 Collateral
 >>> print(mo[126].crew.cast.cast[0].actor)
 Tom Cruise
+>>> insp = media.general.inspector.Inspector()
+>>> m1 = repo.media[25]
+print (insp.inspector(m1))
+===================================
+Media object confirmed.
+Media Title: 52 Pickup
+Instance count: 1
+Total content objects: 1
+
+Movie Object Found
+    Title: 52 Pickup
+    Actor Count: 12
+    First Actor: Roy Scheider
+===================================
 >>> quit()
 ```

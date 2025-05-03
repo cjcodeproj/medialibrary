@@ -23,26 +23,41 @@
 #
 
 '''
-Compare all of the movies against each other.
+Data structures for output elements.
 '''
 
-# pylint: disable=R0801
-
-import os
-import argparse
-from media.general.compare.movie import MovieComparator
-from media.tools.common import load_movies
+# pylint: disable=R0903
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Simple movie list.')
-    parser.add_argument('--mediapath', help='path of media library')
-    args = parser.parse_args()
-    mediapath = args.mediapath or os.environ['MEDIAPATH']
-    if not mediapath:
-        parser.print_help()
-    all_movies = load_movies(mediapath)
-    comparator = MovieComparator()
-    comparator.load_data(all_movies)
-    comparator.compare()
-    comparator.report()
+class AbstractStructure():
+    '''
+    Abstract class.
+    '''
+    def __init__(self):
+        pass
+
+
+class Header(AbstractStructure):
+    '''
+    Header structure.
+    '''
+    def __init__(self, in_text):
+        self.text = None
+        if in_text:
+            self.text = in_text
+
+    def __str__(self):
+        return self.text
+
+
+class Paragraph(AbstractStructure):
+    '''
+    Paragraph text structure.
+    '''
+    def __init__(self, in_text):
+        self.text = None
+        if in_text:
+            self.text = in_text
+
+    def __str__(self):
+        return self.text

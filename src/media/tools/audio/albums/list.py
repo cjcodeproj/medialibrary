@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -35,8 +35,8 @@ import argparse
 import media.fmt.text.audio.album
 from media.fileops.filenames import FilenameMatches
 from media.fileops.repo import Repo
-from media.generic.sorting.content.audio import AlbumOrganizer
-from media.generic.sorting.batch import Batch
+from media.general.sorting.content.audio import AlbumOrganizer
+from media.general.sorting.batch import Batch
 
 
 CliGroupingOptions = {
