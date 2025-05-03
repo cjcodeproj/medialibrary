@@ -1,7 +1,9 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.2.7
+
+ - [medialibrary-220](https://github.com/cjcodeproj/medialibrary/issues/220) Release 0.2.7
  - [medialibrary-219](https://github.com/cjcodeproj/medialibrary/issues/219) Inspector tweek
  - [medialibrary-217](https://github.com/cjcodeproj/medialibrary/issues/217) Module path is misnamed
  - [medialibrary-212](https://github.com/cjcodeproj/medialibrary/issues/212) CLI Controller class should process args internally
