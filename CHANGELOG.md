@@ -1,6 +1,16 @@
 medialibrary CHANGELOG
 ======================
 
+## RELEASE 0.2.7
+
+ - [medialibrary-220](https://github.com/cjcodeproj/medialibrary/issues/220) Release 0.2.7
+ - [medialibrary-219](https://github.com/cjcodeproj/medialibrary/issues/219) Inspector tweek
+ - [medialibrary-217](https://github.com/cjcodeproj/medialibrary/issues/217) Module path is misnamed
+ - [medialibrary-212](https://github.com/cjcodeproj/medialibrary/issues/212) CLI Controller class should process args internally
+ - [medialibrary-215](https://github.com/cjcodeproj/medialibrary/issues/215) Quick inspector object
+ - [medialibrary-213](https://github.com/cjcodeproj/medialibrary/issues/213) Output structures for paragraphs and headings
+ - [medialibrary-178](https://github.com/cjcodeproj/medialibrary/issues/178) Output format framework
+
 ## RELEASE 0.2.5
  - [medialibrary-196](https://github.com/cjcodeproj/medialibrary/issues/196) Release 0.2.5
  - [medialibrary-175](https://github.com/cjcodeproj/medialibrary/issues/175) Some code formatting fixes

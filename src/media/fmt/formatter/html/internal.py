@@ -23,26 +23,25 @@
 #
 
 '''
-Compare all of the movies against each other.
+Code for handling HTML output formatting.
 '''
 
-# pylint: disable=R0801
+# pylint:disable=R0903, R0801
 
-import os
-import argparse
-from media.general.compare.movie import MovieComparator
-from media.tools.common import load_movies
+from media.fmt.formatter.abstract import AbstractFormatter
+from media.fmt.formatter.html.table import Table
+from media.fmt.formatter.html.basics import Basics
+import media.fmt.structure.table
+import media.fmt.structure.basics
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Simple movie list.')
-    parser.add_argument('--mediapath', help='path of media library')
-    args = parser.parse_args()
-    mediapath = args.mediapath or os.environ['MEDIAPATH']
-    if not mediapath:
-        parser.print_help()
-    all_movies = load_movies(mediapath)
-    comparator = MovieComparator()
-    comparator.load_data(all_movies)
-    comparator.compare()
-    comparator.report()
+class DriverMain(AbstractFormatter):
+    '''
+    Code for the HTML output formatter.
+    '''
+
+    structure_matrix = {
+            media.fmt.structure.table.Table: Table,
+            media.fmt.structure.basics.Paragraph: Basics,
+            media.fmt.structure.basics.Header: Basics,
+            }

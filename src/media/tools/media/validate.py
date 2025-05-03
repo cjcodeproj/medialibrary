@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -33,7 +33,7 @@ import argparse
 import os
 from datetime import datetime
 from media.data.media.medium.release import FormalType
-from media.generic.sorting.organizer import Organizer
+from media.general.sorting.organizer import Organizer
 from media.tools.common import load_media_dev
 
 from media.validation.core.validator import Validator

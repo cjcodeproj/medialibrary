@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -41,7 +41,7 @@ from media.data.media.contents.audio.album.technical \
     import AlbumTechnical
 from media.data.media.contents.audio.elements.song import Song
 from media.data.media.contents.audio.elements.dialogue import Dialogue
-from media.generic.sorting.index import ContentIndex
+from media.general.sorting.index import ContentIndex
 from media.xml.namespaces import Namespaces
 
 

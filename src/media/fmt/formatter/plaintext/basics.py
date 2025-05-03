@@ -23,26 +23,42 @@
 #
 
 '''
-Compare all of the movies against each other.
+Plain text formatting for basic text structures.
 '''
 
 # pylint: disable=R0801
 
-import os
-import argparse
-from media.general.compare.movie import MovieComparator
-from media.tools.common import load_movies
+import media.fmt.structure.basics
 
 
-if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Simple movie list.')
-    parser.add_argument('--mediapath', help='path of media library')
-    args = parser.parse_args()
-    mediapath = args.mediapath or os.environ['MEDIAPATH']
-    if not mediapath:
-        parser.print_help()
-    all_movies = load_movies(mediapath)
-    comparator = MovieComparator()
-    comparator.load_data(all_movies)
-    comparator.compare()
-    comparator.report()
+class Basics():
+    '''
+    Basic rendering.
+    '''
+
+    def render(self, in_object):
+        '''
+        Call the appropriate function based on the object
+        passed.
+        '''
+        out = ''
+        if in_object:
+            if issubclass(in_object.__class__,
+                          media.fmt.structure.basics.Paragraph):
+                out = self.render_para(in_object)
+            elif issubclass(in_object.__class__,
+                            media.fmt.structure.basics.Header):
+                out = self.render_header(in_object)
+        return out
+
+    def render_para(self, in_structure):
+        '''
+        Render a paragraph.
+        '''
+        return f"\n{in_structure!s}\n"
+
+    def render_header(self, in_structure):
+        '''
+        Render a header.
+        '''
+        return f"\n{in_structure!s}\n"
