@@ -2,6 +2,7 @@ medialibrary CHANGELOG
 ======================
 
 ## CURRENT
+ - [medialibrary-219](https://github.com/cjcodeproj/medialibrary/issues/219) Inspector tweek
  - [medialibrary-217](https://github.com/cjcodeproj/medialibrary/issues/217) Module path is misnamed
  - [medialibrary-212](https://github.com/cjcodeproj/medialibrary/issues/212) CLI Controller class should process args internally
  - [medialibrary-215](https://github.com/cjcodeproj/medialibrary/issues/215) Quick inspector object

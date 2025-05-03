@@ -85,8 +85,15 @@ class Inspector():
 
     def _inspect_con_album(self, in_con):
         out = "Album Object Found\n"
+        art_str = ""
         if in_con.title:
-            out += f"   Title: {in_con.title}\n"
+            out += f"    Title: {in_con.title}\n"
+        if in_con.catalog:
+            if in_con.catalog.artists:
+                for art_i in in_con.catalog.artists:
+                    art_str += str(art_i) + " "
+        if art_str:
+            out += f"    Artists: {art_str}\n"
         out += f"    Element Count: {len(in_con.elements)}\n"
         return out
 
