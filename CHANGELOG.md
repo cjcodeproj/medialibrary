@@ -1,6 +1,11 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+
+ - [medialibrary-227](https://github.com/cjcodeproj/medialibrary/issues/227) Re-factor composer for new XML structure
+
+
 ## RELEASE 0.2.7
 
  - [medialibrary-220](https://github.com/cjcodeproj/medialibrary/issues/220) Release 0.2.7
