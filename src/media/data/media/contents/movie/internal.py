@@ -34,6 +34,7 @@ from media.data.media.contents import AbstractContent, ContentException
 from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
+from media.data.media.contents.genericv.variants import VariantPool
 from media.data.media.contents.movie.classification import Classification
 from media.general.sorting.index import ContentIndex
 
@@ -43,6 +44,7 @@ class Movie(AbstractContent):
     def __init__(self, in_element):
         super().__init__()
         self.technical = None
+        self.variants = []
         self.crew = None
         self.s_index = None
         self._process(in_element)
@@ -59,13 +61,15 @@ class Movie(AbstractContent):
         for child in in_element:
             if child.tag == Namespaces.nsf('movie') + 'classification':
                 self.classification = Classification(child)
-            if child.tag == Namespaces.nsf('movie') + 'technical':
+            elif child.tag == Namespaces.nsf('movie') + 'technical':
                 self.technical = Technical(child)
-            if child.tag == Namespaces.nsf('movie') + 'story':
+            elif child.tag == Namespaces.nsf('movie') + 'story':
                 self.story = Story(child)
-            if child.tag == Namespaces.nsf('movie') + 'description':
+            elif child.tag == Namespaces.nsf('movie') + 'description':
                 self.story = Story(child)
-            if child.tag == Namespaces.nsf('movie') + 'crew':
+            elif child.tag == Namespaces.nsf('movie') + 'variants':
+                self.variants = VariantPool.read_variants(child)
+            elif child.tag == Namespaces.nsf('movie') + 'crew':
                 self.crew = Crew(child)
         self._post_load_process()
 
