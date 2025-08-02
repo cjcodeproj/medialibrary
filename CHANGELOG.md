@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-203](https://github.com/cjcodeproj/medialibrary/issues/203) Internal function definition has bad default value
  - [medialibrary-227](https://github.com/cjcodeproj/medialibrary/issues/227) Re-factor composer for new XML structure
 
 
