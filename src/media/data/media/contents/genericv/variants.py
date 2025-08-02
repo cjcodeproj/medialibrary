@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +62,6 @@ class AbstractVariant():
         self.id = ''
         self.name = ''
         self.notes = ''
-        self.technical = None
 
     def _process_xml_stream(self, in_element):
         if 'id' in in_element.attrib:
