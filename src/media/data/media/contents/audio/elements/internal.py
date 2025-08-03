@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ Audio element objects
 '''
 
 # pylint: disable=too-few-public-methods
-# pylint: disable=R0801
+# pylint: disable=R0801, W0613
 
 from media.data.media.contents.generic.catalog import AbstractCatalog
 from media.data.nouns import noun_dispatcher
