@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-223](https://github.com/cjcodeproj/medialibrary/issues/223) Generic keywords do not strip leading or trailing whitespace
  - [medialibrary-230](https://github.com/cjcodeproj/medialibrary/issues/230) Support variant data structure
  - [medialibrary-203](https://github.com/cjcodeproj/medialibrary/issues/203) Internal function definition has bad default value
  - [medialibrary-227](https://github.com/cjcodeproj/medialibrary/issues/227) Re-factor composer for new XML structure
