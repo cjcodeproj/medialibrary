@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## RELEASE 0.2.9 (Aug, 2025)
 
+ - [medialibrary-234](https://github.com/cjcodeproj/medialibrary/issues/234) Release 0.2.9
  - [medialibrary-232](https://github.com/cjcodeproj/medialibrary/issues/232) pylint error in audio/elements/internal.py
  - [medialibrary-223](https://github.com/cjcodeproj/medialibrary/issues/223) Generic keywords do not strip leading or trailing whitespace
  - [medialibrary-230](https://github.com/cjcodeproj/medialibrary/issues/230) Support variant data structure
