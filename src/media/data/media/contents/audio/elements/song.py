@@ -31,8 +31,9 @@ Song object structure
 
 from media.data.media.contents.genericv.technical import process_iso_duration
 from media.data.media.contents.audio.elements import (
-        AbstractElement, ElementTechnical
+        AbstractElement, ElementCatalog, ElementTechnical
         )
+from media.data.nouns import noun_dispatcher
 from media.xml.namespaces import Namespaces
 
 
@@ -54,11 +55,63 @@ class Song(AbstractElement):
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'technical':
                 self.technical = SongTechnical(child)
+            elif e_name == 'catalog':
+                self.catalog = SongCatalog(child)
         self._post_load_process()
 
     def _post_load_process(self):
         if not self.catalog:
             self._extract_catalog_from(self.parent_o)
+
+    def _extract_catalog_from(self, in_parent):
+        super()._extract_catalog_from(in_parent)
+        if in_parent.catalog is not None:
+            if in_parent.catalog.composers is not None:
+                self.catalog.composers = in_parent.catalog.composers
+
+
+class SongCatalog(ElementCatalog):
+    '''
+    Catalog specific to a song.
+    '''
+    def __init__(self, in_element):
+        super().__init__(in_element)
+        self.composers = []
+        if in_element is not None:
+            self._process(in_element)
+
+    def _process(self, in_element):
+        super()._process(in_element)
+        for child in in_element:
+            e_name = Namespaces.ns_strip(child.tag)
+            if e_name == 'composers':
+                self._process_composers(child)
+
+    def _process_composers(self, in_element):
+        for child in in_element:
+            self.composers.append(SongComposer(child))
+
+
+class SongComposer():
+    '''
+    Object representing a composer.
+    '''
+    def __init__(self, in_element):
+        self.name = None
+        self.publishers = []
+        self.rights = None
+        if in_element is not None:
+            self._process(in_element)
+
+    def _process(self, in_element):
+        for child in in_element:
+            e_name = Namespaces.ns_strip(child.tag)
+            if e_name == 'name':
+                self.name = noun_dispatcher(child)
+            elif e_name == 'publisher':
+                self.publishers.append(child.text)
+            elif e_name == 'rights':
+                self.rights = child.text
 
 
 class SongTechnical(ElementTechnical):

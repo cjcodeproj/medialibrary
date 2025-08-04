@@ -50,7 +50,10 @@ CASE1 = '''<?xml version='1.0'?>
      <artist><gn>Blake</gn><fn>Drake</fn></artist>
     </artists>
     <composers>
-     <composer><gn>Chad</gn><fn>Brooks</fn></composer>
+     <composer>
+       <name><gn>Chad</gn><fn>Brooks</fn></name>
+       <publisher>Drunken Tirade Music, LLC</publisher>
+     </composer>
     </composers>
    </catalog>
    <technical>
@@ -133,14 +136,14 @@ class TestAlbumElementCatalog(unittest.TestCase):
         Verify object of first composer passed.
         '''
         song_comp_one = self.album.elements[0].catalog.composers[0]
-        self.assertIsInstance(song_comp_one, PersonalName)
+        self.assertIsInstance(song_comp_one.name, PersonalName)
 
     def test_song_catalog_first_composer_val(self):
         '''
         Verify value of first composer passed.
         '''
         song_comp_one = self.album.elements[0].catalog.composers[0]
-        self.assertEqual(str(song_comp_one), 'Chad Brooks')
+        self.assertEqual(str(song_comp_one.name), 'Chad Brooks')
 
 
 class TestAlbumElementInheritedCatalog(unittest.TestCase):

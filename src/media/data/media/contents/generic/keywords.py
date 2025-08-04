@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -203,7 +203,7 @@ class GenericKeyword(AbstractKeyword):
     '''
     def __init__(self, in_element):
         super().__init__(in_element)
-        self.value = in_element.text
+        self.value = in_element.text.strip()
         self.sort_value = self.value.casefold()
         self.type = 'generic'
 

@@ -200,7 +200,7 @@ class MovieReport():
             out += f"  {'Sample count':12s} : {wrk_c:5d} ({wrk_p:5.2f}%)\n"
         return out
 
-    def _out_batch(self, batch, sort_field=1):
+    def _out_batch(self, batch, sort_field=Batch.S_TITLE):
         '''
         Generate the output for a single batch.
         '''

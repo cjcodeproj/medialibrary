@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@ Audio element objects
 '''
 
 # pylint: disable=too-few-public-methods
-# pylint: disable=R0801
+# pylint: disable=R0801, W0613
 
 from media.data.media.contents.generic.catalog import AbstractCatalog
 from media.data.nouns import noun_dispatcher
@@ -56,8 +56,6 @@ class AbstractElement():
             self.catalog = ElementCatalog(None)
             if in_parent.catalog.artists is not None:
                 self.catalog.artists = in_parent.catalog.artists
-            if in_parent.catalog.composers is not None:
-                self.catalog.composers = in_parent.catalog.composers
 
 
 class ElementTitle():
@@ -86,9 +84,9 @@ class ElementCatalog(AbstractCatalog):
     def __init__(self, in_element):
         super().__init__()
         self.artists = []
-        self.composers = []
-        if in_element is not None:
-            self._process(in_element)
+        # We can't call process here, because it'll
+        # it would run prematurely before subclass
+        # __init__ completes.
 
     def _process(self, in_element):
         super()._process(in_element)
@@ -96,20 +94,12 @@ class ElementCatalog(AbstractCatalog):
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'artists':
                 self._process_artists(child)
-            elif e_name == 'composers':
-                self._process_composers(child)
 
     def _process_artists(self, in_element):
         for child in in_element:
             e_name = Namespaces.ns_strip(child.tag)
             if e_name == 'artist':
                 self.artists.append(noun_dispatcher(child))
-
-    def _process_composers(self, in_element):
-        for child in in_element:
-            e_name = Namespaces.ns_strip(child.tag)
-            if e_name == 'composer':
-                self.composers.append(noun_dispatcher(child))
 
 
 class ElementTechnical():
