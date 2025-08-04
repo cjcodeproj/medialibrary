@@ -1,6 +1,15 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+
+ - [medialibrary-232](https://github.com/cjcodeproj/medialibrary/issues/232) pylint error in audio/elements/internal.py
+ - [medialibrary-223](https://github.com/cjcodeproj/medialibrary/issues/223) Generic keywords do not strip leading or trailing whitespace
+ - [medialibrary-230](https://github.com/cjcodeproj/medialibrary/issues/230) Support variant data structure
+ - [medialibrary-203](https://github.com/cjcodeproj/medialibrary/issues/203) Internal function definition has bad default value
+ - [medialibrary-227](https://github.com/cjcodeproj/medialibrary/issues/227) Re-factor composer for new XML structure
+
+
 ## RELEASE 0.2.7
 
  - [medialibrary-220](https://github.com/cjcodeproj/medialibrary/issues/220) Release 0.2.7
