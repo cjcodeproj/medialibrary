@@ -1,7 +1,7 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.2.9 (Aug, 2025)
 
  - [medialibrary-232](https://github.com/cjcodeproj/medialibrary/issues/232) pylint error in audio/elements/internal.py
  - [medialibrary-223](https://github.com/cjcodeproj/medialibrary/issues/223) Generic keywords do not strip leading or trailing whitespace
