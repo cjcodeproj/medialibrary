@@ -1,6 +1,11 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+
+ - [medialibrary-238](https://github.com/cjcodeproj/medialibrary/issues/238) Put version identifier into the code
+
+
 ## RELEASE 0.2.9 (Aug, 2025)
 
  - [medialibrary-234](https://github.com/cjcodeproj/medialibrary/issues/234) Release 0.2.9
