@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@
 
 from media.xml.namespaces import Namespaces
 
+from media.data.media.medium.device import BaseDevice, MediumDeviceMap
 from media.data.media.medium.release import Release, ReleaseException
 from media.data.media.medium.productid import ProductId
 from media.data.media.medium.productspecs import ProductSpecs
@@ -37,20 +38,27 @@ class Medium():
     '''Medium object - the physical thing'''
     def __init__(self, in_element):
         self.release = None
+        self.device = None
+        self.new_device_used = False
         self.product_id = None
         self.physical_specs = None
-        self._process(in_element)
+        self.product_specs = None
+        self._process_xml_stream(in_element)
 
-    def _process(self, in_element):
+    def _process_xml_stream(self, in_element):
         for child in in_element:
-            if child.tag == Namespaces.nsf('media') + 'release':
+            e_tag = Namespaces.ns_strip(child.tag)
+            if e_tag in MediumDeviceMap.f_map:
+                self.new_device_used = True
+                self.device = BaseDevice(child)
+            elif e_tag == 'release' and self.new_device_used is False:
                 try:
                     self.release = Release(child)
                 except ReleaseException as rel:
                     raise MediumException(rel.message) from rel
-            if child.tag == Namespaces.nsf('media') + 'productId':
+            elif e_tag == 'productId':
                 self.product_id = ProductId(child)
-            if child.tag == Namespaces.nsf('media') + 'productSpecs':
+            elif e_tag == 'productSpecs':
                 self.product_specs = ProductSpecs(child)
 
 

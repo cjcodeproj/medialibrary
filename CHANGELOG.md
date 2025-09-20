@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-237](https://github.com/cjcodeproj/medialibrary/issues/237) Adapt codebase to medium change
  - [medialibrary-238](https://github.com/cjcodeproj/medialibrary/issues/238) Put version identifier into the code
 
 
