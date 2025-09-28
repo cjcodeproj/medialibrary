@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -285,7 +285,6 @@ def build_runtime(in_movie):
     Construct a presentable version of the runtime value.
     '''
     runtime = timedelta(seconds=0)
-    if in_movie.technical:
-        if in_movie.technical.runtime:
-            runtime = in_movie.technical.runtime.overall
+    if in_movie.s_index.runtime:
+        runtime = in_movie.s_index.runtime
     return f"{runtime!s}"
