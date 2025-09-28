@@ -94,8 +94,8 @@ class MovieIndexEntry(ContentIndex):
     def __init__(self, in_movie):
         super().__init__()
         self.movie = in_movie
-        self.year = None
-        self.decade = None
+        self.year = 0
+        self.decade = 0
         self.primary_g = None
         self.first_letter = None
         self.runtime = None

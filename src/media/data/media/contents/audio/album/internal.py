@@ -100,9 +100,9 @@ class AlbumIndexEntry(ContentIndex):
     def __init__(self, in_album):
         super().__init__()
         self.album = in_album
-        self.year = None
+        self.year = 0
         self.artists = None
-        self.decade = None
+        self.decade = 0
         self.primary_g = None
         self.first_letter = None
         self.runtime = None
