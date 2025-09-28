@@ -41,7 +41,6 @@ class Medium():
         self.device = None
         self.new_device_used = False
         self.product_id = None
-        self.physical_specs = None
         self.product_specs = None
         self._process_xml_stream(in_element)
 
