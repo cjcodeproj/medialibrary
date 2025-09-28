@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-225](https://github.com/cjcodeproj/medialibrary/issues/225) Support for middle initial element
  - [medialibrary-240](https://github.com/cjcodeproj/medialibrary/issues/240) Eliminate physical_specs
  - [medialibrary-241](https://github.com/cjcodeproj/medialibrary/issues/241) Album group by decade fails when data is missing
  - [medialibrary-237](https://github.com/cjcodeproj/medialibrary/issues/237) Adapt codebase to medium change
