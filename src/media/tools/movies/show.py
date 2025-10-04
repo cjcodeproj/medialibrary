@@ -96,7 +96,14 @@ class MovieShowReport(MovieReport):
         if stats:
             self.stats = stats
         out = ''
-        # out += media.fmt.text.movie.OneLiner.header_fields()
+        if self.organizer:
+            out += self.report_body()
+        if self.stats:
+            out += self._stats()
+        return out
+
+    def report_body(self):
+        out = ''
         self.organizer.set_grouping(self.group)
         if self.sample > 0:
             batches = self.organizer.create_batches(self.group, self.sample)
@@ -109,9 +116,6 @@ class MovieShowReport(MovieReport):
                 out += f"  -- {batch_i.header} ({len(batch_i.entries)}) --\n"
                 out += self._out_batch(batch_i, self.asort)
             out = out[:-1]
-        # out += media.fmt.text.movie.OneLiner.header_line()
-        if self.stats:
-            out += self._stats()
         return out
 
     def _stats(self):
@@ -120,8 +124,11 @@ class MovieShowReport(MovieReport):
         and the number of movies in the sample set
         (if one is defined)
         '''
-        all_c = len(self.organizer.entries)
-        wrk_c = len(self.organizer.working)
+        all_c = 0
+        wrk_c = 0
+        if self.organizer:
+            all_c = len(self.organizer.entries)
+            wrk_c = len(self.organizer.working)
         out = "\n    ---- Movie Statistics ----\n\n"
         out += f"  {'Movie count':12s} : {all_c:5d}\n"
         if wrk_c < all_c:
