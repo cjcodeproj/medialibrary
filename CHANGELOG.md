@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-245](https://github.com/cjcodeproj/medialibrary/issues/245) Validator code was having an issue with new medium format
  - [medialibrary-200](https://github.com/cjcodeproj/medialibrary/issues/200) Movie list fails if there are no movies
  - [medialibrary-231](https://github.com/cjcodeproj/medialibrary/issues/231) Determine runtime from variants
  - [medialibrary-225](https://github.com/cjcodeproj/medialibrary/issues/225) Support for middle initial element

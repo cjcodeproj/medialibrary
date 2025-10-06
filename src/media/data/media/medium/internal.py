@@ -29,7 +29,8 @@
 from media.xml.namespaces import Namespaces
 
 from media.data.media.medium.device import BaseDevice, MediumDeviceMap
-from media.data.media.medium.release import Release, ReleaseException
+from media.data.media.medium.release import (
+        FormalType, Release, ReleaseException)
 from media.data.media.medium.productid import ProductId
 from media.data.media.medium.productspecs import ProductSpecs
 
@@ -71,3 +72,20 @@ class MediumException(Exception):
 
     def __str__(self):
         return self.message
+
+
+def get_medium_type(in_medium):
+    '''
+    Simple fumction to get medium type value.
+    '''
+    f_type = ''
+    m_type = ''
+    if in_medium.device:
+        f_type = in_medium.device.type_name
+        m_type = MediumDeviceMap.formal_convert(f_type)
+    elif in_medium.release:
+        f_type = in_medium.release.type
+        m_type = FormalType.formal_convert(f_type)
+    else:
+        m_type = 'UNKNOWN'
+    return m_type
