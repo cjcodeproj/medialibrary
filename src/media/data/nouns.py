@@ -217,6 +217,7 @@ class PersonalName(AbstractNoun):
         self.given = ''
         self.family = ''
         self.middle = ''
+        self.mid_initial = ''
         self.suffix = ''
         self.prefix = ''
         self.pref_complete = ''
@@ -234,6 +235,8 @@ class PersonalName(AbstractNoun):
                 self.family = child.text
             elif tagname == 'mn':
                 self.middle = child.text
+            elif tagname == 'mi':
+                self.mid_initial = child.text
             elif tagname == 'suffix':
                 self.suffix = child.text
             elif tagname == 'prefix':
@@ -260,6 +263,8 @@ class PersonalName(AbstractNoun):
                     raw += self.given + ' '
                 if self.middle:
                     raw += self.middle + ' '
+                elif self.mid_initial:
+                    raw += self.mid_initial + ' '
             if self.family:
                 raw += self.family
             if self.suffix:
@@ -280,10 +285,14 @@ class PersonalName(AbstractNoun):
                     raw += chg_ws(self.given.casefold())
                     if self.middle:
                         raw += '_' + chg_ws(self.middle.casefold())
+                    elif self.mid_initial:
+                        raw += '_' + chg_ws(self.mid_initial.casefold())
             else:
                 raw = chg_ws(self.given.casefold())
                 if self.middle:
                     raw += '_' + chg_ws(self.middle)
+                elif self.mid_initial:
+                    raw += '_' + chg_ws(self.mid_initial)
         self.sort_value = raw
 
     def __str__(self):

@@ -78,8 +78,8 @@ class CharacterName():
     missing.
 
     '''
-    name_tags = ['pgn', 'pcn', 'gn', 'nick', 'mn', 'fn']
-    sort_order = ['fn', 'pgn', 'gn', 'mn']
+    name_tags = ['pgn', 'pcn', 'gn', 'nick', 'mn', 'mi', 'fn']
+    sort_order = ['fn', 'pgn', 'gn', 'mn', 'mi']
 
     def __init__(self, in_element):
         self.value = ''
