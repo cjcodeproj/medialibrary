@@ -1,8 +1,9 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.3.1 (Oct 2025)
 
+ - [medialibrary-248](https://github.com/cjcodeproj/medialibrary/issues/248) Release 0.3.1
  - [medialibrary-245](https://github.com/cjcodeproj/medialibrary/issues/245) Validator code was having an issue with new medium format
  - [medialibrary-200](https://github.com/cjcodeproj/medialibrary/issues/200) Movie list fails if there are no movies
  - [medialibrary-231](https://github.com/cjcodeproj/medialibrary/issues/231) Determine runtime from variants
