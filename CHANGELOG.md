@@ -1,6 +1,19 @@
 medialibrary CHANGELOG
 ======================
 
+## RELEASE 0.3.1 (Oct 2025)
+
+ - [medialibrary-248](https://github.com/cjcodeproj/medialibrary/issues/248) Release 0.3.1
+ - [medialibrary-245](https://github.com/cjcodeproj/medialibrary/issues/245) Validator code was having an issue with new medium format
+ - [medialibrary-200](https://github.com/cjcodeproj/medialibrary/issues/200) Movie list fails if there are no movies
+ - [medialibrary-231](https://github.com/cjcodeproj/medialibrary/issues/231) Determine runtime from variants
+ - [medialibrary-225](https://github.com/cjcodeproj/medialibrary/issues/225) Support for middle initial element
+ - [medialibrary-240](https://github.com/cjcodeproj/medialibrary/issues/240) Eliminate physical_specs
+ - [medialibrary-241](https://github.com/cjcodeproj/medialibrary/issues/241) Album group by decade fails when data is missing
+ - [medialibrary-237](https://github.com/cjcodeproj/medialibrary/issues/237) Adapt codebase to medium change
+ - [medialibrary-238](https://github.com/cjcodeproj/medialibrary/issues/238) Put version identifier into the code
+
+
 ## RELEASE 0.2.9 (Aug, 2025)
 
  - [medialibrary-234](https://github.com/cjcodeproj/medialibrary/issues/234) Release 0.2.9

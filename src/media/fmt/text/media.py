@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2024 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -24,6 +24,7 @@
 
 '''Classes and subroutines for media display.'''
 
+from media.data.media.medium.device import MediumDeviceMap
 from media.data.media.medium.release import FormalType
 from media.fmt.text.basics import (hdr_list,
                                    hdr_list_oneper)
@@ -37,19 +38,26 @@ class ListEntry():
     def __init__(self, in_media):
         self.media = in_media
         self.type = ''
+        self.type_new = False
         self.date = ''
         self.copies = 0
         self.title_key = ''
         self._prep_fields()
         if self.type:
-            f_type = FormalType.formal_convert(self.type)
+            if self.type_new:
+                f_type = MediumDeviceMap.formal_convert(self.type)
+            else:
+                f_type = FormalType.formal_convert(self.type)
         else:
             f_type = 'UNKNOWN'
         self.output = f"{self.media.title!s:45.45s} {f_type:10s} " + \
                       f"{self.copies:6d} {self.date!s:s}"
 
     def _prep_fields(self):
-        if self.media.medium.release:
+        if self.media.medium.device:
+            self.type = self.media.medium.device.type_name
+            self.type_new = True
+        elif self.media.medium.release:
             if self.media.medium.release.type:
                 self.type = self.media.medium.release.type
         if self.media.library:
@@ -85,7 +93,10 @@ class BriefEntry():
         self.title_key = self.media.title.sort_title
         if self.media.medium:
             medm = self.media.medium
-            if medm.release:
+            if medm.device:
+                self.f_type = MediumDeviceMap.formal_convert(
+                        medm.device.type_name)
+            elif medm.release:
                 self.f_type = FormalType.formal_convert(medm.release.type)
             else:
                 self.f_type = 'UNKNOWN'

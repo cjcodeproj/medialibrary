@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@ All object classes to store test status information.
 
 # pylint: disable=R0903
 
-from media.data.media.medium.release import FormalType
+from media.data.media.medium import get_medium_type
 
 
 class StatusCode():
@@ -152,7 +152,7 @@ class MediaStatus(AbstractStatus):
         return out
 
     def _report_header(self):
-        ftype = FormalType.formal_convert(self.media.medium.release.type)
+        ftype = get_medium_type(self.media.medium)
         out = f"\n{'='*72}\n" + \
               f"{self.media.title!s:61s} {ftype:>10s}\n" + \
               f"{'='*72}\n"

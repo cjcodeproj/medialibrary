@@ -34,7 +34,7 @@ from media.data.media.contents import AbstractContent, ContentException
 from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
-from media.data.media.contents.genericv.variants import VariantPool
+from media.data.media.contents.genericv.variants import VariantPool, Variant
 from media.data.media.contents.movie.classification import Classification
 from media.general.sorting.index import ContentIndex
 
@@ -94,8 +94,8 @@ class MovieIndexEntry(ContentIndex):
     def __init__(self, in_movie):
         super().__init__()
         self.movie = in_movie
-        self.year = None
-        self.decade = None
+        self.year = 0
+        self.decade = 0
         self.primary_g = None
         self.first_letter = None
         self.runtime = None
@@ -116,15 +116,30 @@ class MovieIndexEntry(ContentIndex):
             if cls.genres:
                 if cls.genres.primary:
                     self.primary_g = cls.genres.primary
+        self._extract_runtime()
+        self.sort_title = self.movie.sort_title
+        self.first_letter = self.sort_title[0]
+
+    def _extract_runtime(self):
         if self.movie.technical:
             tch = self.movie.technical
             if tch.runtime:
                 if tch.runtime.overall:
                     self.runtime = tch.runtime.overall
         if not self.runtime:
+            if len(self.movie.variants) > 0:
+                self._extract_variant_runtime()
+        if not self.runtime:
             self.runtime = timedelta(seconds=0)
-        self.sort_title = self.movie.sort_title
-        self.first_letter = self.sort_title[0]
+
+    def _extract_variant_runtime(self):
+        for var_i in self.movie.variants:
+            if issubclass(var_i.__class__, Variant):
+                if var_i.technical:
+                    tch = var_i.technical
+                    if tch.runtime:
+                        if tch.runtime.overall:
+                            self.runtime = tch.runtime.overall
 
 
 class MovieException(ContentException):

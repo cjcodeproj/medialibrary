@@ -32,7 +32,7 @@ Run simple validation tests against the movies, report any incomplete data.
 import argparse
 import os
 from datetime import datetime
-from media.data.media.medium.release import FormalType
+from media.data.media.medium import get_medium_type
 from media.general.sorting.organizer import Organizer
 from media.tools.common import load_media_dev
 
@@ -45,7 +45,6 @@ def filter_output_set(in_results, in_args):
     Output a random sample of records.
     '''
     outset = []
-    # final = []
     for result in in_results:
         if in_args.filter == 'none':
             outset.append(result)
@@ -56,7 +55,6 @@ def filter_output_set(in_results, in_args):
             if not result.has_passed():
                 outset.append(result)
     if in_args.random:
-        # return random_sample(output, args.random)
         return Organizer.get_random_sample(outset, in_args.random)
     return outset
 
@@ -67,7 +65,7 @@ def output_list(filtered_list):
     '''
     print(Tally.header(), end='')
     for sample_i in filtered_list:
-        mtype = FormalType.formal_convert(sample_i.media.medium.release.type)
+        mtype = get_medium_type(sample_i.media.medium)
         status_o = sample_i.status
         print(f"{sample_i.media!s:40.39s} {mtype:10s} {status_o.tally!s}")
 
