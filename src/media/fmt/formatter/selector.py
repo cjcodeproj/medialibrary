@@ -37,10 +37,14 @@ class Selector():
     Class for loading up the appropriate formatter
     code based on the output format requested.
     '''
-    modules = {
-            'html': 'media.fmt.formatter.html',
-            'plaintext': 'media.fmt.formatter.plaintext',
-            'csv': 'media.fmt.formatter.csv'
+    HTML = 1
+    PLAINTEXT = 2
+    CSV = 3
+
+    MODULES = {
+            HTML : 'media.fmt.formatter.html',
+            PLAINTEXT : 'media.fmt.formatter.plaintext',
+            CSV : 'media.fmt.formatter.csv'
             }
 
     @classmethod
@@ -49,8 +53,8 @@ class Selector():
         Loads a formatter object.
         '''
         drv = None
-        if in_driver in Selector.modules:
-            drv = importlib.import_module(Selector.modules[in_driver])
+        if in_driver in Selector.MODULES:
+            drv = importlib.import_module(Selector.MODULES[in_driver])
         else:
             print('DRIVER NOT LOADED')
         return getattr(sys.modules[drv.__name__], 'DriverMain')()

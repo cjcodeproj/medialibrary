@@ -1,6 +1,11 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+
+ - [medialibrary-244](https://github.com/cjcodeproj/medialibrary/issues/244) Formatter selected should work off constants, not strings
+
+
 ## RELEASE 0.3.1 (Oct 2025)
 
  - [medialibrary-248](https://github.com/cjcodeproj/medialibrary/issues/248) Release 0.3.1
