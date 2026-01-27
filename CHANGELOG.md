@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-252](https://github.com/cjcodeproj/medialibrary/issues/252) Output streams for reports
  - [medialibrary-244](https://github.com/cjcodeproj/medialibrary/issues/244) Formatter selected should work off constants, not strings
 
 
