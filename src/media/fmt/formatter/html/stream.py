@@ -26,7 +26,7 @@
 Code for handling HTML output formatting.
 '''
 
-# pylint:disable=R0903, R0801
+# pylint:disable=R0903, R0801, W0237
 
 import xml.etree.ElementTree as ET
 from media.fmt.formatter.stream import AbstractStream
@@ -43,6 +43,16 @@ class HtmlStream(AbstractStream):
         super().__init__()
         self.mime_type = 'text/html'
         self.element = None
+        if in_element:
+            self.element = in_element
+
+    # We're violating W0237 here by changing a variable name.
+    # If we were static typing, the type would also be
+    # different
+    def input(self, in_element=None):
+        '''
+        Input object to be sent out.
+        '''
         if in_element:
             self.element = in_element
 

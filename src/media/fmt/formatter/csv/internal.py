@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ Code for handling plain text output.
 # pylint: disable=R0903
 
 from media.fmt.formatter.abstract import AbstractFormatter
+from media.fmt.formatter.csv.stream import CSVStream
 from media.fmt.formatter.csv.table import Table
 import media.fmt.structure.table
 
@@ -41,3 +42,14 @@ class DriverMain(AbstractFormatter):
     structure_matrix = {
             media.fmt.structure.table.Table: Table,
             }
+    stream_class = CSVStream
+
+    def render(self, in_structure_obj):
+        stream = None
+        rend_obj = self.get_renderer_for_structure(in_structure_obj)
+        if rend_obj:
+            # stream = CSVStream(rend_obj.render(in_structure_obj))
+            stream = self.get_stream_object()
+            stream.input(rend_obj.render(in_structure_obj))
+            self._counter_tally(rend_obj)
+        return stream

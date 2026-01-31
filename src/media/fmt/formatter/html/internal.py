@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +31,7 @@ Code for handling HTML output formatting.
 from media.fmt.formatter.abstract import AbstractFormatter
 from media.fmt.formatter.html.table import Table
 from media.fmt.formatter.html.basics import Basics
+from media.fmt.formatter.html.stream import HtmlStream
 import media.fmt.structure.table
 import media.fmt.structure.basics
 
@@ -45,3 +46,29 @@ class DriverMain(AbstractFormatter):
             media.fmt.structure.basics.Paragraph: Basics,
             media.fmt.structure.basics.Header: Basics,
             }
+    stream_class = HtmlStream
+
+    def data(self, in_structure_obj):
+        '''
+        Return data.  (experimental)
+        '''
+        out_obj = None
+        rend_obj = self.get_renderer_for_structure(in_structure_obj)
+        if rend_obj:
+            out_obj = rend_obj.render(in_structure_obj)
+        return out_obj
+
+    def render(self, in_structure_obj):
+        '''
+        Launch a formatter object and return the output
+        stream.
+        '''
+        stream = None
+        rend_obj = self.get_renderer_for_structure(in_structure_obj)
+        if rend_obj:
+            # out_obj = rend_obj.render(in_structure_obj)
+            # out_stream = HtmlStream(out_obj)
+            stream = self.get_stream_object()
+            stream.input(rend_obj.render(in_structure_obj))
+            self._counter_tally(rend_obj)
+        return stream or ''

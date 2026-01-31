@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@ class AbstractFormatter():
     '''
 
     structure_matrix = {}
+    stream_class = object
 
     def __init__(self):
         self.rend_obj_pool = {}
@@ -68,6 +69,15 @@ class AbstractFormatter():
                 self.rend_obj_pool[rend_class] = rend_obj
             return self.rend_obj_pool[rend_class]
         return None
+
+    def get_stream_object(self):
+        '''
+        Return the stream object appropriate for
+        the formatter driver.
+        '''
+        strm_class = self.stream_class
+        stream_obj = strm_class()
+        return stream_obj
 
     def _counter_tally(self, in_rend_obj):
         rend_class = in_rend_obj.__class__

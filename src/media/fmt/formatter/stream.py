@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,9 +36,17 @@ class AbstractStream():
     '''
     def __init__(self):
         self.mime_type = ""
+        self.stream = None
 
     def mime_header(self):
         '''
         Return a compliant HTTP mime header.
         '''
         return f"Content-Type: {self.mime_type}\n"
+
+    def input(self, in_stream=None):
+        '''
+        Input stream to be sent out.
+        '''
+        if in_stream:
+            self.stream = in_stream

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -42,9 +42,9 @@ class Selector():
     CSV = 3
 
     MODULES = {
-            HTML : 'media.fmt.formatter.html',
-            PLAINTEXT : 'media.fmt.formatter.plaintext',
-            CSV : 'media.fmt.formatter.csv'
+            HTML: 'media.fmt.formatter.html',
+            PLAINTEXT: 'media.fmt.formatter.plaintext',
+            CSV: 'media.fmt.formatter.csv'
             }
 
     @classmethod

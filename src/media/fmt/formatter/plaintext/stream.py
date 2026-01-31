@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -37,9 +37,16 @@ class PlainTextStream(AbstractStream):
     def __init__(self, in_stream=None):
         super().__init__()
         self.mime_type = 'text/plain'
-        self.stream = None
+        # self.stream = None
         if in_stream:
             self.stream = in_stream
+
+#    def input(self, in_stream=None):
+#        '''
+#        Input stream to be sent out.
+#        '''
+#        if in_stream:
+#            self.stream = in_stream
 
     def __str__(self):
         return self.stream
