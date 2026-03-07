@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,8 +26,9 @@
 HTML formatting for basic text structures.
 '''
 
-# pylint: disable=R0801
+# pylint: disable=R0801, R0903
 
+import xml.etree.ElementTree as ET
 import media.fmt.structure.basics
 
 
@@ -35,6 +36,9 @@ class Basics():
     '''
     Basic rendering.
     '''
+
+    def __init__(self):
+        self.count = 0
 
     def render(self, in_object):
         '''
@@ -45,20 +49,54 @@ class Basics():
         if in_object:
             if issubclass(in_object.__class__,
                           media.fmt.structure.basics.Paragraph):
-                out = self.render_para(in_object)
+                out = Paragraph.render(in_object)
             elif issubclass(in_object.__class__,
                             media.fmt.structure.basics.Header):
-                out = self.render_header(in_object)
+                out = Header.render(in_object.text)
         return out
 
-    def render_para(self, in_structure):
-        '''
-        Render a paragraph.
-        '''
-        return f"\n<p>{in_structure!s}</p>\n"
 
-    def render_header(self, in_structure):
+class Header():
+    '''
+    A header element.
+    '''
+    @classmethod
+    def render(cls, in_object=None):
         '''
-        Render a header.
+        Render the header.
         '''
-        return f"\n<h1>{in_structure!s}</h1>\n"
+        element = ET.Element('h1')
+        if in_object:
+            element.text = in_object.text
+        return element
+
+
+class Paragraph():
+    '''
+    A text paragraph.
+    '''
+    def __init__(self):
+        self.count = 0
+
+    @classmethod
+    def render(cls, in_object=None):
+        '''
+        Render the paragraph.
+        '''
+        element = ET.Element('p')
+        if in_object:
+            element.text = in_object.text
+        return element
+
+
+class Line():
+    '''
+    A single line element.
+    '''
+    @classmethod
+    def render(cls):
+        '''
+        Render the line.
+        '''
+        element = ET.Element('hr')
+        return element

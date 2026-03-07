@@ -48,7 +48,6 @@ class DriverMain(AbstractFormatter):
         stream = None
         rend_obj = self.get_renderer_for_structure(in_structure_obj)
         if rend_obj:
-            # stream = CSVStream(rend_obj.render(in_structure_obj))
             stream = self.get_stream_object()
             stream.input(rend_obj.render(in_structure_obj))
             self._counter_tally(rend_obj)

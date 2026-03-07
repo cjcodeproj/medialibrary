@@ -63,12 +63,10 @@ class DriverMain(AbstractFormatter):
         Launch a formatter object and return the output
         stream.
         '''
-        stream = None
+        stream = self.get_stream_object()
         rend_obj = self.get_renderer_for_structure(in_structure_obj)
         if rend_obj:
-            # out_obj = rend_obj.render(in_structure_obj)
-            # out_stream = HtmlStream(out_obj)
-            stream = self.get_stream_object()
-            stream.input(rend_obj.render(in_structure_obj))
+            out_obj = rend_obj.render(in_structure_obj)
+            stream.input(out_obj)
             self._counter_tally(rend_obj)
-        return stream or ''
+        return stream

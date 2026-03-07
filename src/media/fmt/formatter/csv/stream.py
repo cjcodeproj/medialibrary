@@ -39,16 +39,15 @@ class CSVStream(AbstractStream):
     def __init__(self, in_stream=None):
         super().__init__()
         self.mime_type = 'text/csv'
-        # self.stream = None
         if in_stream:
             self.stream = in_stream
 
-#    def input(self, in_stream=None):
-#        '''
-#        Input stream to be sent out.
-#        '''
-#        if in_stream:
-#            self.stream = in_stream
+    def input(self, in_stream=None):
+        '''
+        Input stream to be sent out.
+        '''
+        if in_stream:
+            self.stream = in_stream
 
     def __str__(self):
         return self.stream or ''

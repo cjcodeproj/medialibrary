@@ -43,10 +43,3 @@ class AbstractStream():
         Return a compliant HTTP mime header.
         '''
         return f"Content-Type: {self.mime_type}\n"
-
-    def input(self, in_stream=None):
-        '''
-        Input stream to be sent out.
-        '''
-        if in_stream:
-            self.stream = in_stream

@@ -53,7 +53,7 @@ class HtmlStream(AbstractStream):
         '''
         Input object to be sent out.
         '''
-        if in_element:
+        if in_element is not None:
             self.element = in_element
 
     def __str__(self):

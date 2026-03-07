@@ -57,4 +57,5 @@ class Selector():
             drv = importlib.import_module(Selector.MODULES[in_driver])
         else:
             print('DRIVER NOT LOADED')
+            # This should be an exception in the future
         return getattr(sys.modules[drv.__name__], 'DriverMain')()
