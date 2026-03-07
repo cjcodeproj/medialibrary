@@ -28,7 +28,7 @@ Code for handling HTML output formatting.
 
 # pylint:disable=R0903, R0801
 
-from media.fmt.formatter.abstract import AbstractFormatter
+from media.fmt.formatter import AbstractFormatter
 from media.fmt.formatter.html.table import Table
 from media.fmt.formatter.html.basics import Basics
 from media.fmt.formatter.html.stream import HtmlStream

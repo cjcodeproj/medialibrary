@@ -28,7 +28,7 @@ Code for handling plain text output.
 
 # pylint: disable=R0903
 
-from media.fmt.formatter.abstract import AbstractFormatter
+from media.fmt.formatter import AbstractFormatter
 from media.fmt.formatter.csv.stream import CSVStream
 from media.fmt.formatter.csv.table import Table
 import media.fmt.structure.table

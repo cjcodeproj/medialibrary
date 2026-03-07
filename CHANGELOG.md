@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-256](https://github.com/cjcodeproj/medialibrary/issues/257) File abstract.py should probably be renamed
  - [medialibrary-226](https://github.com/cjcodeproj/medialibrary/issues/226) HTML output should probably use native XML code
  - [medialibrary-257](https://github.com/cjcodeproj/medialibrary/issues/257) Adapt Formatter classes to use Stream objects
  - [medialibrary-252](https://github.com/cjcodeproj/medialibrary/issues/252) Output streams for reports
