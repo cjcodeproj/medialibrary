@@ -22,40 +22,46 @@
 # SOFTWARE.
 #
 
-'''
-Code for handling the selection of an output formatter.
-'''
+'''Unit tests for classification classes.'''
 
-# pylint:disable=R0903
+# pylint: disable=R0801
 
-import sys
-import importlib
+import unittest
+from media.fmt.formatter.html.stream import HtmlStream
 
 
-class Selector():
+class TestCSVStream(unittest.TestCase):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    Test CSVStream object.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
+    def setUp(self):
+        self.html_stream = HtmlStream()
 
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
+    def test_instance_class(self):
+        '''
+        Test the variable is the proper class.
+        '''
+        self.assertIsInstance(self.html_stream, HtmlStream)
 
-    @classmethod
-    def load_formatter(cls, in_driver):
+    def test_mime_type(self):
         '''
-        Loads a formatter object.
+        Test the mime value is correct.
         '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+        self.assertEqual(self.html_stream.mime_type, 'text/html')
+
+    def test_extension(self):
+        '''
+        Test the file extension value.
+        '''
+        self.assertEqual(self.html_stream.extension, 'html')
+
+    def test_mime_header(self):
+        '''
+        Test the HTTP Content-Type header.
+        '''
+        self.assertEqual(self.html_stream.mime_header(),
+                         "Content-Type: text/html\n")
+
+
+if __name__ == '__main__':
+    unittest.main()

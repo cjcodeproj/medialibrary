@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ Code for HTML table output.
 # pylint:disable=R0903
 # pylint:disable=R0801
 
+import xml.etree.ElementTree as ET
 from media.fmt.formatter.html.common import sanitize_for_xml
 from media.fmt.structure.table import (TableHeaderColumnSpec,
                                        TableSetupException)
@@ -47,89 +48,99 @@ class Table():
         '''
         if len(in_table.col_specs) == 0:
             raise TableSetupException('No columns defined')
-        output = "<table>\n"
-        output += self._render_column_setup(in_table)
-        output += self._render_headers(in_table)
-        output += self._render_body(in_table)
-        output += "</table>\n"
+        element = ET.Element('table')
+        if len(in_table.classes) > 0:
+            c_str = ' '.join(in_table.classes)
+            element.attrib['class'] = c_str
+        element.append(Table._xml_colgroup(in_table))
+        hdr = None
+        hdr = Table._xml_table_header(in_table)
+        if hdr:
+            element.append(hdr)
+        ca = []
+        ca = Table._xml_body(in_table)
+        if len(ca) > 0:
+            for bochunk in ca:
+                element.append(bochunk)
         self.count += 1
-        return output
+        return element
 
-    def _render_column_setup(self, in_table):
-        output = ''
-        output += " <colgroup>\n"
+    @classmethod
+    def _xml_colgroup(cls, in_table):
+        element = ET.Element('colgroup')
         for col_iter in in_table.col_specs:
+            col_element = ET.Element('col')
             if isinstance(col_iter, TableHeaderColumnSpec):
-                output += "  <col class='headers'/>\n"
-            else:
-                output += "  <col/>\n"
-        output += " </colgroup>\n"
-        return output
+                col_element.attrib['class'] = 'headers'
+            element.append(col_element)
+        return element
 
-    def _render_headers(self, in_table):
-        '''
-        We want to output a the header row, but
-        only if the table has defined headers.
-        '''
-        output = ''
+    @classmethod
+    def _xml_table_header(cls, in_table):
         has_hdr_text = False
         for col_iter in in_table.col_specs:
             if col_iter.hdr_text:
                 has_hdr_text = True
                 break
         if has_hdr_text:
-            output = " <thead>\n  <tr>\n"
+            hdr_element = ET.Element('thead')
+            hdr_row = ET.Element('tr')
             for col_iter in in_table.col_specs:
-                output += f"   <th>{col_iter.hdr_text}</th>\n"
-            output += "  </tr>\n </thead>\n"
-        return output
+                hdr_cell = ET.Element('th')
+                hdr_cell.text = sanitize_for_xml(col_iter.hdr_text)
+                hdr_row.append(hdr_cell)
+            hdr_element.append(hdr_row)
+            return hdr_element
+        return None
 
-    def _render_body(self, in_table):
-        output = ''
+    @classmethod
+    def _xml_body(cls, in_table):
+        celements = []
         for chunk in in_table.bchunks:
-            output += TableBodyChunk.render(chunk)
-        return output
+            c_elem = TableBodyChunk.xml(chunk)
+            celements.append(c_elem)
+        if len(celements) > 0:
+            return celements
+        return None
 
 
 class TableBodyChunk():
     '''
-    The TableBodyChunk represents a group of table rows.
-
-    Most of the init code is handled by the parent class.
+    A tbody element
     '''
-
     @classmethod
-    def render(cls, in_chunk):
+    def xml(cls, in_chunk):
         '''
-        Generate a group of table rows.
+        Return a body chunk for a HTML table.
         '''
-        output = " <tbody>\n"
-        col_count = len(in_chunk.table.col_specs)
+        element = ET.Element('tbody')
         if in_chunk.body_header:
-            output += "  <tr>\n"
-            output += f"   <th colspan='{col_count}'>"
-            output += f"{in_chunk.body_header}</th>\n  </tr>\n"
+            col_count = len(in_chunk.table.col_specs)
+            row = ET.Element('tr')
+            hdr = ET.Element('th')
+            hdr.attrib['colspan'] = str(col_count)
+            hdr.text = in_chunk.body_header
+            row.append(hdr)
+            element.append(row)
         for row in in_chunk.rows:
-            output += TableBodyRow.render(row)
-        output += " </tbody>\n"
-        return output
+            element.append(TableBodyRow.xml(row))
+        return element
 
 
 class TableBodyRow():
     '''
-    Most of the init code is handled by the parent class.
+    Set up a row in a table.
     '''
 
     @classmethod
-    def render(cls, in_row):
+    def xml(cls, in_row):
         '''
-        Generate a table row.
+        Return a row for a HTML table body.
         '''
-        output = "  <tr>\n"
+        element = ET.Element('tr')
         for cell in in_row.cells:
-            output += TableCell.render(cell)
-        output += "  </tr>\n"
-        return output
+            element.append(TableCell.xml(cell))
+        return element
 
 
 class TableCell():
@@ -141,12 +152,29 @@ class TableCell():
     '''
 
     @classmethod
-    def render(cls, in_cell):
+    def xml(cls, in_cell):
         '''
-        Generate a single table cell.
+        Return a HTML table cell.
         '''
+        element = ET.Element('foo')
         if isinstance(in_cell.spec, TableHeaderColumnSpec):
-            output = f"   <th>{sanitize_for_xml(in_cell.value)}</th>\n"
+            element.tag = 'th'
         else:
-            output = f"   <td>{sanitize_for_xml(in_cell.value)}</td>\n"
-        return output
+            element.tag = 'td'
+        element.text = in_cell.value
+        return element
+
+
+class TableHeaderCell():
+    '''
+    A table header cell.
+    '''
+    @classmethod
+    def xml(cls, in_colspan=0):
+        '''
+        Return a HTML table header cell.
+        '''
+        element = ET.Element('th')
+        if in_colspan > 0:
+            element.attrib['colspan'] = in_colspan
+        return element

@@ -23,39 +23,30 @@
 #
 
 '''
-Code for handling the selection of an output formatter.
+Code for handling plain text output.
 '''
 
-# pylint:disable=R0903
-
-import sys
-import importlib
+from media.fmt.formatter.stream import AbstractStream
 
 
-class Selector():
+class PlainTextStream(AbstractStream):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    The CSV stream is text output of
+    the object data in CSV form.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
+    def __init__(self, in_stream=None):
+        super().__init__()
+        self.mime_type = 'text/plain'
+        self.extension = 'txt'
+        if in_stream:
+            self.stream = in_stream
 
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
+    def input(self, in_stream=None):
+        '''
+        Input stream to be sent out.
+        '''
+        if in_stream:
+            self.stream = in_stream
 
-    @classmethod
-    def load_formatter(cls, in_driver):
-        '''
-        Loads a formatter object.
-        '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+    def __str__(self):
+        return self.stream
