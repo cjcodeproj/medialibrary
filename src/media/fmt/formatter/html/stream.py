@@ -42,6 +42,7 @@ class HtmlStream(AbstractStream):
     def __init__(self, in_element=None):
         super().__init__()
         self.mime_type = 'text/html'
+        self.extension = 'html'
         self.element = None
         if in_element:
             self.element = in_element

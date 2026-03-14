@@ -37,6 +37,7 @@ class PlainTextStream(AbstractStream):
     def __init__(self, in_stream=None):
         super().__init__()
         self.mime_type = 'text/plain'
+        self.extension = 'txt'
         if in_stream:
             self.stream = in_stream
 

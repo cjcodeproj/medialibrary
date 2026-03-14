@@ -49,6 +49,12 @@ class TestCSVStream(unittest.TestCase):
         '''
         self.assertEqual(self.plaintext_stream.mime_type, 'text/plain')
 
+    def test_extension(self):
+        '''
+        Test the file extension value.
+        '''
+        self.assertEqual(self.plaintext_stream.extension, 'txt')
+
     def test_mime_header(self):
         '''
         Test the HTTP Content-Type header.

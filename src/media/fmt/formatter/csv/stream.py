@@ -39,6 +39,7 @@ class CSVStream(AbstractStream):
     def __init__(self, in_stream=None):
         super().__init__()
         self.mime_type = 'text/csv'
+        self.extension = 'csv'
         if in_stream:
             self.stream = in_stream
 
