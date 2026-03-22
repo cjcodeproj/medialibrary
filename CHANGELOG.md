@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class (cleanup)
  - [medialibrary-263](https://github.com/cjcodeproj/medialibrary/issues/263) Integrate Album and Movie into AVContent abstract class
  - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class
  - [medialibrary-262](https://github.com/cjcodeproj/medialibrary/issues/262) Stream objects should provide data on file extensions

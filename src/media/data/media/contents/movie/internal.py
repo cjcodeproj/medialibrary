@@ -143,27 +143,6 @@ class MovieIndexEntry(ContentIndex):
     def _extract_runtime(self):
         self.runtime = self.movie.default_runtime
 
-#    def _extract_runtime(self):
-#        if self.movie.technical:
-#            tch = self.movie.technical
-#            if tch.runtime:
-#                if tch.runtime.overall:
-#                    self.runtime = tch.runtime.overall
-#        if not self.runtime:
-#            if len(self.movie.variants) > 0:
-#                self._extract_variant_runtime()
-#        if not self.runtime:
-#            self.runtime = timedelta(seconds=0)
-#
-#    def _extract_variant_runtime(self):
-#        for var_i in self.movie.variants:
-#            if issubclass(var_i.__class__, Variant):
-#                if var_i.technical:
-#                    tch = var_i.technical
-#                    if tch.runtime:
-#                        if tch.runtime.overall:
-#                            self.runtime = tch.runtime.overall
-
 
 class MovieException(ContentException):
     '''Exception raised when there is an issue with a movie.'''
