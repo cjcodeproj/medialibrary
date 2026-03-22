@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -30,7 +30,7 @@
 
 from datetime import timedelta
 from media.xml.namespaces import Namespaces
-from media.data.media.contents import AbstractContent, ContentException
+from media.data.media.contents import AbstractAVContent, ContentException
 from media.data.media.contents.generic.story import Story
 from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
@@ -39,7 +39,7 @@ from media.data.media.contents.movie.classification import Classification
 from media.general.sorting.index import ContentIndex
 
 
-class Movie(AbstractContent):
+class Movie(AbstractAVContent):
     '''Movie object'''
     def __init__(self, in_element):
         super().__init__()
@@ -75,7 +75,27 @@ class Movie(AbstractContent):
 
     def _post_load_process(self):
         super()._post_load_process()
+        self._set_default_runtime()
         self.s_index = MovieIndexEntry(self)
+
+    def _set_default_runtime(self):
+        if self.technical:
+            tch = self.technical
+            if tch.runtime:
+                if tch.runtime.overall:
+                    self.default_runtime = tch.runtime.overall
+        if self.default_runtime == timedelta(seconds=0):
+            self._find_variant_runtime()
+
+    def _find_variant_runtime(self):
+        for var_i in self.variants:
+            if issubclass(var_i.__class__, Variant):
+                if var_i.technical:
+                    tch = var_i.technical
+                    if tch.runtime:
+                        if tch.runtime.overall:
+                            self.default_runtime = tch.runtime.overall
+                            break
 
     def __hash__(self):
         return hash(self.unique_key)
@@ -121,25 +141,28 @@ class MovieIndexEntry(ContentIndex):
         self.first_letter = self.sort_title[0]
 
     def _extract_runtime(self):
-        if self.movie.technical:
-            tch = self.movie.technical
-            if tch.runtime:
-                if tch.runtime.overall:
-                    self.runtime = tch.runtime.overall
-        if not self.runtime:
-            if len(self.movie.variants) > 0:
-                self._extract_variant_runtime()
-        if not self.runtime:
-            self.runtime = timedelta(seconds=0)
+        self.runtime = self.movie.default_runtime
 
-    def _extract_variant_runtime(self):
-        for var_i in self.movie.variants:
-            if issubclass(var_i.__class__, Variant):
-                if var_i.technical:
-                    tch = var_i.technical
-                    if tch.runtime:
-                        if tch.runtime.overall:
-                            self.runtime = tch.runtime.overall
+#    def _extract_runtime(self):
+#        if self.movie.technical:
+#            tch = self.movie.technical
+#            if tch.runtime:
+#                if tch.runtime.overall:
+#                    self.runtime = tch.runtime.overall
+#        if not self.runtime:
+#            if len(self.movie.variants) > 0:
+#                self._extract_variant_runtime()
+#        if not self.runtime:
+#            self.runtime = timedelta(seconds=0)
+#
+#    def _extract_variant_runtime(self):
+#        for var_i in self.movie.variants:
+#            if issubclass(var_i.__class__, Variant):
+#                if var_i.technical:
+#                    tch = var_i.technical
+#                    if tch.runtime:
+#                        if tch.runtime.overall:
+#                            self.runtime = tch.runtime.overall
 
 
 class MovieException(ContentException):
