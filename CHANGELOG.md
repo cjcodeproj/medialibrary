@@ -3,6 +3,9 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class (cleanup)
+ - [medialibrary-263](https://github.com/cjcodeproj/medialibrary/issues/263) Integrate Album and Movie into AVContent abstract class
+ - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class
  - [medialibrary-262](https://github.com/cjcodeproj/medialibrary/issues/262) Stream objects should provide data on file extensions
  - [medialibrary-256](https://github.com/cjcodeproj/medialibrary/issues/257) File abstract.py should probably be renamed
  - [medialibrary-226](https://github.com/cjcodeproj/medialibrary/issues/226) HTML output should probably use native XML code

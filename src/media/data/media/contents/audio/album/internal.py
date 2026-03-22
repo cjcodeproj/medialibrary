@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ Album objects
 
 
 from datetime import timedelta
-from media.data.media.contents.internal import AbstractContent
+from media.data.media.contents.internal import AbstractAVContent
 from media.data.media.contents.generic.catalog import Title
 from media.data.media.contents.audio.album.catalog import AlbumCatalog
 from media.data.media.contents.audio.album.classification \
@@ -45,7 +45,7 @@ from media.general.sorting.index import ContentIndex
 from media.xml.namespaces import Namespaces
 
 
-class Album(AbstractContent):
+class Album(AbstractAVContent):
     '''
     Album class
     '''
@@ -90,6 +90,7 @@ class Album(AbstractContent):
     def _post_load_process(self):
         super()._post_load_process()
         self.technical = AlbumTechnical(self)
+        self.default_runtime = self.technical.runtime
         self.s_index = AlbumIndexEntry(self)
 
 
