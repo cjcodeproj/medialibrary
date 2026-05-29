@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,25 +27,32 @@
 import string
 from media.general.language import LanguageHelpers
 
+NO_PUNC = str.maketrans('', '', string.punctuation)
+NO_WSPACE = str.maketrans(string.whitespace, '______')
+
 
 def transform_string(in_value):
     '''Low level change to remove all punctuation from a string.'''
     if in_value is not None:
-        no_punctuation = in_value.translate(
-            in_value.maketrans("", "", string.punctuation))
+        no_punctuation = in_value.translate(NO_PUNC)
         return no_punctuation.casefold()
     return "SHOULDNT BE HERE"
+
+
+def trans_str_ws(in_value):
+    '''Low level change to remove all punctuation from a string.'''
+    lvl1 = ''
+    lvl2 = ''
+    if in_value is not None:
+        lvl1 = in_value.translate(NO_PUNC)
+        lvl2 = lvl1.translate(NO_WSPACE)
+    return lvl2.casefold()
 
 
 def build_filename_string(in_value):
     '''Convert all whitespace into underscores suitable for a filename'''
     level1 = transform_string(in_value)
     return level1.translate(level1.maketrans(" \t\n\r", "____"))
-
-
-def chg_ws(in_value):
-    """Convert whitespace characters to underscores"""
-    return in_value.translate(in_value.maketrans(" \t\n\r", "____"))
 
 
 def build_sort_string(in_value):
