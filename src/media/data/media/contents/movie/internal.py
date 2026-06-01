@@ -36,6 +36,7 @@ from media.data.media.contents.genericv.crew import Crew
 from media.data.media.contents.genericv.technical import Technical
 from media.data.media.contents.genericv.variants import VariantPool, Variant
 from media.data.media.contents.movie.classification import Classification
+from media.data.media.contents.movie.unique import MovieUniqueKey
 from media.general.sorting.index import ContentIndex
 
 
@@ -47,6 +48,7 @@ class Movie(AbstractAVContent):
         self.variants = []
         self.crew = None
         self.s_index = None
+        self.unique_key2 = None
         self._process(in_element)
 
     def build_index_object(self):
@@ -77,6 +79,7 @@ class Movie(AbstractAVContent):
         super()._post_load_process()
         self._set_default_runtime()
         self.s_index = MovieIndexEntry(self)
+        self.unique_key2 = MovieUniqueKey(self)
 
     def _set_default_runtime(self):
         if self.technical:

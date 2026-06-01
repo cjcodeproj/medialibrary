@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-273](https://github.com/cjcodeproj/medialibrary/issues/273) Unique string hash for movies
  - [medialibrary-266](https://github.com/cjcodeproj/medialibrary/issues/266) Base class for content unique string identifier
  - [medialibrary-270](https://github.com/cjcodeproj/medialibrary/issues/270) Personal names need a form without punctuation
  - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class (cleanup)
