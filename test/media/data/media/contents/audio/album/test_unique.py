@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -92,7 +92,7 @@ class TestFirstAlbumUniqueKeyCase(unittest.TestCase):
         '''
         xmlroot = ET.fromstring(CASE1)
         self.album = Album(xmlroot)
-        self.u_key = self.album.unique_key2
+        self.u_key = self.album.unique_key
 
     def test_object_class(self):
         '''
@@ -120,7 +120,7 @@ class TestSecondAlbumUniqueKeyCase(unittest.TestCase):
     def setUp(self):
         xmlroot = ET.fromstring(CASE2)
         self.album = Album(xmlroot)
-        self.u_key = self.album.unique_key2
+        self.u_key = self.album.unique_key
 
     def test_object_unique_value(self):
         '''
@@ -137,7 +137,7 @@ class TestThirdAlbumUniqueKeyCase(unittest.TestCase):
     def setUp(self):
         xmlroot = ET.fromstring(CASE3)
         self.album = Album(xmlroot)
-        self.u_key = self.album.unique_key2
+        self.u_key = self.album.unique_key
 
     def test_object_unique_value(self):
         '''

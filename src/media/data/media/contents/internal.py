@@ -47,7 +47,7 @@ class AbstractContent():
         self.catalog = None
         self.classification = None
         self.sort_title = ""
-        self.unique_key = ""
+        self.unique_key = None
 
     def _process(self, in_element):
         for child in in_element:
@@ -62,12 +62,10 @@ class AbstractContent():
 
     def _post_load_process(self):
         if self.title:
-            self._build_unique_key()
+            self._build_sort_title()
 
-    def _build_unique_key(self):
+    def _build_sort_title(self):
         self.sort_title = TitleMunger.build_sort_cat_title(
-                self.title, self.catalog)
-        self.unique_key = TitleMunger.build_unique_key_string(
                 self.title, self.catalog)
 
     def catalog_title(self):

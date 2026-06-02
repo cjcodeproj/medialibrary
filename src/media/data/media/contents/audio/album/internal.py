@@ -59,7 +59,6 @@ class Album(AbstractAVContent):
         self.elements = []
         self.runtime = timedelta(seconds=0)
         self.s_index = None
-        self.unique_key2 = None
         self._process(in_element)
 
     def _process(self, in_element):
@@ -94,7 +93,7 @@ class Album(AbstractAVContent):
         self.technical = AlbumTechnical(self)
         self.default_runtime = self.technical.runtime
         self.s_index = AlbumIndexEntry(self)
-        self.unique_key2 = AlbumUniqueKey(self)
+        self.unique_key = AlbumUniqueKey(self)
 
 
 class AlbumIndexEntry(ContentIndex):

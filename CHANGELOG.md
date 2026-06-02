@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-210](https://github.com/cjcodeproj/medialibrary/issues/210) Unique hash string context for content media
  - [medialibrary-268](https://github.com/cjcodeproj/medialibrary/issues/268) Unique hash string for albums
  - [medialibrary-273](https://github.com/cjcodeproj/medialibrary/issues/273) Unique string hash for movies
  - [medialibrary-266](https://github.com/cjcodeproj/medialibrary/issues/266) Base class for content unique string identifier

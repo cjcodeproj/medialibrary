@@ -48,7 +48,6 @@ class Movie(AbstractAVContent):
         self.variants = []
         self.crew = None
         self.s_index = None
-        self.unique_key2 = None
         self._process(in_element)
 
     def build_index_object(self):
@@ -79,7 +78,7 @@ class Movie(AbstractAVContent):
         super()._post_load_process()
         self._set_default_runtime()
         self.s_index = MovieIndexEntry(self)
-        self.unique_key2 = MovieUniqueKey(self)
+        self.unique_key = MovieUniqueKey(self)
 
     def _set_default_runtime(self):
         if self.technical:
@@ -104,10 +103,10 @@ class Movie(AbstractAVContent):
         return hash(self.unique_key)
 
     def __lt__(self, other):
-        return self.unique_key < other.unique_key
+        return self.s_index.sort_title < other.s_index.sort_title
 
     def __gt__(self, other):
-        return self.unique_key > other.unique_key
+        return self.s_index.sort_title > other.s_index.sort_title
 
 
 class MovieIndexEntry(ContentIndex):

@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2022 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -82,7 +82,7 @@ class TestFirstMovieUniqueKeyCase(unittest.TestCase):
         '''
         xmlroot = ET.fromstring(CASE1)
         self.movie = Movie(xmlroot)
-        self.u_key = self.movie.unique_key2
+        self.u_key = self.movie.unique_key
 
     def test_object_class(self):
         '''
@@ -110,7 +110,7 @@ class TestSecondMovieUniqueKeyCase(unittest.TestCase):
     def setUp(self):
         xmlroot = ET.fromstring(CASE2)
         self.movie = Movie(xmlroot)
-        self.u_key = self.movie.unique_key2
+        self.u_key = self.movie.unique_key
 
     def test_object_unique_value(self):
         '''
@@ -126,7 +126,7 @@ class TestThirdMovieUniqueKeyCase(unittest.TestCase):
     def setUp(self):
         xmlroot = ET.fromstring(CASE3)
         self.movie = Movie(xmlroot)
-        self.u_key = self.movie.unique_key2
+        self.u_key = self.movie.unique_key
 
     def test_object_unique_value(self):
         '''
