@@ -3,6 +3,11 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-210](https://github.com/cjcodeproj/medialibrary/issues/210) Unique hash string context for content media
+ - [medialibrary-268](https://github.com/cjcodeproj/medialibrary/issues/268) Unique hash string for albums
+ - [medialibrary-273](https://github.com/cjcodeproj/medialibrary/issues/273) Unique string hash for movies
+ - [medialibrary-266](https://github.com/cjcodeproj/medialibrary/issues/266) Base class for content unique string identifier
+ - [medialibrary-270](https://github.com/cjcodeproj/medialibrary/issues/270) Personal names need a form without punctuation
  - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class (cleanup)
  - [medialibrary-263](https://github.com/cjcodeproj/medialibrary/issues/263) Integrate Album and Movie into AVContent abstract class
  - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class

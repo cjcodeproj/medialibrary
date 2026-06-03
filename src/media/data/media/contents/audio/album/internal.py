@@ -40,6 +40,7 @@ from media.data.media.contents.audio.album.classification \
 from media.data.media.contents.audio.album.technical \
     import AlbumTechnical
 from media.data.media.contents.audio.elements.song import Song
+from media.data.media.contents.audio.album.unique import AlbumUniqueKey
 from media.data.media.contents.audio.elements.dialogue import Dialogue
 from media.general.sorting.index import ContentIndex
 from media.xml.namespaces import Namespaces
@@ -92,6 +93,7 @@ class Album(AbstractAVContent):
         self.technical = AlbumTechnical(self)
         self.default_runtime = self.technical.runtime
         self.s_index = AlbumIndexEntry(self)
+        self.unique_key = AlbumUniqueKey(self)
 
 
 class AlbumIndexEntry(ContentIndex):
