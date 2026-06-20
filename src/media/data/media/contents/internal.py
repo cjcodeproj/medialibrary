@@ -47,6 +47,7 @@ class AbstractContent():
         self.catalog = None
         self.classification = None
         self.sort_title = ""
+        self.s_index = None
         self.unique_key = None
 
     def _process(self, in_element):

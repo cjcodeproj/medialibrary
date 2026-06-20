@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-275](https://github.com/cjcodeproj/medialibrary/issues/275) Bring s_index into the AbstractBase content class
  - [medialibrary-265](https://github.com/cjcodeproj/medialibrary/issues/265) Move the egg info
  - [medialibrary-210](https://github.com/cjcodeproj/medialibrary/issues/210) Unique hash string context for content media
  - [medialibrary-268](https://github.com/cjcodeproj/medialibrary/issues/268) Unique hash string for albums

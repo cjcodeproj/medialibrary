@@ -47,7 +47,6 @@ class Movie(AbstractAVContent):
         self.technical = None
         self.variants = []
         self.crew = None
-        self.s_index = None
         self._process(in_element)
 
     def build_index_object(self):

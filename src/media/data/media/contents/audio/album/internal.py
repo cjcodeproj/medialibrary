@@ -58,7 +58,6 @@ class Album(AbstractAVContent):
         self.technical = None
         self.elements = []
         self.runtime = timedelta(seconds=0)
-        self.s_index = None
         self._process(in_element)
 
     def _process(self, in_element):
