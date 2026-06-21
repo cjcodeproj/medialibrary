@@ -23,39 +23,37 @@
 #
 
 '''
-Code for handling the selection of an output formatter.
+Abstract object class for the unique key.
 '''
+from media.data.media.contents.unique import AbstractUniqueKey
+from media.general.stringtools import trans_str_ws
 
-# pylint:disable=R0903
-
-import sys
-import importlib
+# pylint: disable=too-few-public-methods
 
 
-class Selector():
+class MovieUniqueKey(AbstractUniqueKey):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    A unique identifier value.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
+    def __init__(self, in_movie):
+        super().__init__()
+        self.build(in_movie)
 
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
-
-    @classmethod
-    def load_formatter(cls, in_driver):
+    def build(self, in_movie):
         '''
-        Loads a formatter object.
+        Build the unique string for the movie.
         '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+        self.c_name = in_movie.__class__.__name__.casefold()
+        self.title = trans_str_ws(str(in_movie.title))
+        d_lst = []
+        if in_movie.catalog:
+            if in_movie.catalog.copyright:
+                self.year = str(in_movie.catalog.copyright.year)
+        if in_movie.crew:
+            if in_movie.crew.directors:
+                for dl in in_movie.crew.directors:
+                    d_lst.append(dl.sort_value)
+                self.extra = '+'.join(d_lst)
+        self.hash.low = self.crc32enc([self.title, self.year, self.extra])
+        self.hash.high = self.crc32enc([self.extra, self.title, self.year])
+        self.value = self.concat(self.title, self.year, self.hash)

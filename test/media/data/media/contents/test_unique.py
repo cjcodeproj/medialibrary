@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2026 Chris Josephes
+# Copyright 2022 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,49 @@
 # SOFTWARE.
 #
 
-'''
-Code for handling the selection of an output formatter.
-'''
+'''Unit tests for movie unique key class.'''
 
-# pylint:disable=R0903
+# pylint: disable=R0801
 
-import sys
-import importlib
+import unittest
+from media.data.media.contents.unique import KeyHash
+
+LOW = 0x00000001
+HGH = 0x00000002
+FULL = HGH << 32 | LOW
+HEXSTR = '0000000200000001'
 
 
-class Selector():
+class TestKeyHashCase(unittest.TestCase):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    Unit tests for testing the KeyHash class.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
-
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
-
-    @classmethod
-    def load_formatter(cls, in_driver):
+    def setUp(self):
         '''
-        Loads a formatter object.
+        Set up unit tests.
         '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+        self.keyhash = KeyHash()
+        self.keyhash.low = LOW
+        self.keyhash.high = HGH
+
+    def test_object_instance(self):
+        '''
+        Assert Classification instance is created.
+        '''
+        self.assertIsInstance(self.keyhash, KeyHash)
+
+    def test_full_value(self):
+        '''
+        Assert the hashed value is correct.
+        '''
+        self.assertEqual(self.keyhash.full(), FULL)
+
+    def test_str_value(self):
+        '''
+        Assert the hexadecimal value is correct.
+        '''
+        self.assertEqual(str(self.keyhash), HEXSTR)
+
+
+if __name__ == '__main__':
+    unittest.main()

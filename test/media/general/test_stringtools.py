@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2026 Chris Josephes
+# Copyright 2025 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -22,40 +22,36 @@
 # SOFTWARE.
 #
 
-'''
-Code for handling the selection of an output formatter.
-'''
+'''Unit tests for code handling titles.'''
 
-# pylint:disable=R0903
+# pylint: disable=R0801
 
-import sys
-import importlib
+import unittest
+from media.general.stringtools import (
+        transform_string, trans_str_ws)
 
 
-class Selector():
+class TestStringToolsCase(unittest.TestCase):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    Test string testing methods.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
-
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
-
-    @classmethod
-    def load_formatter(cls, in_driver):
+    def test_transform_string(self):
         '''
-        Loads a formatter object.
+        Test the removal of punctuation from a string.
         '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+        str_in = "Barry's Condition"
+        str_out = "barrys condition"
+        self.assertEqual(transform_string(str_in), str_out)
+
+    def test_trans_str_ws(self):
+        '''
+        Test the removal of punctuation and change of
+        whitespace in a string.
+        '''
+        str_in = "Jennifer's Body"
+        str_out = "jennifers_body"
+        self.assertEqual(trans_str_ws(str_in), str_out)
+
+
+if __name__ == '__main__':
+    unittest.main()

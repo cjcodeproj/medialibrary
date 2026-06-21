@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -61,3 +61,30 @@ class Paragraph(AbstractStructure):
 
     def __str__(self):
         return self.text
+
+
+class Division(AbstractStructure):
+    '''
+    A division is a logical grouping of child
+    elements.
+    '''
+    def __init__(self, in_structures):
+        self.structures = []
+        self.classes = []
+        if in_structures:
+            self.structures.extend(in_structures)
+
+    def set_classes(self, in_classes):
+        '''
+        Define the classes of the division.
+        (only really useful with HTML output)
+        '''
+        if in_classes:
+            self.classes.extend(in_classes)
+
+    def add_structure(self, in_structure):
+        '''
+        Add an element to the structure array.
+        '''
+        if in_structure:
+            self.structures.append(in_structure)

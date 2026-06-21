@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -32,7 +32,7 @@ Album objects
 
 
 from datetime import timedelta
-from media.data.media.contents.internal import AbstractContent
+from media.data.media.contents.internal import AbstractAVContent
 from media.data.media.contents.generic.catalog import Title
 from media.data.media.contents.audio.album.catalog import AlbumCatalog
 from media.data.media.contents.audio.album.classification \
@@ -40,12 +40,13 @@ from media.data.media.contents.audio.album.classification \
 from media.data.media.contents.audio.album.technical \
     import AlbumTechnical
 from media.data.media.contents.audio.elements.song import Song
+from media.data.media.contents.audio.album.unique import AlbumUniqueKey
 from media.data.media.contents.audio.elements.dialogue import Dialogue
 from media.general.sorting.index import ContentIndex
 from media.xml.namespaces import Namespaces
 
 
-class Album(AbstractContent):
+class Album(AbstractAVContent):
     '''
     Album class
     '''
@@ -57,7 +58,6 @@ class Album(AbstractContent):
         self.technical = None
         self.elements = []
         self.runtime = timedelta(seconds=0)
-        self.s_index = None
         self._process(in_element)
 
     def _process(self, in_element):
@@ -90,7 +90,9 @@ class Album(AbstractContent):
     def _post_load_process(self):
         super()._post_load_process()
         self.technical = AlbumTechnical(self)
+        self.default_runtime = self.technical.runtime
         self.s_index = AlbumIndexEntry(self)
+        self.unique_key = AlbumUniqueKey(self)
 
 
 class AlbumIndexEntry(ContentIndex):

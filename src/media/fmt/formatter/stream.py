@@ -23,39 +23,23 @@
 #
 
 '''
-Code for handling the selection of an output formatter.
+Abstract class for handling output streams
 '''
 
 # pylint:disable=R0903
 
-import sys
-import importlib
 
-
-class Selector():
+class AbstractStream():
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    An output stream from the reporting system.
+    Returns string output based on passed input.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
+    def __init__(self):
+        self.mime_type = ""
+        self.stream = None
 
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
-
-    @classmethod
-    def load_formatter(cls, in_driver):
+    def mime_header(self):
         '''
-        Loads a formatter object.
+        Return a compliant HTTP mime header.
         '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+        return f"Content-Type: {self.mime_type}\n"

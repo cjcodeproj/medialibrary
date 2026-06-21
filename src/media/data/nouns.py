@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ Objects for representation of proper nouns used in keywords.
 # pylint: disable=too-many-instance-attributes
 
 from media.general.stringtools import build_sort_string
-from media.general.stringtools import chg_ws
+from media.general.stringtools import trans_str_ws
 from media.xml.namespaces import Namespaces
 
 
@@ -275,24 +275,24 @@ class PersonalName(AbstractNoun):
         """Construct a string for sorting names."""
         raw = ''
         if self.pref_complete:
-            raw = chg_ws(self.pref_complete.casefold())
+            raw = trans_str_ws(self.pref_complete.casefold())
         else:
             if self.family:
-                raw = chg_ws(self.family.casefold()) + '_'
+                raw = trans_str_ws(self.family.casefold()) + '_'
                 if self.pref_given:
-                    raw += chg_ws(self.pref_given.casefold())
+                    raw += trans_str_ws(self.pref_given.casefold())
                 else:
-                    raw += chg_ws(self.given.casefold())
+                    raw += trans_str_ws(self.given.casefold())
                     if self.middle:
-                        raw += '_' + chg_ws(self.middle.casefold())
+                        raw += '_' + trans_str_ws(self.middle.casefold())
                     elif self.mid_initial:
-                        raw += '_' + chg_ws(self.mid_initial.casefold())
+                        raw += '_' + trans_str_ws(self.mid_initial.casefold())
             else:
-                raw = chg_ws(self.given.casefold())
+                raw = trans_str_ws(self.given.casefold())
                 if self.middle:
-                    raw += '_' + chg_ws(self.middle)
+                    raw += '_' + trans_str_ws(self.middle)
                 elif self.mid_initial:
-                    raw += '_' + chg_ws(self.mid_initial)
+                    raw += '_' + trans_str_ws(self.mid_initial)
         self.sort_value = raw
 
     def __str__(self):
