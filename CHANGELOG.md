@@ -1,7 +1,7 @@
 medialibrary CHANGELOG
 ======================
 
-## CURRENT
+## RELEASE 0.3.3
 
  - [medialibrary-275](https://github.com/cjcodeproj/medialibrary/issues/275) Bring s_index into the AbstractBase content class
  - [medialibrary-265](https://github.com/cjcodeproj/medialibrary/issues/265) Move the egg info
