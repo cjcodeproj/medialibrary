@@ -23,39 +23,36 @@
 #
 
 '''
-Code for handling the selection of an output formatter.
+Abstract object class for the unique key.
 '''
+from media.data.media.contents.unique import AbstractUniqueKey
+from media.general.stringtools import trans_str_ws
 
-# pylint:disable=R0903
-
-import sys
-import importlib
+# pylint: disable=too-few-public-methods
 
 
-class Selector():
+class AlbumUniqueKey(AbstractUniqueKey):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    A unique identifier value.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
+    def __init__(self, in_album):
+        super().__init__()
+        self.build(in_album)
 
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
-
-    @classmethod
-    def load_formatter(cls, in_driver):
+    def build(self, in_album):
         '''
-        Loads a formatter object.
+        Build the unique string for the movie.
         '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+        self.c_name = in_album.__class__.__name__.casefold()
+        self.title = trans_str_ws(str(in_album.title))
+        a_lst = []
+        if in_album.catalog:
+            if in_album.catalog.copyright:
+                self.year = str(in_album.catalog.copyright.year)
+            if in_album.catalog.artists:
+                for al in in_album.catalog.artists:
+                    a_lst.append(al.sort_value)
+                self.extra = '+'.join(a_lst)
+        self.hash.low = self.crc32enc([self.title, self.year, self.extra])
+        self.hash.high = self.crc32enc([self.extra, self.title, self.year])
+        self.value = self.concat(self.title, self.year, self.hash)

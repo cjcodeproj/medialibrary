@@ -1,6 +1,26 @@
 medialibrary CHANGELOG
 ======================
 
+## RELEASE 0.3.3
+
+ - [medialibrary-275](https://github.com/cjcodeproj/medialibrary/issues/275) Bring s_index into the AbstractBase content class
+ - [medialibrary-265](https://github.com/cjcodeproj/medialibrary/issues/265) Move the egg info
+ - [medialibrary-210](https://github.com/cjcodeproj/medialibrary/issues/210) Unique hash string context for content media
+ - [medialibrary-268](https://github.com/cjcodeproj/medialibrary/issues/268) Unique hash string for albums
+ - [medialibrary-273](https://github.com/cjcodeproj/medialibrary/issues/273) Unique string hash for movies
+ - [medialibrary-266](https://github.com/cjcodeproj/medialibrary/issues/266) Base class for content unique string identifier
+ - [medialibrary-270](https://github.com/cjcodeproj/medialibrary/issues/270) Personal names need a form without punctuation
+ - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class (cleanup)
+ - [medialibrary-263](https://github.com/cjcodeproj/medialibrary/issues/263) Integrate Album and Movie into AVContent abstract class
+ - [medialibrary-243](https://github.com/cjcodeproj/medialibrary/issues/243) AVContent Class
+ - [medialibrary-262](https://github.com/cjcodeproj/medialibrary/issues/262) Stream objects should provide data on file extensions
+ - [medialibrary-256](https://github.com/cjcodeproj/medialibrary/issues/257) File abstract.py should probably be renamed
+ - [medialibrary-226](https://github.com/cjcodeproj/medialibrary/issues/226) HTML output should probably use native XML code
+ - [medialibrary-257](https://github.com/cjcodeproj/medialibrary/issues/257) Adapt Formatter classes to use Stream objects
+ - [medialibrary-252](https://github.com/cjcodeproj/medialibrary/issues/252) Output streams for reports
+ - [medialibrary-244](https://github.com/cjcodeproj/medialibrary/issues/244) Formatter selected should work off constants, not strings
+
+
 ## RELEASE 0.3.1 (Oct 2025)
 
  - [medialibrary-248](https://github.com/cjcodeproj/medialibrary/issues/248) Release 0.3.1

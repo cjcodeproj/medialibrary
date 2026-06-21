@@ -23,39 +23,42 @@
 #
 
 '''
-Code for handling the selection of an output formatter.
+Code for handling HTML output formatting.
 '''
 
-# pylint:disable=R0903
+# pylint:disable=R0903, R0801, W0237
 
-import sys
-import importlib
+import xml.etree.ElementTree as ET
+from media.fmt.formatter.stream import AbstractStream
 
 
-class Selector():
+class HtmlStream(AbstractStream):
     '''
-    Class for loading up the appropriate formatter
-    code based on the output format requested.
+    The HTML stream is the string text output
+    of the object data.
+
+    NOTE: It probably shouldn't retain the element object.
     '''
-    HTML = 1
-    PLAINTEXT = 2
-    CSV = 3
+    def __init__(self, in_element=None):
+        super().__init__()
+        self.mime_type = 'text/html'
+        self.extension = 'html'
+        self.element = None
+        if in_element:
+            self.element = in_element
 
-    MODULES = {
-            HTML: 'media.fmt.formatter.html',
-            PLAINTEXT: 'media.fmt.formatter.plaintext',
-            CSV: 'media.fmt.formatter.csv'
-            }
+    # We're violating W0237 here by changing a variable name.
+    # If we were static typing, the type would also be
+    # different
+    def input(self, in_element=None):
+        '''
+        Input object to be sent out.
+        '''
+        if in_element is not None:
+            self.element = in_element
 
-    @classmethod
-    def load_formatter(cls, in_driver):
-        '''
-        Loads a formatter object.
-        '''
-        drv = None
-        if in_driver in Selector.MODULES:
-            drv = importlib.import_module(Selector.MODULES[in_driver])
-        else:
-            print('DRIVER NOT LOADED')
-            # This should be an exception in the future
-        return getattr(sys.modules[drv.__name__], 'DriverMain')()
+    def __str__(self):
+        ET.indent(self.element, space=' ')
+        return ET.tostring(self.element,
+                           encoding='us-ascii',
+                           method='xml').decode('utf-8')

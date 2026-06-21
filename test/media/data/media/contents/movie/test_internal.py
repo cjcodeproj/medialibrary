@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -101,13 +101,6 @@ class TestMovie(unittest.TestCase):
         '''
         self.assertIsInstance(self.movie, Movie)
 
-    def test_movie_unique_key(self):
-        '''
-        Assert the unique key value for a given movie.
-        '''
-        self.assertEqual(self.movie.unique_key,
-                         "river_turns_inward_+a-0000-1")
-
 
 class TestMovieSort(unittest.TestCase):
     '''
@@ -129,22 +122,6 @@ class TestMovieSort(unittest.TestCase):
         self.assertTrue(self.movie2 < self.movie1)
 
 
-class TestMoviePunctuationTitle(unittest.TestCase):
-    '''
-    Punctuation title movie tests.
-    '''
-    def setUp(self):
-        xmlroot1 = ET.fromstring(CASE3)
-        self.movie = Movie(xmlroot1)
-
-    def test_movie_punctuation_unique_key(self):
-        '''
-        Assert unique_key removes punctuation.
-        '''
-        self.assertEqual(self.movie.unique_key,
-                         "valeries_mistake_gregs_terror-1994-1")
-
-
 class TestMovieVariantTitle(unittest.TestCase):
     '''Variant title movie tests.'''
     def setUp(self):
@@ -152,13 +129,6 @@ class TestMovieVariantTitle(unittest.TestCase):
         xmlroot2 = ET.fromstring(CASE2)
         self.movie1 = Movie(xmlroot1)
         self.movie2 = Movie(xmlroot2)
-
-    def test_movie_variant_unique_key(self):
-        '''
-        Assert unique_key against a movie with a variant title.
-        '''
-        self.assertEqual(self.movie1.unique_key,
-                         "seventy_four_minutes_to_countdown-1977-2")
 
     def test_movie_variant_order(self):
         '''

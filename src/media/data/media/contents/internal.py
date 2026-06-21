@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,6 +28,7 @@ Abstract object classes used by all content objects.
 
 # pylint: disable=too-few-public-methods
 
+from datetime import timedelta
 from media.xml.namespaces import Namespaces
 from media.data.media.contents.generic.catalog import (
         Title, TitleValueException, Catalog
@@ -46,7 +47,8 @@ class AbstractContent():
         self.catalog = None
         self.classification = None
         self.sort_title = ""
-        self.unique_key = ""
+        self.s_index = None
+        self.unique_key = None
 
     def _process(self, in_element):
         for child in in_element:
@@ -61,12 +63,10 @@ class AbstractContent():
 
     def _post_load_process(self):
         if self.title:
-            self._build_unique_key()
+            self._build_sort_title()
 
-    def _build_unique_key(self):
+    def _build_sort_title(self):
         self.sort_title = TitleMunger.build_sort_cat_title(
-                self.title, self.catalog)
-        self.unique_key = TitleMunger.build_unique_key_string(
                 self.title, self.catalog)
 
     def catalog_title(self):
@@ -79,6 +79,15 @@ class AbstractContent():
     def __eq__(self, other):
         return self.__class__ == other.__class__ and \
                 self.unique_key == other.unique_key
+
+
+class AbstractAVContent(AbstractContent):
+    '''
+    Abstract Audio/Visual Content base class.
+    '''
+    def __init__(self):
+        super().__init__()
+        self.default_runtime = timedelta(seconds=0)
 
 
 class ContentException(Exception):
