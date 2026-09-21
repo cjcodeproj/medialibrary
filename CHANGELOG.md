@@ -1,6 +1,11 @@
 medialibrary CHANGELOG
 ======================
 
+## CURRENT
+
+ - [medialibrary-285](https://github.com/cjcodeproj/medialibrary/issues/285) String truncate functions should be static methods of a single class
+
+
 ## RELEASE 0.3.3
 
  - [medialibrary-275](https://github.com/cjcodeproj/medialibrary/issues/275) Bring s_index into the AbstractBase content class

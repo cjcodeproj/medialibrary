@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2025 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,7 @@
 
 import unittest
 from media.general.stringtools import (
-        transform_string, trans_str_ws)
+        transform_string, trans_str_ws, StringTransform)
 
 
 class TestStringToolsCase(unittest.TestCase):
@@ -51,6 +51,29 @@ class TestStringToolsCase(unittest.TestCase):
         str_in = "Jennifer's Body"
         str_out = "jennifers_body"
         self.assertEqual(trans_str_ws(str_in), str_out)
+
+
+class TestStringTransformCase(unittest.TestCase):
+    '''
+    Test new string transform class.
+    '''
+
+    def test_no_punctuation(self):
+        '''
+        Test the removal of punctuation from a string.
+        '''
+        str_in = "Barry's Condition"
+        str_out = "barrys condition"
+        self.assertEqual(StringTransform.no_punc(str_in), str_out)
+
+    def test_trans_str_ws(self):
+        '''
+        Test the removal of punctuation and change of
+        whitespace in a string.
+        '''
+        str_in = "Jennifer's Body"
+        str_out = "jennifers_body"
+        self.assertEqual(StringTransform.no_punc_ws(str_in), str_out)
 
 
 if __name__ == '__main__':

@@ -63,3 +63,36 @@ def build_sort_string(in_value):
         article = word_split.pop(0)
         word_split.append('+'+article)
     return '_'.join(word_split)
+
+
+class StringTransform():
+    '''
+    Class with string transformation code.
+    '''
+
+    NO_PUNC = str.maketrans('', '', string.punctuation)
+    NO_WS = str.maketrans(string.whitespace, '______')
+
+    @staticmethod
+    def no_punc_ws(in_value):
+        '''
+        Remove all punctuation and whitespace from a string,
+        and then return it converted to lowercase.
+        '''
+        lvl1 = ''
+        lvl2 = ''
+        if in_value is not None:
+            lvl1 = in_value.translate(StringTransform.NO_PUNC)
+            lvl2 = lvl1.translate(StringTransform.NO_WS)
+        return lvl2.casefold()
+
+    @staticmethod
+    def no_punc(in_value):
+        '''
+        Remove all punctuation from a string, and retrn it
+        converted to lowercase.
+        '''
+        lvl1 = ''
+        if in_value is not None:
+            lvl1 = in_value.translate(StringTransform.NO_PUNC)
+        return lvl1.casefold()
