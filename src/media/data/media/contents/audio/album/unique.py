@@ -26,7 +26,7 @@
 Abstract object class for the unique key.
 '''
 from media.data.media.contents.unique import AbstractUniqueKey
-from media.general.stringtools import trans_str_ws
+from media.general.stringtools import StringTransform
 
 # pylint: disable=too-few-public-methods
 
@@ -44,7 +44,8 @@ class AlbumUniqueKey(AbstractUniqueKey):
         Build the unique string for the movie.
         '''
         self.c_name = in_album.__class__.__name__.casefold()
-        self.title = trans_str_ws(str(in_album.title))
+        title_str = StringTransform.no_punc_ws(str(in_album.title))
+        self.title = StringTransform.no_dup_underscores(title_str)
         a_lst = []
         if in_album.catalog:
             if in_album.catalog.copyright:

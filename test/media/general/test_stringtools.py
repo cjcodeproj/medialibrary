@@ -75,6 +75,14 @@ class TestStringTransformCase(unittest.TestCase):
         str_out = "jennifers_body"
         self.assertEqual(StringTransform.no_punc_ws(str_in), str_out)
 
+    def test_no_dup_underscores(self):
+        '''
+        Test the removal of duplicate underscores.
+        '''
+        str_in = 'every_little__thing_forever___more'
+        str_out = 'every_little_thing_forever_more'
+        self.assertEqual(StringTransform.no_dup_underscores(str_in), str_out)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -96,3 +96,21 @@ class StringTransform():
         if in_value is not None:
             lvl1 = in_value.translate(StringTransform.NO_PUNC)
         return lvl1.casefold()
+
+    @staticmethod
+    def no_dup_underscores(in_value):
+        '''
+        Remove duplicate underscores in a string if they
+        are present.
+        '''
+        out_str = ''
+        prev_char = ''
+        for char in in_value:
+            if char == '_':
+                if prev_char != '_':
+                    out_str += char
+                    prev_char = char
+            else:
+                out_str += char
+                prev_char = char
+        return out_str

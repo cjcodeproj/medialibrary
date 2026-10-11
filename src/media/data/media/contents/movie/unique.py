@@ -26,7 +26,7 @@
 Abstract object class for the unique key.
 '''
 from media.data.media.contents.unique import AbstractUniqueKey
-from media.general.stringtools import trans_str_ws
+from media.general.stringtools import StringTransform
 
 # pylint: disable=too-few-public-methods
 
@@ -44,7 +44,8 @@ class MovieUniqueKey(AbstractUniqueKey):
         Build the unique string for the movie.
         '''
         self.c_name = in_movie.__class__.__name__.casefold()
-        self.title = trans_str_ws(str(in_movie.title))
+        title_str = StringTransform.no_punc_ws(str(in_movie.title))
+        self.title = StringTransform.no_dup_underscores(title_str)
         d_lst = []
         if in_movie.catalog:
             if in_movie.catalog.copyright:

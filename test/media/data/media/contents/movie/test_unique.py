@@ -61,7 +61,7 @@ CASE2 = '''<?xml version='1.0'?>
 </movie>
 '''
 
-UNIQUE_STR2 = 'mandy__sandy-111eaf187972bfb7'
+UNIQUE_STR2 = 'mandy_sandy-bc1e590ebab1b0ab'
 
 CASE3 = '''<?xml version='1.0'?>
 <movie xmlns='http://vectortron.com/xml/media/movie'>
