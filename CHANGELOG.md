@@ -3,6 +3,7 @@ medialibrary CHANGELOG
 
 ## CURRENT
 
+ - [medialibrary-287](https://github.com/cjcodeproj/medialibrary/issues/287) Directory path derived from movie title
  - [medialibrary-286](https://github.com/cjcodeproj/medialibrary/issues/286) Unique keys should drop double underscores
  - [medialibrary-285](https://github.com/cjcodeproj/medialibrary/issues/285) String truncate functions should be static methods of a single class
 
