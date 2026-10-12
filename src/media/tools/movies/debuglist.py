@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 #
-# Copyright 2023 Chris Josephes
+# Copyright 2026 Chris Josephes
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -43,10 +43,11 @@ class DebugList():
     @classmethod
     def list_header(cls):
         '''Generate a simple header'''
-        out = f"{'Title':35s} {'Year':4s} {'Sort Title':35s} " + \
-              f"{'Unique Key':35s}" + \
-              f"{'Hash':20s} {'Object Address':18s}\n" + \
-              f"{'=' * 35} {'=' * 4} {'=' * 20} {'=' * 18}"
+        out = f"{'Title':35s} {'Year':4s} {'Sort Title':40s} " + \
+              f"{'Unique Key':50s} " + \
+              f"{'Object Address':18s}\n" + \
+              f"{'=' * 35} {'=' * 4} {'=' * 40} {'=' * 50} " + \
+              f"{'=' * 18}\n"
         return out
 
     def mentry(self):
@@ -55,11 +56,10 @@ class DebugList():
         if self.movie.catalog is not None:
             if self.movie.catalog.copyright is not None:
                 y_string = self.movie.catalog.copyright.year
-        hash_string = hash(self.movie)
         out = f"{self.movie.title!s:35s} {y_string:4d} " + \
-              f"{'('+self.movie.title.sort_title+')':35s} " + \
-              f"{'('+self.movie.unique_key+')':35s} " + \
-              f"{hash_string:20d} {hex(id(self.movie))}"
+              f"{'('+self.movie.title.sort_title+')':40s} " + \
+              f"{'('+str(self.movie.unique_key)+')':50s} " + \
+              f"{hex(id(self.movie))}"
         return out
 
     def __str__(self):
